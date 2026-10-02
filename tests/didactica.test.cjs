@@ -137,7 +137,7 @@ const url = (n) => "file:///" + path.resolve(__dirname, "..", n).replace(/\\/g, 
 
     // D en otros módulos: cada simulador vela su resultado clave.
     for (const [file, target, prepare] of [
-      ["tri.html", "#d-maxinfo", null],
+      ["tri.html", "#d-information", null],
       ["afe.html", "#parallel-summary", '[data-panel="numero"]'],
       ["afc.html", "#cfa-df", '[data-panel="cfa-modelos"]'],
     ]) {
@@ -154,6 +154,33 @@ const url = (n) => "file:///" + path.resolve(__dirname, "..", n).replace(/\\/g, 
       } else await g.locator("button", { hasText: "Ver sin predecir" }).click();
       assert.equal(await isVeiled(), false, file + ": se muestra tras predecir");
     }
+
+    // TRI: el valor sale del modelo (también con b negativo y signo «−»), la línea que da la respuesta se oculta
+    // sin dejar un bloque borroso y, al revelar, el gráfico pasa a la información del ítem elegido.
+    await p.goto(url("tri.html"));
+    assert.equal(await p.locator("#d-maxinfo").isHidden(), true, "TRI: θ máximo oculto, no difuminado");
+    assert.equal(await p.locator("#d-information-caption").evaluate((e) => !!e.closest(".dx-veiled")), false);
+    await p.selectOption("#selected-item", "0");
+    const tg = p.locator(".dx-gate").first();
+    await tg.locator("input").fill("−1,3");
+    await tg.locator("button", { hasText: "Comprobar" }).click();
+    assert.match(
+      await tg.locator('[role="status"]').innerText(),
+      /^Predijiste −1,30; el resultado es −1,30\. ¡Bien! En el 2PL/,
+    );
+    assert.equal(await p.locator("#d-maxinfo").isVisible(), true);
+    assert.equal(await p.locator("#d-precision").inputValue(), "item");
+    await tg.locator(".dx-again").click();
+    await p.selectOption("#model", "3PL");
+    await p.selectOption("#selected-item", "2");
+    await tg.locator("input").fill("1,3");
+    await tg.locator("button", { hasText: "Comprobar" }).click();
+    assert.match(
+      await tg.locator('[role="status"]').innerText(),
+      /^Predijiste 1,30; el resultado es 1,47\. En el 3PL, con c = 0,25, el máximo queda por encima de b/,
+      "en el 3PL, responder b no se da por bueno",
+    );
+    assert.deepEqual(errors, []);
 
     // E/D en Diseño: el ejemplo pide un intento antes de abrir la propuesta.
     await p.goto(url("index.html"));

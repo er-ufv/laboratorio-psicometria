@@ -53,7 +53,7 @@ puede ocultarlo de nuevo («Volver a predecir»), cambiar los parámetros y repe
 |---|---|---|---|
 | Análisis de ítems | Índices de la tabla de grupos extremos y distractores (ya tenía predicción previa) | — | — |
 | TCT | Fiabilidad de Spearman–Brown con la longitud elegida | ± 0,03 | Si sobrestima o infraestima, y por qué (rendimientos decrecientes) |
-| TRI | θ en que el ítem informa más | ± 0,25 | Máximo en b en el 2PL; se desplaza con c (3PL) y d (4PL) |
+| TRI | θ en que el ítem informa más | ± 0,1 | Máximo en b en el 1PL y el 2PL; se desplaza con c (3PL) y d (4PL). Al revelar, el gráfico muestra la información del ítem elegido |
 | AFE | Número de factores del análisis paralelo | Exacta | Contraste con la regla de Kaiser |
 | AFC | Grados de libertad del modelo | Exacta | Cómo contar momentos y parámetros |
 | Rotación | Qué cambia al rotar (apartado 01) | — | Contraste en el apartado 07 |

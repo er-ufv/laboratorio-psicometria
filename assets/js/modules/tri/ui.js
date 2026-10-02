@@ -496,17 +496,37 @@
   });
   // Predecir dónde informa más el ítem antes de ver la curva de información.
   if (globalThis.Didactica) {
-    const info = $("d-information").closest(".tct-chart");
+    const info = $("d-information").closest(".tct-chart"),
+      // Se calcula con el modelo (no leyendo el texto, que usa el signo «−» tipográfico).
+      peakNow = () => {
+        const model = $("model").value,
+          x = M.effective(model, items[sel()]);
+        return { model, x, theta: Math.round(M.maxInformation(x, D()).theta * 100) / 100 };
+      },
+      n2 = (v) => fmt(v, 2);
     Didactica.gate({
       anchor: info,
-      hide: [info, $("d-maxinfo"), $("d-information-caption")],
+      hide: [info],
+      conceal: [$("d-maxinfo")],
       prompt: "¿en qué valor de θ crees que informa más el ítem elegido? Fíjate en su b y en su c.",
-      value: () => Number(($("d-maxinfo").textContent.match(/θ = (-?[\d,]+)/) || [])[1]?.replace(",", ".")),
-      tolerance: 0.25,
-      explain: (pred, actual) =>
-        Math.abs(pred - actual) <= 0.25
-          ? "En el 2PL el máximo está en b; con c > 0 se desplaza hacia arriba."
-          : "Recuerda: en el 2PL el máximo está en θ = b; con c > 0 (3PL) se desplaza por encima de b, y con d < 1 (4PL), por debajo.",
+      value: () => peakNow().theta,
+      format: n2,
+      // Estrecha: en el 3PL responder «b» no debe darse por bueno si el máximo se ha desplazado.
+      tolerance: 0.1,
+      explain: () => {
+        const { model, x } = peakNow(),
+          why = {
+            "1PL": `En el 1PL el máximo está justo en θ = b (aquí b = ${n2(x.b)}).`,
+            "2PL": `En el 2PL el máximo está justo en θ = b (aquí b = ${n2(x.b)}).`,
+            "3PL": `En el 3PL, con c = ${n2(x.c)}, el máximo queda por encima de b = ${n2(x.b)}: la conjetura resta información en la zona baja.`,
+            "4PL": `En el 4PL, c > 0 lleva el máximo por encima de b y d < 1 por debajo; aquí b = ${n2(x.b)}, c = ${n2(x.c)} y d = ${n2(x.d)}.`,
+          }[model];
+        return why + " El gráfico muestra ahora la información del ítem elegido.";
+      },
+      onReveal: () => {
+        $("d-precision").value = "item";
+        updateD();
+      },
     });
   }
   // El cuestionario lo genera Didactica (assets/js/core/preguntas.js, clave «tri»).

@@ -6,7 +6,8 @@
  *   Didactica.quiz(host, clave, opciones) Cuestionario: seguridad antes de responder, explicación por opción,
  *                                        escalera de ayudas (pista → solución), calibración, repetir fallos,
  *                                        exportación CSV sin datos personales y cola de repaso espaciado.
- *   Didactica.gate(config)               Predecir antes de ver un resultado de un simulador.
+ *   Didactica.gate(config)               Predecir antes de ver un resultado de un simulador (hide: difuminar;
+ *                                        conceal: ocultar del todo; onReveal: al mostrar el resultado).
  *   Didactica.wire()                     Autoexplicación ([data-autoexp]) y paginación ([data-pager]).
  *
  * El contenido (preguntas y predicciones) está en preguntas.js. Nada se envía a ningún servidor; el
@@ -51,7 +52,13 @@
     ["adivino", "Adivino"],
   ];
   const TAG = { recuerdo: "Recuerdo", aplicacion: "Aplicación", transferencia: "Transferencia" };
-  const stripCorrect = (s) => String(s || "").replace(/^Correcto[.:]\s*/i, "");
+  // Quita el «Correcto:» inicial de la explicación y empieza con mayúscula.
+  const stripCorrect = (s) => {
+      const t = String(s || "").replace(/^Correcto[.:]\s*/i, "");
+      return t.charAt(0).toUpperCase() + t.slice(1);
+    },
+    // Texto de una opción citado entre comillas, sin el punto final («…».» → «…»).
+    quote = (t) => "«" + String(t).replace(/\.$/, "") + "»";
   // Barajado reproducible (mismo orden en cada visita, distinto entre preguntas).
   function order(n, seed) {
     const o = Array.from({ length: n }, (_, i) => i);
@@ -137,7 +144,7 @@
         out.append(
           el("div", {
             class: "dx-item-feedback" + (ok ? "" : " miss"),
-            text: `${i + 1}. ${ok ? "Acertaste." : a === null ? "Sin respuesta." : "No era esa."} ${stripCorrect((it.o[a] || it.o[it.a])[1])}${ok ? "" : " La respuesta: «" + it.o[it.a][0] + "»."}`,
+            text: `${i + 1}. ${ok ? "Acertaste." : a === null ? "Sin respuesta." : "No era esa."} ${stripCorrect((it.o[a] || it.o[it.a])[1])}${ok ? "" : " La respuesta: " + quote(it.o[it.a][0]) + "."}`,
           }),
         );
       });
@@ -245,7 +252,7 @@
         right.className = "answer-correct";
         optsBox.querySelectorAll("button").forEach((x) => (x.disabled = x !== right));
         fb.className = "feedback answer-correct";
-        fb.textContent = "Solución: «" + it.o[it.a][0] + "». " + stripCorrect(it.o[it.a][1]);
+        fb.textContent = "Solución: " + quote(it.o[it.a][0]) + ". " + stripCorrect(it.o[it.a][1]);
         solve.hidden = true;
         if (hint) hint.hidden = true;
         update();
@@ -362,14 +369,19 @@
   //           format(x), explain(pred, actual) }
   function gate(cfg) {
     const anchor = cfg.anchor,
-      hide = (cfg.hide || []).filter(Boolean);
+      hide = (cfg.hide || []).filter(Boolean),
+      // conceal: elementos lejos del recuadro que darían la respuesta; se ocultan del todo (no se difuminan)
+      // para no dejar un bloque borroso sin explicación en otra parte de la página.
+      conceal = (cfg.conceal || []).filter(Boolean);
     if (!anchor || !hide.length) return;
-    const veil = (on) =>
+    const veil = (on) => {
       hide.forEach((h) => {
         h.classList.toggle("dx-veiled", on);
         if (on) h.setAttribute("aria-hidden", "true");
         else h.removeAttribute("aria-hidden");
       });
+      conceal.forEach((h) => (h.hidden = on));
+    };
     const input =
         cfg.kind === "choice"
           ? el(
@@ -395,7 +407,8 @@
       );
     function parse(v) {
       const t = String(v).trim();
-      return cfg.kind === "choice" ? v : t === "" ? NaN : Number(t.replace(",", "."));
+      // Admite coma decimal y el signo menos tipográfico (−) que usan los resultados.
+      return cfg.kind === "choice" ? v : t === "" ? NaN : Number(t.replace(",", ".").replace(/^[−–]/, "-"));
     }
     function check() {
       const pred = parse(input.value);
