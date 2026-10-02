@@ -1,0 +1,10 @@
+# Desde la raiz del proyecto: shiny::runApp("r/tri")
+source("../modules/host.R", local = TRUE)
+psicometria_utf8()
+library(shiny)
+source("../modules/tri.R", local = TRUE)
+source("../modules/tri_math.R", local = TRUE)
+addResourcePath("laboratorio", psicometria_web_root("../.."))
+ui <- fluidPage(tags$head(tags$style(HTML("html,body,.container-fluid{margin:0;padding:0;height:100%;}"))), triUI("tri"))
+server <- function(input, output, session) { triServer("tri") }
+shinyApp(ui, server)

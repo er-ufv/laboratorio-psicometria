@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Análisis factorial exploratorio</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/tct.css" />
+    <link rel="stylesheet" href="assets/css/factor.css" />
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/vendor/chart.umd.min.js"></script>
+    <script defer src="assets/js/modules/factor/math.js"></script>
+    <script defer src="assets/js/modules/factor/examples.js"></script>
+    <script defer src="assets/js/modules/factor/common-ui.js"></script>
+    <script defer src="assets/js/modules/factor/afe-ui.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a class="current" href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 05</span><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">ANÁLISIS FACTORIAL EXPLORATORIO</div>
+        <h1>De los ítems a<br />las dimensiones.</h1>
+        <p>
+          Explora la estructura del test y aprende a justificar cada decisión, desde la matriz de correlaciones hasta la
+          interpretación de factores.
+        </p>
+        <div class="hero-meta">
+          <span>Evidencia de estructura</span><span>Decisiones justificadas</span><span>Interpretación</span>
+        </div>
+      </section>
+      <section class="dx-start" aria-label="Objetivos y punto de partida">
+        <article class="card dx-goals">
+          <span class="eyebrow">AL TERMINAR PODRÁS…</span>
+          <ol>
+            <li>Justificar la matriz de correlaciones (Pearson o policóricas) y revisar KMO y Bartlett.</li>
+            <li>Decidir cuántos factores retener combinando análisis paralelo, teoría e interpretabilidad.</li>
+            <li>Detectar soluciones impropias (casos Heywood) antes de interpretar.</li>
+            <li>Distinguir extracción y rotación y leer patrón, estructura, Φ y comunalidades.</li>
+          </ol>
+          <div class="dx-meta">
+            <span><strong>Duración:</strong> 60 min</span><span><strong>Modo:</strong> individual y en parejas</span
+            ><span><strong>Sin nota</strong></span>
+          </div>
+          <p class="explanation">
+            Avanza por los seis apartados; antes de ver el análisis paralelo, predice cuántos factores sugerirá.
+          </p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">ANTES DE EMPEZAR</span>
+          <h2>Tus ideas de partida</h2>
+          <p class="explanation">
+            Responde rápido, sin consultar nada. Al final del módulo comprobarás qué ha cambiado.
+          </p>
+          <div data-predict="afe"></div>
+        </article>
+      </section>
+
+      <div class="tct-tabs" role="tablist" data-pager aria-label="Apartados de AFE">
+        <button
+          role="tab"
+          id="tab-fundamentos"
+          aria-controls="fundamentos"
+          aria-selected="true"
+          data-panel="fundamentos"
+        >
+          01 · Fundamentos</button
+        ><button
+          role="tab"
+          id="tab-supuestos"
+          aria-controls="supuestos"
+          aria-selected="false"
+          data-panel="supuestos"
+          tabindex="-1"
+        >
+          02 · Antes del AFE</button
+        ><button
+          role="tab"
+          id="tab-numero"
+          aria-controls="numero"
+          aria-selected="false"
+          data-panel="numero"
+          tabindex="-1"
+        >
+          03 · Cuántos factores</button
+        ><button
+          role="tab"
+          id="tab-extraccion"
+          aria-controls="extraccion"
+          aria-selected="false"
+          data-panel="extraccion"
+          tabindex="-1"
+        >
+          04 · Extracción</button
+        ><button
+          role="tab"
+          id="tab-rotacion"
+          aria-controls="rotacion"
+          aria-selected="false"
+          data-panel="rotacion"
+          tabindex="-1"
+        >
+          05 · Rotación 2D/3D</button
+        ><button
+          role="tab"
+          id="tab-informe"
+          aria-controls="informe"
+          aria-selected="false"
+          data-panel="informe"
+          tabindex="-1"
+        >
+          06 · Interpretar e informar
+        </button>
+      </div>
+      <section class="card factor-controls">
+        <div class="factor-control-grid">
+          <div>
+            <label for="afe-profile">Ejemplo de datos</label
+            ><select id="afe-profile">
+              <option value="continua">Continuos · tres dimensiones relacionadas</option>
+              <option value="ordinal">Ordinales · cinco categorías</option>
+              <option value="independiente">Variables independientes · contraste</option>
+            </select>
+          </div>
+          <div>
+            <label for="afe-cor">Matriz de correlación</label
+            ><select id="afe-cor">
+              <option value="pearson">Pearson</option>
+              <option value="poly">Policóricas (solo ordinales)</option>
+            </select>
+          </div>
+        </div>
+        <p class="explanation">
+          600 personas simuladas, 9 indicadores (I1–I9). En los ejemplos continuo y ordinal, I1–I3, I4–I6 e I7–I9
+          representan tres dominios relacionados. Cambiar una selección carga una estimación ya ejecutada en R sobre el
+          mismo ejemplo.
+        </p>
+        <p id="afe-context" class="factor-note" role="status"></p>
+        <a id="afe-download" href="data/continua.csv" download>Descargar los datos de este ejemplo (CSV)</a>
+      </section>
+      <section class="tct-panel" id="fundamentos" role="tabpanel" aria-labelledby="tab-fundamentos">
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">DEL CONTENIDO A LA ESTRUCTURA</span>
+            <h2>¿Qué comparten los ítems?</h2>
+            <p class="explanation">
+              El AFE estudia si las asociaciones entre indicadores pueden explicarse por un número menor de factores
+              comunes. Ayuda a explorar la estructura del instrumento; no decide por sí solo qué significa cada factor
+              ni valida todo el test.
+            </p>
+            <div class="formula">R ≈ ΛΦΛ′ + Ψ</div>
+            <p class="explanation">
+              Λ contiene las cargas, Φ las relaciones entre factores y Ψ las varianzas únicas. Para variables
+              estandarizadas: 1 = h² + u². La unicidad combina varianza específica y error; no es exclusivamente error
+              de medición.
+            </p>
+            <p class="tct-help">
+              Un factor se interpreta con el contenido de los ítems que lo definen y con su patrón de cargas, no solo
+              con una etiqueta que propone el programa.
+            </p>
+          </article>
+          <article class="card">
+            <h3>AFE, componentes y AFC</h3>
+            <p class="explanation">
+              <strong>AFE:</strong> explora cargas y dimensiones sin fijar de antemano una estructura simple completa.
+            </p>
+            <p class="explanation">
+              <strong>Componentes principales:</strong> resume la varianza total; no separa factores comunes y
+              unicidades como este modelo. No es un sustituto automático del AFE para medir constructos.
+            </p>
+            <p class="explanation">
+              <strong>AFC:</strong> contrasta una estructura especificada antes del ajuste. Se desarrolla en el Módulo
+              6; un buen ajuste no demuestra que sea el único modelo posible.
+            </p>
+            <a href="afc.html">Ir al Módulo 6 · Confirmatorio →</a>
+            <details>
+              <summary>Las decisiones forman una cadena</summary>
+              <p class="explanation">
+                Contenido → datos y participantes → revisión de datos → correlaciones → extracción → número de factores
+                → rotación → interpretación → informe. Explorar y confirmar en muestras independientes reduce el riesgo
+                de sobreajuste.
+              </p>
+            </details>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="supuestos" role="tabpanel" aria-labelledby="tab-supuestos" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <h2>Antes de extraer factores</h2>
+            <p class="explanation">
+              Comprueba codificación, ítems inversos, distribución, categorías poco usadas, valores extremos, datos
+              ausentes y posibles ítems duplicados. El tamaño necesario depende de comunalidades, cargas e indicadores
+              por factor; no existe una razón personas/ítem que garantice calidad.
+            </p>
+            <details open>
+              <summary>Pearson frente a policóricas</summary>
+              <p class="explanation">
+                Pearson describe asociación lineal entre puntuaciones numéricas. Las policóricas modelan categorías
+                ordenadas como cortes de variables continuas latentes con normalidad bivariada. No son simplemente
+                “Pearson corregida”: dependen de esos supuestos y pueden ser inestables con celdas escasas.
+              </p>
+            </details>
+            <details open>
+              <summary>KMO y adecuación por ítem</summary>
+              <p class="explanation">
+                Compara correlaciones con correlaciones parciales: KMO = Σr² / (Σr² + Σq²), fuera de la diagonal. Una
+                mayor proporción sugiere más varianza común. Examina también MSA por ítem, contenido y estructura; no es
+                una prueba de unidimensionalidad.
+              </p>
+              <p class="explanation">
+                Kaiser (1974) propuso etiquetas orientativas: ≥ 0,90 maravilloso, ≥ 0,80 meritorio, ≥ 0,70 mediano, ≥
+                0,60 mediocre, ≥ 0,50 miserable y &lt; 0,50 inaceptable. Son una convención, no un umbral de decisión:
+                en el ejemplo de variables independientes el KMO queda por debajo de 0,50, como cabe esperar sin
+                varianza común.
+              </p>
+            </details>
+            <details open>
+              <summary>Bartlett y su límite</summary>
+              <p class="explanation">
+                Contrasta que R sea la identidad. χ² = −[n−1−(2p+5)/6]·ln|R|, con gl = p(p−1)/2. Es una aproximación
+                bajo supuestos para correlaciones muestrales de variables continuas; sobre policóricas se muestra como
+                diagnóstico orientativo, sin interpretar su p como prueba exacta ordinal.
+              </p>
+            </details>
+          </article>
+          <article class="card">
+            <h3>Resultados del ejemplo seleccionado</h3>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="afe-kmo"></strong><span>KMO global</span></div>
+              <div class="tct-stat"><strong id="afe-bartlett"></strong><span>χ² de Bartlett · gl 36</span></div>
+              <div class="tct-stat"><strong id="afe-bartlett-p"></strong><span>p aproximada</span></div>
+            </div>
+            <div id="afe-msa" class="factor-table"></div>
+            <div id="afe-correlation" class="factor-table heatmap"></div>
+            <p class="explanation">
+              El color acompaña al valor numérico. Una matriz singular o no definida positiva detiene el análisis; no se
+              “arregla” escondiendo el problema.
+            </p>
+          </article>
+        </div>
+        <article class="card">
+          <h3>Mini laboratorio: ¿tres correlaciones forman una matriz posible?</h3>
+          <p class="explanation">
+            Edita las asociaciones. Aquí KMO y Bartlett se calculan en tiempo real, sin estimar factores.
+          </p>
+          <div class="factor-control-grid">
+            <div>
+              <label for="r-12">r12</label><input id="r-12" type="number" min="-1" max="1" step="0.05" value="0.5" />
+            </div>
+            <div>
+              <label for="r-13">r13</label><input id="r-13" type="number" min="-1" max="1" step="0.05" value="0.5" />
+            </div>
+            <div>
+              <label for="r-23">r23</label><input id="r-23" type="number" min="-1" max="1" step="0.05" value="0.5" />
+            </div>
+            <div>
+              <label for="diag-n">Personas n</label><input id="diag-n" type="number" min="10" step="1" value="200" />
+            </div>
+          </div>
+          <p id="diag-status" class="factor-note" role="status"></p>
+          <div id="diag-values" class="factor-inline-results"></div>
+        </article>
+      </section>
+      <section class="tct-panel" id="numero" role="tabpanel" aria-labelledby="tab-numero" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <h2>¿Cuántos factores conservar?</h2>
+            <p class="explanation">
+              Combina análisis paralelo, codo del gráfico, interpretabilidad, teoría y estabilidad. Más factores no
+              siempre significan una representación más útil.
+            </p>
+            <div>
+              <label for="parallel-rule">Referencia del análisis paralelo</label
+              ><select id="parallel-rule">
+                <option value="mean">Media de 100 remuestreos · inicio siguiendo Watkins</option>
+                <option value="95">Percentil 95 · criterio alternativo</option>
+              </select>
+            </div>
+            <div class="tct-help" id="parallel-summary"></div>
+            <p class="explanation">
+              <span id="parallel-reference"></span> Estos autovalores factoriales (matriz reducida) se distinguen de los
+              autovalores de R que usan los componentes y la regla de Kaiser; el gráfico muestra ambos.
+            </p>
+            <p class="dx-pair">
+              Con el ejemplo de variables independientes: uno defiende retener los factores con autovalor &gt; 1 y el
+              otro, el análisis paralelo. ¿Qué argumento convence más y por qué?
+            </p>
+            <details>
+              <summary>Por qué no basta con autovalores &gt; 1</summary>
+              <p class="explanation">
+                La regla de Kaiser puede sobreextraer o infraextraer. El análisis paralelo también depende de la
+                muestra, la estimación y el criterio de referencia; no es una decisión automática ni una prueba que
+                nombre los factores.
+              </p>
+            </details>
+            <p class="explanation">
+              La media y el percentil 95 pueden recomendar números diferentes. El valor seleccionado es una ayuda para
+              justificar una decisión, no un semáforo de validez.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Autovalores factoriales y referencia aleatoria</h3>
+            <div class="tct-chart factor-chart">
+              <canvas
+                id="parallel-chart"
+                role="img"
+                aria-label="Autovalores factoriales y referencia aleatoria"
+              ></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="extraccion" role="tabpanel" aria-labelledby="tab-extraccion" hidden>
+        <div class="card">
+          <h2>Extraer no es rotar</h2>
+          <div class="factor-control-grid">
+            <div>
+              <label for="afe-method">Extracción</label
+              ><select id="afe-method">
+                <option value="uls">ULS · mínimos cuadrados no ponderados</option>
+                <option value="pa">PA · ejes principales</option>
+                <option value="ml">ML · máxima verosimilitud</option>
+              </select>
+            </div>
+            <div>
+              <label for="afe-count">Factores retenidos</label
+              ><select id="afe-count">
+                <option value="3">3 factores</option>
+                <option value="2">2 factores</option>
+                <option value="1">1 factor</option>
+              </select>
+            </div>
+            <div>
+              <label for="afe-rotation">Rotación</label
+              ><select id="afe-rotation">
+                <option value="oblimin">Oblimin · oblicua</option>
+                <option value="promax">Promax · oblicua</option>
+                <option value="varimax">Varimax · ortogonal</option>
+                <option value="none">Sin rotar</option>
+              </select>
+            </div>
+          </div>
+          <p id="method-help" class="explanation"></p>
+          <div class="factor-extraction-guide">
+            <p>
+              <strong>ULS:</strong> busca reducir discrepancias de correlación. Puede utilizarse con policóricas si el
+              diseño y la muestra las sostienen; no elimina sus supuestos.
+            </p>
+            <p>
+              <strong>PA:</strong> estima comunalidades y extrae factores de la matriz reducida, de forma iterativa. No
+              equivale a componentes principales.
+            </p>
+            <p>
+              <strong>ML:</strong> usa un criterio de máxima verosimilitud bajo el modelo continuo normal. La normalidad
+              multivariada importa para su inferencia; un ML normal aplicado a policóricas no se convierte en estimación
+              ordinal apropiada.
+            </p>
+          </div>
+          <p id="afe-fit-status" class="factor-note" role="status"></p>
+        </div>
+        <div class="factor-plots">
+          <article class="card">
+            <h3>Cargas del patrón factorial</h3>
+            <div class="tct-chart factor-chart">
+              <canvas id="loading-chart" role="img" aria-label="Cargas del patrón factorial"></canvas>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Patrón, estructura y comunalidad</h3>
+            <div>
+              <label for="loading-view">Matriz que se muestra</label
+              ><select id="loading-view">
+                <option value="pattern">Patrón · contribuciones condicionadas a otros factores</option>
+                <option value="structure">Estructura · correlaciones indicador–factor</option>
+              </select>
+            </div>
+            <div id="loading-table" class="factor-table"></div>
+            <p id="residual-summary" class="explanation"></p>
+            <p class="tct-help">
+              En rotación oblicua, estructura = patrón · Φ. La comunalidad se obtiene de ΛΦΛ′, no sumando sin más las
+              cargas oblicuas al cuadrado.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="rotacion" role="tabpanel" aria-labelledby="tab-rotacion" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <h2>Dar sentido a las dimensiones</h2>
+            <div class="factor-subtabs" role="group" aria-label="Familia de rotación">
+              <button id="rotation-orth" aria-pressed="false">Ortogonal · Varimax</button
+              ><button id="rotation-oblique" aria-pressed="true">Oblicua · Oblimin</button
+              ><button id="rotation-promax" aria-pressed="false">Oblicua · Promax</button
+              ><button id="rotation-none" aria-pressed="false">Sin rotar</button>
+            </div>
+            <p id="rotation-help" class="explanation"></p>
+            <p class="explanation">
+              Una rotación cambia la orientación y la interpretación de los factores, sin añadir factores nuevos. Con el
+              mismo método y número de factores, la matriz común reproducida y las comunalidades se conservan dentro de
+              la precisión numérica.
+            </p>
+            <h3>Correlación entre factores Φ</h3>
+            <div id="phi-table" class="factor-table"></div>
+            <p class="tct-help">
+              Oblicua permite correlación; no obliga a que sea elevada. Si la teoría admite rasgos relacionados, suele
+              ser un punto de partida razonable. Varimax fija los factores como no correlacionados.
+            </p>
+            <a class="lab-cta" href="rotacion.html">
+              <span class="eyebrow">LABORATORIO DE ROTACIÓN</span>
+              <strong>Gira tú los ejes, ortogonales y oblicuos</strong>
+              <small
+                >Varimax, Oblimin, Promax y Geomin paso a paso; patrón frente a estructura; espacio 3D y una calculadora
+                para rotar tus propias cargas. 25–35 min →</small
+              >
+            </a>
+          </article>
+          <article class="card">
+            <h3>Plano de cargas de patrón</h3>
+            <div class="factor-control-grid">
+              <div>
+                <label for="plane-pair">Factores</label
+                ><select id="plane-pair">
+                  <option value="0,1">F1 y F2</option>
+                  <option value="0,2">F1 y F3</option>
+                  <option value="1,2">F2 y F3</option>
+                </select>
+              </div>
+              <div>
+                <label class="rot-check"
+                  ><input type="checkbox" id="plane-unrotated" checked /> Comparar con la solución sin rotar</label
+                >
+              </div>
+            </div>
+            <div class="tct-chart factor-chart">
+              <canvas id="factor-plane" role="img" aria-label="Cargas de patrón en el plano de dos factores"></canvas>
+            </div>
+            <p class="tct-help">
+              Se dibujan las coordenadas de patrón sobre ejes perpendiculares para leerlas con facilidad. En una
+              solución oblicua los ejes forman en realidad un ángulo de arccos(φ); el laboratorio de rotación dibuja esa
+              geometría.
+            </p>
+          </article>
+        </div>
+        <article class="card">
+          <span class="eyebrow">RESULTADOS REALES DE R · MISMA EXTRACCIÓN</span>
+          <h3>Qué cambia y qué se conserva al rotar</h3>
+          <p class="explanation">
+            Las cuatro columnas son soluciones de psych::fa con la extracción y el número de factores elegidos. Compara
+            las filas que no cambian (ajuste y comunalidades) con las que sí (reparto de la varianza y Φ).
+          </p>
+          <div id="rotation-compare" class="factor-table"></div>
+          <p id="rotation-compare-note" class="tct-help"></p>
+        </article>
+      </section>
+      <section class="tct-panel" id="informe" role="tabpanel" aria-labelledby="tab-informe" hidden>
+        <article class="card">
+          <h2>De los resultados al informe</h2>
+          <p class="explanation">
+            Nombra los factores con cautela. Revisa cargas cruzadas, comunalidades y cobertura del contenido antes de
+            eliminar un ítem; una carga alta no justifica todo uso del instrumento.
+          </p>
+          <div class="factor-checklist">
+            <label
+              ><input type="checkbox" /> Describí muestra, variables, categorías y tratamiento de datos ausentes.</label
+            ><label><input type="checkbox" /> Justifiqué la matriz y el método de extracción.</label
+            ><label><input type="checkbox" /> Expliqué cómo decidí el número de factores.</label
+            ><label><input type="checkbox" /> Informé rotación, patrón, Φ y comunalidades.</label
+            ><label><input type="checkbox" /> Revisé residuos, soluciones impropias y estabilidad.</label
+            ><label><input type="checkbox" /> Relacioné la estructura con el contenido y reconocí sus límites.</label>
+          </div>
+          <p class="tct-help">Completar esta lista documenta la revisión; no certifica la validez del test.</p>
+          <a href="afc.html">Continuar con el Módulo 6 · AFC →</a>
+        </article>
+      </section>
+      <section class="card quiz-card">
+        <span class="eyebrow">COMPRUEBA TU INTERPRETACIÓN</span>
+        <h2>Decide con criterio</h2>
+        <div id="factor-quiz" data-quiz="afe" data-module="afe"></div>
+      </section>
+      <section class="card dx-closing" id="cierre-modulo" aria-labelledby="cierre-titulo">
+        <span class="eyebrow">CIERRE DEL MÓDULO</span>
+        <h2 id="cierre-titulo">Antes de terminar</h2>
+        <div class="dx-closing-grid">
+          <div>
+            <h3>¿Han cambiado tus ideas?</h3>
+            <div data-predcheck="afe"></div>
+          </div>
+          <div data-autoexp>
+            <h3>Explícalo con tus palabras</h3>
+            <label for="autoexp-afe"
+              >¿Por qué el análisis paralelo compara con autovalores de datos sin relación entre ítems?</label
+            >
+            <textarea id="autoexp-afe" rows="4"></textarea>
+            <button type="button" class="ghost">Comparar con una respuesta modelo</button>
+            <p class="dx-model" hidden>
+              Porque, aunque en la población los ítems no se relacionen (todos los autovalores valdrían 1), en una
+              muestra finita los primeros autovalores salen mayores que 1 solo por azar. Comparar con los autovalores de
+              datos aleatorios del mismo tamaño (misma n y mismo número de ítems) permite retener solo los factores que
+              superan lo esperable por azar; por eso la regla de Kaiser tiende a retener de más.
+            </p>
+          </div>
+        </div>
+        <h3>Ideas clave</h3>
+        <ol>
+          <li>El AFE explora qué varianza común comparten los ítems; no valida por sí solo el instrumento.</li>
+          <li>
+            La regla de autovalores &gt; 1 puede equivocarse; el análisis paralelo es una mejor orientación, no un
+            veredicto.
+          </li>
+          <li>Una comunalidad cercana a 1 (Heywood) indica una solución impropia que no debe interpretarse.</li>
+          <li>Rotar no cambia el ajuste ni las comunalidades; cambia cómo se reparte la varianza común.</li>
+          <li>Los factores se nombran por el contenido de sus ítems.</li>
+        </ol>
+        <p class="explanation">
+          <strong>Después:</strong> vuelve dentro de una semana al <a href="repaso.html#afe">repaso espaciado</a>;
+          empezará por las preguntas que fallaste.
+        </p>
+        <details class="dx-teacher">
+          <summary>Guía para el docente</summary>
+          <h4>Uso sugerido</h4>
+          <p>
+            60 min. Antes del AFE y número de factores (20 min), con la predicción del análisis paralelo; extracción y
+            rotación (20 min), enlazando con el laboratorio de rotación; informe y cuestionario (20 min).
+          </p>
+          <h4>Preguntas para el debate</h4>
+          <ul>
+            <li>En el ejemplo independiente, ¿qué diríais a quien retiene 4 factores por la regla de Kaiser?</li>
+            <li>¿Qué haríais ante un caso Heywood?</li>
+            <li>¿Cuándo preferiríais policóricas?</li>
+          </ul>
+          <h4>Errores frecuentes que conviene buscar</h4>
+          <ul>
+            <li>Retener factores con autovalor &gt; 1 sin más.</li>
+            <li>Interpretar una solución impropia.</li>
+            <li>Calcular h² sumando cuadrados del patrón en oblicuas.</li>
+            <li>Nombrar factores por el ítem de mayor carga.</li>
+          </ul>
+          <h4>Qué mirar</h4>
+          <p>
+            Las predicciones del número de factores frente al resultado del paralelo, y la pregunta de transferencia
+            sobre el caso Heywood.
+          </p>
+          <p>
+            La herramienta no envía datos a ningún servidor: solo el navegador de cada estudiante recuerda las
+            predicciones y qué preguntas falló, para el repaso. Si queréis recoger resultados, cada estudiante puede
+            descargar sus resultados en CSV (con un código, sin su nombre) y entregarlos en el aula virtual.
+          </p>
+        </details>
+      </section>
+      <details class="sources">
+        <summary>Fuentes, alcance y reproducción</summary>
+        <p>
+          Watkins (2021), <em>A Step-by-Step Guide to Exploratory Factor Analysis with R and RStudio</em>, capítulos
+          6–16 y 18. Abad et al. (2011), <em>Medición en ciencias sociales y de la salud</em>, capítulos 6 y 10.
+        </p>
+        <p>
+          Las matrices y soluciones de ejemplo se generaron con
+          <a href="https://personality-project.org/r/psych/help/fa.html" target="_blank" rel="noopener">psych</a> y
+          <a href="https://lavaan.ugent.be/tutorial/" target="_blank" rel="noopener">lavaan</a>. Las fuentes y la
+          verificación reproducible están en docs/FUENTES.md y docs/VERIFICACION.md.
+        </p>
+        <p>
+          La web consulta análisis R ya calculados para ejemplos reproducibles. No ajusta un AFE/AFC a datos nuevos en
+          JavaScript. Los diagnósticos de la matriz editable sí se recalculan en el navegador, y el laboratorio de
+          rotación rota cualquier matriz de cargas. Para analizar un CSV propio usa la carpeta r/factor.
+        </p>
+        <p>Diseño, contenidos y dirección: Eduar Ramírez.</p>
+      </details>
+      <div class="module-footer"><a class="home-link" href="index.html">← Volver a la página principal</a></div>
+    </main>
+  </body>
+</html>

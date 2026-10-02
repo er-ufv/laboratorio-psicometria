@@ -1,0 +1,43 @@
+/* Resultados de ejercicios: color y texto explícito, con contraste legible. */
+body .factor-quiz button.answer-correct {
+  background: #eaf6e5;
+  color: #0c3d00;
+  border: 1px solid #0c3d00;
+}
+body .factor-quiz button.answer-wrong {
+  background: #ffe0e0;
+  color: #a80808;
+  border: 1px solid #a80808;
+}
+body .tri-quiz button.answer-correct,
+body .tct-quiz button.answer-correct,
+body .quiz-opt.correct {
+  background: #eaf6e5;
+  color: #0c3d00;
+  border: 1px solid #0c3d00;
+  opacity: 1;
+}
+body .tri-quiz button.answer-wrong,
+body .tct-quiz button.answer-wrong,
+body .quiz-opt.wrong {
+  background: #ffe0e0;
+  color: #a80808;
+  border: 1px solid #a80808;
+  opacity: 1;
+}
+body .feedback.answer-correct,
+body .quiz-feedback.correct {
+  background: #eaf6e5;
+  color: #0c3d00;
+  border: 1px solid #c3f3c1;
+  padding: 12px;
+  border-radius: 5px;
+}
+body .feedback.answer-wrong,
+body .quiz-feedback.wrong {
+  background: #ffe0e0;
+  color: #a80808;
+  border: 1px solid #f2a7a7;
+  padding: 12px;
+  border-radius: 5px;
+}

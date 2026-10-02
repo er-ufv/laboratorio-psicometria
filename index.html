@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Laboratorio de tests</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/js/modules/diseno/data.js"></script>
+    <script defer src="assets/js/core/state.js"></script>
+    <script defer src="assets/js/modules/diseno/ui.js"></script>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <link rel="stylesheet" href="assets/css/diseno.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a class="current" href="#main"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 01</span><button id="print" class="ghost">Imprimir ficha</button
+        ><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="home-modules" aria-label="Módulos del laboratorio">
+        <a href="index.html#guide"><span>01</span>Diseño de tests<small>Guías, ejemplos y revisión</small></a
+        ><a href="analisis.html"><span>02</span>Análisis de ítems<small>Dificultad y discriminación</small></a
+        ><a href="tct.html"><span>03</span>Teoría clásica<small>Fiabilidad y error</small></a
+        ><a href="tri.html"><span>04</span>Respuesta al ítem<small>Curvas y precisión</small></a
+        ><a href="afe.html"><span>05</span>Exploratorio<small>Estructura y número de factores</small></a
+        ><a href="afc.html"><span>06</span>Confirmatorio<small>Modelos e índices de ajuste</small></a
+        ><a class="home-lab" href="rotacion.html"
+          ><span>5b · LABORATORIO</span>Rotación factorial paso a paso<small
+            >Gira ejes ortogonales y oblicuos, compara Varimax, Oblimin y Promax, y rota tus propias cargas</small
+          ></a
+        >
+      </section>
+      <section class="hero">
+        <div class="eyebrow">DISEÑO Y CONSTRUCCIÓN DE TESTS</div>
+        <h1>Un buen test empieza<br />con una buena pregunta.</h1>
+        <p>Define qué quieres medir, aprende a redactar ítems y revisa tu propuesta antes del pilotaje.</p>
+        <div class="hero-meta"><span>01 · Define</span><span>02 · Redacta</span><span>03 · Revisa</span></div>
+      </section>
+      <section class="dx-start" aria-label="Objetivos y punto de partida">
+        <article class="card dx-goals">
+          <span class="eyebrow">AL TERMINAR PODRÁS…</span>
+          <ol>
+            <li>Definir constructo, población y uso de un test antes de redactar ítems.</li>
+            <li>Identificar defectos de redacción: doble contenido, negaciones, absolutos y deseabilidad social.</li>
+            <li>Reescribir un ítem defectuoso y justificar el cambio.</li>
+            <li>Preparar una ficha de ítem para la revisión por expertos.</li>
+          </ol>
+          <div class="dx-meta">
+            <span><strong>Duración:</strong> 30–40 min</span><span><strong>Modo:</strong> individual y en parejas</span
+            ><span><strong>Sin nota</strong></span>
+          </div>
+          <p class="explanation">
+            Lee cada paso, reescribe los ejemplos antes de abrir la propuesta y termina con tu propia ficha.
+          </p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">ANTES DE EMPEZAR</span>
+          <h2>Tus ideas de partida</h2>
+          <p class="explanation">
+            Responde rápido, sin consultar nada. Al final del módulo comprobarás qué ha cambiado.
+          </p>
+          <div data-predict="diseno"></div>
+        </article>
+      </section>
+
+      <div class="type-tabs" role="tablist" aria-label="Tipo de rendimiento">
+        <button id="tab-tipico" role="tab" aria-selected="true" aria-controls="workspace" data-type="tipico">
+          Rendimiento típico<small>Personalidad · actitudes · escalas Likert</small></button
+        ><button
+          id="tab-optimo"
+          role="tab"
+          aria-selected="false"
+          aria-controls="workspace"
+          data-type="optimo"
+          tabindex="-1"
+        >
+          Rendimiento óptimo<small>Aptitudes · conocimientos · elección múltiple</small>
+        </button>
+      </div>
+      <section id="workspace" role="tabpanel" aria-labelledby="tab-tipico">
+        <div class="intro">
+          <div>
+            <h2 id="type-title"></h2>
+            <p id="type-description"></p>
+          </div>
+          <span class="badge">TALLER DE DISEÑO</span>
+        </div>
+        <nav class="section-nav" aria-label="Secciones del taller">
+          <a href="#guide">Guía paso a paso</a><a href="#examples">Aprender con ejemplos</a
+          ><a href="#draft">Mi ficha de ítem</a>
+        </nav>
+        <section id="guide">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">01 / EL MÉTODO</span>
+              <h2>Diseña con un propósito</h2>
+            </div>
+            <span>Abre cada paso para explorar sus decisiones.</span>
+          </div>
+          <div id="steps" class="steps"></div>
+        </section>
+        <section id="examples">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">02 / CRITERIO EN PRÁCTICA</span>
+              <h2>Del error a la mejora</h2>
+            </div>
+            <label
+              >Filtrar ejemplos
+              <select id="filter">
+                <option value="all">Todos los errores</option>
+              </select></label
+            >
+          </div>
+          <div id="example-list" class="example-grid"></div>
+          <p class="hint">
+            Ejemplos creados para aprender a redactar. No son reactivos validados ni versiones finales de instrumentos.
+          </p>
+          <p class="dx-pair">
+            Cada uno reescribe un ejemplo distinto en su tarjeta. Intercambiad las versiones y revisadlas con la lista
+            «Antes del pilotaje» antes de abrir la propuesta.
+          </p>
+        </section>
+        <section id="draft">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">03 / TU TURNO</span>
+              <h2>Prepara un ítem para revisión</h2>
+            </div>
+            <div class="file-actions">
+              <button id="export">Exportar ficha JSON</button
+              ><button id="import" class="ghost" aria-describedby="import-help">Importar ficha JSON</button
+              ><input id="import-file" type="file" accept="application/json,.json" hidden />
+            </div>
+          </div>
+          <p id="import-help" class="hint file-help">
+            Exporta la ficha para conservarla o llevarla a otro equipo; impórtala allí para seguir trabajando. La
+            importación solo acepta fichas JSON exportadas desde este taller y sustituye la ficha del mismo tipo.
+          </p>
+          <p id="print-meta" class="print-only"></p>
+          <div class="draft-grid">
+            <div class="card">
+              <label for="construct">Constructo y dimensión</label
+              ><input id="construct" maxlength="300" placeholder="Ej.: planificación del estudio" /><label
+                for="population"
+                >Población y contexto de uso</label
+              ><input
+                id="population"
+                maxlength="300"
+                placeholder="Ej.: estudiantes de primer curso; uso docente"
+              /><label for="item">Enunciado del ítem</label
+              ><textarea
+                id="item"
+                maxlength="4000"
+                rows="4"
+                placeholder="Redacta una sola idea con un lenguaje claro."
+              ></textarea>
+              <div id="response-editor"></div>
+              <label for="notes">Justificación y cambios pendientes</label
+              ><textarea
+                id="notes"
+                maxlength="4000"
+                rows="3"
+                placeholder="¿Qué indicador representa? ¿Qué deben revisar los expertos?"
+              ></textarea>
+              <div class="actions">
+                <button id="save" class="ghost">Guardar en este navegador</button
+                ><button id="reset" class="ghost danger">Vaciar esta ficha</button>
+              </div>
+              <p id="save-status" role="status" class="hint"></p>
+            </div>
+            <div class="card review">
+              <h3>Antes del pilotaje</h3>
+              <p>Marca solo los criterios que hayas revisado. Esta lista organiza el trabajo; no acredita validez.</p>
+              <div id="checklist"></div>
+              <div class="progress-label"><strong id="progress-text"></strong><span>criterios revisados</span></div>
+              <progress id="progress" value="0" max="1"></progress>
+              <p id="review-result" role="status"></p>
+            </div>
+          </div>
+        </section>
+        <section class="card dx-closing" id="cierre-modulo" aria-labelledby="cierre-titulo">
+          <span class="eyebrow">CIERRE DEL MÓDULO</span>
+          <h2 id="cierre-titulo">Antes de terminar</h2>
+          <h3>Comprueba lo aprendido</h3>
+          <p class="explanation">
+            Elige tu seguridad antes de responder. Si fallas, verás por qué y podrás pedir una pista.
+          </p>
+          <div data-quiz="diseno" data-module="diseno"></div>
+          <div class="dx-closing-grid">
+            <div>
+              <h3>¿Han cambiado tus ideas?</h3>
+              <div data-predcheck="diseno"></div>
+            </div>
+            <div data-autoexp>
+              <h3>Explícalo con tus palabras</h3>
+              <label for="autoexp-diseno"
+                >¿Por qué un ítem con doble contenido perjudica la medida aunque esté bien escrito?</label
+              >
+              <textarea id="autoexp-diseno" rows="4"></textarea>
+              <button type="button" class="ghost">Comparar con una respuesta modelo</button>
+              <p class="dx-model" hidden>
+                Porque la respuesta mezcla dos conductas: quien cumple una y no la otra no sabe qué contestar, y su
+                puntuación deja de reflejar un único indicador. Eso añade varianza ajena al constructo y hace difícil
+                interpretar el ítem y sus índices.
+              </p>
+            </div>
+          </div>
+          <h3>Ideas clave</h3>
+          <ol>
+            <li>El diseño empieza por el constructo, la población y el uso de las puntuaciones, no por los ítems.</li>
+            <li>Cada ítem expresa una sola idea, con lenguaje claro y sin pistas sobre la respuesta.</li>
+            <li>En elección múltiple, pocos distractores plausibles valen más que muchos débiles.</li>
+            <li>Invertir ítems no controla por sí solo la aquiescencia y puede crear otros problemas.</li>
+            <li>La revisión por expertos y el pilotaje van antes de cualquier análisis de datos.</li>
+          </ol>
+          <p class="explanation">
+            <strong>Después:</strong> vuelve dentro de una semana al <a href="repaso.html#diseno">repaso espaciado</a>;
+            empezará por las preguntas que fallaste.
+          </p>
+          <details class="dx-teacher">
+            <summary>Guía para el docente</summary>
+            <h4>Uso sugerido</h4>
+            <p>
+              30–40 min. Ejemplos «del error a la mejora» en parejas: cada uno reescribe antes de abrir la propuesta y
+              el otro lo revisa. Después, ficha individual; exportadla en JSON e intercambiadla para una revisión
+              cruzada.
+            </p>
+            <h4>Preguntas para el debate</h4>
+            <ul>
+              <li>¿Qué cambiaría en la redacción si la población fueran niños de 10 años?</li>
+              <li>¿Cuándo tiene sentido un formato de 5 o de 7 categorías? ¿Cómo lo comprobaríais?</li>
+              <li>¿Qué evidencia necesitáis, además de la lista de revisión, para usar el test?</li>
+            </ul>
+            <h4>Errores frecuentes que conviene buscar</h4>
+            <ul>
+              <li>Ítems con doble contenido o con negaciones dobles.</li>
+              <li>Opciones de respuesta no exhaustivas o que se solapan.</li>
+              <li>Creer que invertir ítems controla la aquiescencia.</li>
+              <li>Confundir la lista de revisión con una prueba de validez.</li>
+            </ul>
+            <h4>Qué mirar</h4>
+            <p>
+              En las fichas intercambiadas, ¿detecta el revisor los problemas que la lista recoge? Las preguntas de
+              transferencia del cuestionario muestran si se aplica la pauta a ítems nuevos.
+            </p>
+            <p>
+              La herramienta no envía datos a ningún servidor: solo el navegador de cada estudiante recuerda las
+              predicciones, las fichas y qué preguntas falló, para el repaso. Si queréis recoger resultados, cada
+              estudiante puede descargar sus resultados en CSV (con un código, sin su nombre) y entregarlos en el aula
+              virtual.
+            </p>
+          </details>
+        </section>
+        <section class="next-card">
+          <div>
+            <span class="eyebrow">EL SIGUIENTE PASO</span>
+            <h2>Revisar, pilotar y volver a mejorar.</h2>
+            <p>
+              Contrasta comprensión con la población objetivo y contenido con expertos. Después, estudia las propiedades
+              de los ítems y del test con datos.
+            </p>
+          </div>
+          <a class="next-number" href="analisis.html" aria-label="Ir al módulo 2: análisis de ítems">02 →</a>
+        </section>
+        <details class="sources">
+          <summary>Fundamento científico y referencias</summary>
+          <div id="sources"></div>
+          <p>
+            El porcentaje de revisión es descriptivo: criterios marcados / criterios totales × 100. No es una puntuación
+            psicométrica.
+          </p>
+        </details>
+      </section>
+      <footer class="site-credits">
+        <p>
+          <strong>Laboratorio de psicometría</strong> · Diseño, contenidos y dirección: Eduar Ramírez. Código con
+          licencia MIT; contenidos didácticos con licencia CC BY-SA 4.0. Los datos de los ejemplos son simulados.
+        </p>
+      </footer>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

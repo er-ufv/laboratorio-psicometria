@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Repaso espaciado</title>
+    <meta
+      name="description"
+      content="Repaso espaciado con preguntas de todos los módulos del laboratorio de psicometría."
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/tct.css" />
+    <link rel="stylesheet" href="assets/css/factor.css" />
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/js/core/repaso.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a class="current" href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> REPASO</span><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">REPASO ESPACIADO</div>
+        <h1>Recordar cuesta.<br />Ese esfuerzo es el repaso.</h1>
+        <p>
+          Responde sin mirar los apuntes. Volver a las preguntas unos días después, y sobre todo a las que fallaste,
+          suele consolidar más que releer.
+        </p>
+        <div class="hero-meta">
+          <span>10 min</span><span>Sin nota</span><span>Una semana después de cada módulo</span>
+        </div>
+      </section>
+      <section class="card">
+        <div class="factor-control-grid">
+          <div>
+            <label for="review-mode">Qué repasar</label
+            ><select id="review-mode">
+              <option value="failed">Las preguntas que fallé (guardadas en este navegador)</option>
+              <option value="mix">Una mezcla de todos los módulos</option>
+            </select>
+          </div>
+          <div>
+            <label for="review-module">Módulo</label
+            ><select id="review-module"></select>
+          </div>
+          <div>
+            <label for="review-count">Número de preguntas</label
+            ><select id="review-count">
+              <option value="6">6</option>
+              <option value="8" selected>8</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+        </div>
+        <div class="rot-buttons"><button type="button" id="review-start">Empezar el repaso</button></div>
+        <p id="review-status" class="factor-note" role="status"></p>
+        <p class="tct-help">
+          El navegador recuerda solo qué preguntas fallaste al primer intento. No guarda tu nombre ni envía nada. Si
+          borras los datos del navegador o cambias de equipo, la lista empieza de cero.
+        </p>
+      </section>
+      <section class="card quiz-card">
+        <span class="eyebrow">RECUPERA SIN MIRAR</span>
+        <h2>Preguntas</h2>
+        <div id="review-quiz"><p class="explanation">Elige qué repasar y pulsa «Empezar el repaso».</p></div>
+      </section>
+      <div class="module-footer"><a class="home-link" href="index.html">← Volver a la página principal</a></div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+/* Módulo 1: importación de fichas y versión impresa. Usa solo los tokens de styles.css. */
+.file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.file-actions .ghost {
+  background: #fff;
+  color: var(--blue);
+  border-color: var(--sky-soft);
+}
+.file-help {
+  margin: -8px 0 16px;
+  max-width: 760px;
+}
+.option-settings {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 4px;
+}
+.print-mirror,
+.print-only {
+  display: none;
+}
+@media (max-width: 760px) {
+  .file-actions {
+    justify-content: flex-start;
+  }
+  #draft .section-heading {
+    flex-wrap: wrap;
+  }
+}
+@media print {
+  .print-only {
+    display: block;
+    margin: 0 0 14px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  /* Texto completo en lugar de campos que lo recortan; las líneas vacías quedan para escribir a mano. */
+  #draft .print-mirror {
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    min-height: 1.7em;
+    margin: 0 0 14px;
+    padding: 2px 0 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  #draft input:not([type="checkbox"]),
+  #draft textarea,
+  #draft .option-count-field,
+  #response-editor .hint:not(#scale-help),
+  .file-actions,
+  .file-help,
+  #save-status {
+    display: none !important;
+  }
+  #draft select {
+    appearance: none;
+    padding-left: 0;
+  }
+}

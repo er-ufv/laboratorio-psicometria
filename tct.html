@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Teoría clásica de los tests</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/tct.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/vendor/chart.umd.min.js"></script>
+    <script defer src="assets/js/modules/analisis/math.js"></script>
+    <script defer src="assets/js/modules/tct/math.js"></script>
+    <script defer src="assets/js/modules/tct/ui.js"></script>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a class="current" href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 03</span><a href="analisis.html">Análisis de ítems →</a
+        ><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">TEORÍA CLÁSICA DE LOS TESTS</div>
+        <h1>Una puntuación también<br />contiene incertidumbre.</h1>
+        <p>Explora de dónde viene el error, cómo afecta a la precisión y qué puedes inferir de una puntuación.</p>
+        <div class="hero-meta"><span>Modelo clásico</span><span>Precisión</span><span>Interpretación</span></div>
+      </section>
+      <section class="dx-start" aria-label="Objetivos y punto de partida">
+        <article class="card dx-goals">
+          <span class="eyebrow">AL TERMINAR PODRÁS…</span>
+          <ol>
+            <li>Explicar el modelo X = T + E y qué significa una fiabilidad de 0,80.</li>
+            <li>Calcular el EEM y un intervalo para la puntuación verdadera, e interpretarlos.</li>
+            <li>Predecir con Spearman–Brown la fiabilidad de un test alargado o acortado.</li>
+            <li>Elegir y justificar un estimador de fiabilidad (α, dos mitades, KR-20) para un caso.</li>
+          </ol>
+          <div class="dx-meta">
+            <span><strong>Duración:</strong> 45 min</span><span><strong>Modo:</strong> individual y en parejas</span
+            ><span><strong>Sin nota</strong></span>
+          </div>
+          <p class="explanation">
+            Avanza por los seis apartados con las pestañas o con los botones del final de cada uno; predice los
+            resultados antes de mover los controles.
+          </p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">ANTES DE EMPEZAR</span>
+          <h2>Tus ideas de partida</h2>
+          <p class="explanation">
+            Responde rápido, sin consultar nada. Al final del módulo comprobarás qué ha cambiado.
+          </p>
+          <div data-predict="tct"></div>
+        </article>
+      </section>
+
+      <div class="tct-tabs" role="tablist" data-pager aria-label="Apartados de TCT">
+        <button role="tab" id="tab-modelo" aria-controls="modelo" aria-selected="true" data-panel="modelo">
+          01 · El modelo
+        </button>
+        <button
+          role="tab"
+          id="tab-fiabilidad"
+          aria-controls="fiabilidad"
+          aria-selected="false"
+          data-panel="fiabilidad"
+          tabindex="-1"
+        >
+          02 · Fiabilidad
+        </button>
+        <button role="tab" id="tab-error" aria-controls="error" aria-selected="false" data-panel="error" tabindex="-1">
+          03 · Error e intervalos
+        </button>
+        <button
+          role="tab"
+          id="tab-longitud"
+          aria-controls="longitud"
+          aria-selected="false"
+          data-panel="longitud"
+          tabindex="-1"
+        >
+          04 · Longitud del test
+        </button>
+        <button role="tab" id="tab-alfa" aria-controls="alfa" aria-selected="false" data-panel="alfa" tabindex="-1">
+          05 · Consistencia interna
+        </button>
+        <button
+          role="tab"
+          id="tab-mitades"
+          aria-controls="mitades"
+          aria-selected="false"
+          data-panel="mitades"
+          tabindex="-1"
+        >
+          06 · Mitades y estimación
+        </button>
+      </div>
+      <section class="tct-panel" id="modelo" role="tabpanel" aria-labelledby="tab-modelo">
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">LA IDEA FUNDAMENTAL</span>
+            <h2>Observada = verdadera + error</h2>
+            <div class="formula">X = T + E</div>
+            <p class="explanation">
+              X es la puntuación obtenida. T es la puntuación esperada de la persona en repeticiones hipotéticas bajo
+              las mismas condiciones; no es una medida infalible del constructo. E es la diferencia X − T.
+            </p>
+            <div class="tct-control">
+              <label for="true-score"
+                ><span>Puntuación verdadera hipotética T</span> <output id="true-val"></output></label
+              ><input id="true-score" type="range" min="0" max="100" value="50" />
+            </div>
+            <div class="tct-control">
+              <label for="one-error"><span>Error en una aplicación E</span> <output id="one-error-val"></output></label
+              ><input id="one-error" type="range" min="-30" max="30" value="5" />
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="observed"></strong><span>X = T + E</span></div>
+              <div class="tct-stat"><strong id="single-t"></strong><span>T hipotética</span></div>
+              <div class="tct-stat"><strong id="single-e"></strong><span>Error de esta aplicación</span></div>
+            </div>
+            <p class="tct-help">
+              T y E se conocen aquí porque son valores de una demostración. En una aplicación real observamos X, no sus
+              dos componentes por separado. Un error negativo no significa necesariamente una puntuación inválida.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Los supuestos sostienen las fórmulas</h3>
+            <details open>
+              <summary>El error esperado es cero</summary>
+              <p class="explanation">
+                En repeticiones hipotéticas de una persona, la media de E es cero y T se define como la esperanza de X.
+                Un error concreto puede ser positivo o negativo.
+              </p>
+            </details>
+            <details open>
+              <summary>Error y puntuación verdadera no covarían</summary>
+              <p class="explanation">
+                Cov(T,E) = 0 permite escribir Var(X) = Var(T) + Var(E). La igualdad de varianzas no se deduce de X = T +
+                E sin ese supuesto.
+              </p>
+            </details>
+            <details>
+              <summary>Formas paralelas</summary>
+              <p class="explanation">
+                Comparten la puntuación verdadera de cada persona y la varianza de los errores. Con errores no
+                correlacionados entre formas, su correlación estima la fiabilidad. No basta con que dos tests tengan el
+                mismo número de ítems.
+              </p>
+            </details>
+            <details>
+              <summary>Precisión y validez</summary>
+              <p class="explanation">
+                Un sesgo constante puede desplazar las puntuaciones sin aumentar su dispersión. Por eso una medida
+                reproducible puede sostener interpretaciones inadecuadas: fiabilidad y validez requieren evidencias
+                diferentes.
+              </p>
+            </details>
+            <p class="source-note">Abad et al., cap. 3: modelo, supuestos y descomposición de la varianza.</p>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="fiabilidad" role="tabpanel" aria-labelledby="tab-fiabilidad" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">UNA PROPIEDAD DE LAS PUNTUACIONES</span>
+            <h2>¿Cuánta variación es señal?</h2>
+            <div class="formula">ρ<sub>XX′</sub> = σ²<sub>T</sub> / σ²<sub>X</sub></div>
+            <p class="explanation">
+              Bajo el modelo clásico, σ²<sub>X</sub> = σ²<sub>T</sub> + σ²<sub>E</sub>. La fiabilidad es una proporción
+              de varianza poblacional; no es el porcentaje de respuestas correctas ni un porcentaje de exactitud de cada
+              persona.
+            </p>
+            <div class="tct-control">
+              <label for="sd-t"
+                ><span>Desviación típica verdadera σ<sub>T</sub></span> <output id="sd-t-val"></output></label
+              ><input id="sd-t" type="range" min="0" max="25" value="10" />
+            </div>
+            <div class="tct-control">
+              <label for="sd-e"
+                ><span>Desviación típica del error σ<sub>E</sub></span> <output id="sd-e-val"></output></label
+              ><input id="sd-e" type="range" min="0" max="25" value="5" />
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="rho"></strong><span>Fiabilidad poblacional</span></div>
+              <div class="tct-stat"><strong id="sd-x"></strong><span>σ de X</span></div>
+              <div class="tct-stat"><strong id="parallel-r"></strong><span>r entre formas, muestra</span></div>
+            </div>
+            <p id="reliability-status" class="tct-status" role="status"></p>
+            <p class="tct-help">
+              Con el mismo error, una población más heterogénea puede mostrar mayor fiabilidad. La fiabilidad depende de
+              población, condiciones y puntuación utilizada.
+            </p>
+            <div class="tct-chart small-chart">
+              <canvas id="variance-chart" role="img" aria-label="Descomposición de la varianza observada"></canvas>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Del modelo a una muestra simulada</h3>
+            <label for="scatter-mode">Representación</label
+            ><select id="scatter-mode">
+              <option value="true">T frente a X</option>
+              <option value="parallel">Dos formas paralelas</option>
+            </select>
+            <div class="tct-chart">
+              <canvas id="reliability-chart" role="img" aria-label="Dispersión de puntuaciones simuladas"></canvas>
+            </div>
+            <div class="tct-sample-row">
+              <button type="button" id="new-sample" class="ghost">Nueva muestra</button>
+              <p id="sample-info" class="explanation" role="status"></p>
+            </div>
+            <p class="dx-pair">
+              Cada uno pulsa «Nueva muestra» tres veces y anota la r entre formas. Comparad: ¿cuánto varía alrededor de
+              ρ? ¿Qué esperaríais con 1.200 personas en lugar de 120?
+            </p>
+            <p class="explanation">
+              120 personas simuladas. T tiene media poblacional 50 y errores normales independientes con media cero. Al
+              mover los controles se conserva la misma muestra, para comparar; «Nueva muestra» extrae otra. Los ejes son
+              fijos (−25 a 125) y la diagonal marca y = x; con varianzas extremas, algunos puntos quedan fuera.
+            </p>
+            <p class="explanation">
+              Las varianzas y covarianzas de una muestra finita no coinciden con las poblacionales. En la primera
+              muestra, los errores de las dos formas correlacionan +0,149 por azar, y por eso r entre formas (0,826)
+              supera ρ = 0,80. Extrae varias muestras: r fluctúa alrededor de ρ.
+            </p>
+            <div class="tct-help">
+              Si ambas varianzas son cero, la fiabilidad no está definida. Si σ<sub>E</sub> = 0 y σ<sub>T</sub> &gt; 0,
+              la fiabilidad teórica es 1.
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="error" role="tabpanel" aria-labelledby="tab-error" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">PRECISIÓN EN UNIDADES DE LA ESCALA</span>
+            <h2>Error estándar de medición</h2>
+            <div class="formula">EEM = S<sub>X</sub> √(1 − r<sub>XX′</sub>)</div>
+            <p class="explanation">
+              El EEM expresa la desviación típica del error en las unidades de la puntuación. Se estima con la
+              desviación típica observada y una estimación de fiabilidad adecuada al uso.
+            </p>
+            <div class="tct-field-row">
+              <div>
+                <label for="eem-sd">Desviación típica observada S<sub>X</sub></label
+                ><input id="eem-sd" type="number" min="0.01" step="any" value="15" />
+              </div>
+              <div>
+                <label for="eem-score">Puntuación observada X</label
+                ><input id="eem-score" type="number" step="any" value="50" />
+              </div>
+            </div>
+            <div class="tct-control">
+              <label for="eem-r"><span>Fiabilidad estimada r</span> <output id="eem-r-val"></output></label
+              ><input id="eem-r" type="range" min="0" max="100" value="80" />
+            </div>
+            <label for="confidence">Nivel del intervalo bilateral</label
+            ><select id="confidence">
+              <option value="90">90 %</option>
+              <option value="95" selected>95 %</option>
+              <option value="99">99 %</option>
+            </select>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="eem"></strong><span>EEM</span></div>
+              <div class="tct-stat"><strong id="ci-low"></strong><span>Límite inferior</span></div>
+              <div class="tct-stat"><strong id="ci-high"></strong><span>Límite superior</span></div>
+            </div>
+            <p id="eem-status" class="tct-status" role="status"></p>
+          </article>
+          <article class="card">
+            <h3>El intervalo hace visible la incertidumbre</h3>
+            <div class="formula">X ± z · EEM</div>
+            <div class="tct-chart small-chart">
+              <canvas id="interval-chart" role="img" aria-label="Puntuación observada y límites del intervalo"></canvas>
+            </div>
+            <p class="explanation" id="ci-explanation"></p>
+            <div class="tct-help">
+              Supuestos: errores aproximadamente normales, centrados en cero y con EEM común para las personas. Al
+              estimar EEM y fiabilidad, la cobertura es aproximada. No es un intervalo de predicción de una nueva
+              puntuación ni una distribución posterior de T.
+            </div>
+            <p class="explanation">
+              El nivel describe la cobertura del procedimiento en repeticiones; no afirma una probabilidad del 95 % para
+              T dentro de este intervalo ya calculado. Los límites no se recortan al mínimo y máximo del test, porque
+              hacerlo cambia el procedimiento.
+            </p>
+            <p class="explanation">
+              r = 1 produce EEM = 0 e intervalo puntual como límite idealizado. Una fiabilidad estimada de 1 no elimina
+              las demás fuentes de incertidumbre.
+            </p>
+            <p class="source-note">Abad et al., pp. 106–109: EEM e intervalo centrado en X.</p>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="longitud" role="tabpanel" aria-labelledby="tab-longitud" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">LA PREDICCIÓN DE SPEARMAN–BROWN</span>
+            <h2>Más ítems, ¿más precisión?</h2>
+            <div class="formula">r<sub>nuevo</sub> = kr / [1 + (k − 1)r]</div>
+            <p class="explanation">
+              k es la razón entre la longitud nueva y la original; r es la fiabilidad original. No son el número de
+              ítems y la correlación media inter-ítem.
+            </p>
+            <div class="tct-control">
+              <label for="length-r"><span>Fiabilidad original r</span> <output id="length-r-val"></output></label
+              ><input id="length-r" type="range" min="0" max="100" value="70" />
+            </div>
+            <div class="tct-field-row">
+              <div>
+                <label for="old-n">Ítems originales</label
+                ><input id="old-n" type="number" min="2" max="200" value="20" step="1" />
+              </div>
+              <div>
+                <label for="new-n">Ítems del test nuevo</label
+                ><input id="new-n" type="number" min="2" max="400" value="40" step="1" />
+              </div>
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="length-k"></strong><span>Razón k</span></div>
+              <div class="tct-stat"><strong id="length-result"></strong><span>Fiabilidad predicha</span></div>
+              <div class="tct-stat"><strong id="target-n"></strong><span>Ítems para la meta</span></div>
+            </div>
+            <label for="target-r">Meta de fiabilidad (solo para el ejercicio)</label
+            ><select id="target-r">
+              <option value="0.8">0,80</option>
+              <option value="0.9" selected>0,90</option>
+              <option value="0.95">0,95</option>
+              <option value="1">1,00</option>
+            </select>
+            <p id="length-status" class="tct-status" role="status"></p>
+            <p class="tct-help">
+              La predicción exige que el material añadido o retirado mantenga las propiedades de formas paralelas y
+              errores independientes. Añadir ítems redundantes, mal diseñados o de otro dominio puede incumplir estos
+              supuestos.
+            </p>
+          </article>
+          <article class="card">
+            <h3>La mejora tiene rendimientos decrecientes</h3>
+            <div class="tct-chart">
+              <canvas id="length-chart" role="img" aria-label="Fiabilidad predicha según la longitud del test"></canvas>
+            </div>
+            <p class="explanation">
+              La curva aplica la misma fórmula a distintas longitudes. Si la fiabilidad inicial es cero, aumentar la
+              longitud no la mejora bajo este modelo. Alcanzar exactamente 1 desde r &lt; 1 requiere una longitud
+              infinita.
+            </p>
+            <p class="explanation" id="target-explanation"></p>
+            <p class="source-note">Abad et al., pp. 87–89: test compuesto por formas paralelas.</p>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="alfa" role="tabpanel" aria-labelledby="tab-alfa" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">LOS ÍTEMS COMO CONJUNTO</span>
+            <h2>Alfa de Cronbach</h2>
+            <div class="formula">α = J/(J − 1) · [1 − ΣS²<sub>j</sub>/S²<sub>X</sub>]</div>
+            <p class="explanation">
+              J es el número de ítems. Alfa resume su consistencia interna; no es un coeficiente universal de fiabilidad
+              ni una prueba de unidimensionalidad. Su igualdad con la fiabilidad requiere, entre otras condiciones,
+              tau-equivalencia esencial y errores no correlacionados.
+            </p>
+            <div class="tct-help">
+              Edita esta matriz didáctica completa. No se invierten automáticamente los ítems. Si un ítem está formulado
+              en dirección inversa, revisa su clave antes de analizarlo.
+            </div>
+            <div class="tct-matrix">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Persona</th>
+                    <th scope="col">Ítem 1</th>
+                    <th scope="col">Ítem 2</th>
+                    <th scope="col">Ítem 3</th>
+                  </tr>
+                </thead>
+                <tbody id="alpha-matrix"></tbody>
+              </table>
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="alpha-raw"></strong><span>Alfa bruto</span></div>
+              <div class="tct-stat"><strong id="alpha-standard"></strong><span>Alfa estandarizado</span></div>
+              <div class="tct-stat"><strong id="alpha-mean-r"></strong><span>r media inter-ítem</span></div>
+            </div>
+            <p id="alpha-status" class="tct-status" role="status"></p>
+            <p class="explanation">
+              El alfa bruto utiliza las covarianzas. El estandarizado utiliza las correlaciones: α<sub>est</sub> = J·r̄ /
+              [1+(J−1)·r̄]. Pueden diferir cuando las varianzas de los ítems no son iguales.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Qué aporta cada ítem</h3>
+            <div class="tct-chart">
+              <canvas id="alpha-chart" role="img" aria-label="Alfa del test y alfa al eliminar cada ítem"></canvas>
+            </div>
+            <p class="explanation">
+              Se recalcula alfa después de retirar cada columna. Un aumento no basta para eliminar: puede perderse
+              cobertura del constructo. Un alfa negativo no se convierte en cero; revisa covariaciones y codificación.
+            </p>
+            <p class="tct-help">
+              Varianza total cero: alfa no definido. Un ítem constante: el alfa estandarizado no está definido para la
+              matriz completa, aunque el bruto pueda calcularse. No se elimina esa columna silenciosamente.
+            </p>
+            <a href="analisis.html">Continuar la revisión de ítems en el Módulo 2 →</a>
+            <p class="source-note">Abad et al., pp. 97–106; documentación de psych::alpha.</p>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="mitades" role="tabpanel" aria-labelledby="tab-mitades" hidden>
+        <div class="tct-grid">
+          <article class="card tct-card-fluid">
+            <span class="eyebrow">FIABILIDAD CON UNA SOLA APLICACIÓN</span>
+            <h2>Dos mitades y Kuder–Richardson</h2>
+            <div class="formula">r<sub>XX′</sub> = 2·r<sub>hh</sub> / (1 + r<sub>hh</sub>)</div>
+            <p class="explanation">
+              Se divide el test en dos mitades y se correlacionan sus puntuaciones (r<sub>hh</sub>). Esa correlación
+              estima la fiabilidad de una mitad, no la del test completo: Spearman–Brown con k = 2 la lleva a la
+              longitud completa. Es su uso más frecuente.
+            </p>
+            <div class="tct-help">
+              Matriz didáctica de 10 personas × 6 ítems puntuados 0/1. Edítala: solo se aceptan 0 y 1.
+            </div>
+            <div class="tct-matrix">
+              <table class="tct-half-table">
+                <thead id="half-head"></thead>
+                <tbody id="half-matrix"></tbody>
+              </table>
+            </div>
+            <label for="half-split">División en mitades</label
+            ><select id="half-split">
+              <option value="odd-even">Ítems impares / pares</option>
+              <option value="first-second">Primera / segunda mitad</option>
+            </select>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="half-r"></strong><span>r entre mitades</span></div>
+              <div class="tct-stat"><strong id="half-sb"></strong><span>Spearman–Brown</span></div>
+              <div class="tct-stat"><strong id="half-guttman"></strong><span>Guttman–Flanagan</span></div>
+            </div>
+            <div class="formula tct-formula-sm">
+              KR-20 = k/(k − 1) · [1 − Σp<sub>j</sub>q<sub>j</sub> / S²<sub>X</sub>]<br />KR-21 = k/(k − 1) · [1 − X̄(k −
+              X̄) / (k·S²<sub>X</sub>)]
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="kr20"></strong><span>KR-20 (= α con ítems 0/1)</span></div>
+              <div class="tct-stat"><strong id="kr21"></strong><span>KR-21</span></div>
+              <div class="tct-stat">
+                <strong id="half-var"></strong><span>S²<sub>X</sub> (denominador N)</span>
+              </div>
+            </div>
+            <p id="half-status" class="tct-status" role="status"></p>
+            <p class="explanation" id="half-explanation"></p>
+            <div class="tct-help">
+              Cautelas: Spearman–Brown supone mitades paralelas; Guttman–Flanagan no exige varianzas iguales. Cada
+              división da un valor distinto. En tests de velocidad, la división impares/pares sobrestima la fiabilidad.
+              KR-21 supone que todos los ítems tienen la misma dificultad: si no, es menor que KR-20.
+            </div>
+          </article>
+          <article class="card tct-card-fluid">
+            <span class="eyebrow">DE LA PUNTUACIÓN OBSERVADA A LA VERDADERA</span>
+            <h2>Estimar T y comparar puntuaciones</h2>
+            <div class="formula">T′ = r·X + (1 − r)·X̄</div>
+            <p class="explanation">
+              Estimación de Kelley: la regresión de T sobre X acerca la puntuación a la media del grupo de referencia,
+              tanto más cuanto menor es la fiabilidad. Su error típico de estimación, S<sub>X</sub>√(r(1 − r)), es menor
+              que el EEM. El índice de fiabilidad ρ<sub>XT</sub> = √ρ<sub>XX′</sub> es la correlación entre X y T.
+            </p>
+            <div class="tct-field-row tct-field-row-3">
+              <div>
+                <label for="est-sd">S<sub>X</sub></label
+                ><input id="est-sd" type="number" min="0.01" step="any" value="15" />
+              </div>
+              <div>
+                <label for="est-mean">Media X̄</label><input id="est-mean" type="number" step="any" value="100" />
+              </div>
+              <div>
+                <label for="est-score">Puntuación X</label><input id="est-score" type="number" step="any" value="130" />
+              </div>
+            </div>
+            <div class="tct-control">
+              <label for="est-r"><span>Fiabilidad r</span> <output id="est-r-val"></output></label
+              ><input id="est-r" type="range" min="0" max="100" value="80" />
+            </div>
+            <label for="est-level">Nivel de los intervalos</label
+            ><select id="est-level">
+              <option value="90">90 %</option>
+              <option value="95" selected>95 %</option>
+              <option value="99">99 %</option>
+            </select>
+            <div class="tct-result">
+              <div class="tct-stat">
+                <strong id="est-index"></strong><span>ρ<sub>XT</sub> = √r</span>
+              </div>
+              <div class="tct-stat"><strong id="est-kelley"></strong><span>T′ (Kelley)</span></div>
+              <div class="tct-stat"><strong id="est-se"></strong><span>Error de estimación</span></div>
+            </div>
+            <div class="tct-chart small-chart">
+              <canvas
+                id="estimate-chart"
+                role="img"
+                aria-label="Intervalo centrado en X frente a intervalo centrado en la estimación de Kelley"
+              ></canvas>
+            </div>
+            <p class="explanation" id="est-explanation" role="status"></p>
+            <h3>¿Difieren dos puntuaciones?</h3>
+            <div class="formula tct-formula-sm">
+              S<sub>d</sub> = √(EEM<sub>1</sub>² + EEM<sub>2</sub>²) = S<sub>X</sub>√(2 − r<sub>1</sub> − r<sub>2</sub>)
+            </div>
+            <div class="tct-field-row">
+              <div>
+                <label for="diff-score">Segunda puntuación X<sub>2</sub></label
+                ><input id="diff-score" type="number" step="any" value="115" />
+              </div>
+              <div>
+                <label for="diff-r">Fiabilidad de X<sub>2</sub> (r<sub>2</sub>)</label
+                ><input id="diff-r" type="number" min="0" max="1" step="0.01" value="0.8" />
+              </div>
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat">
+                <strong id="diff-d"></strong><span>Diferencia X − X<sub>2</sub></span>
+              </div>
+              <div class="tct-stat">
+                <strong id="diff-se"></strong><span>S<sub>d</sub></span>
+              </div>
+              <div class="tct-stat">
+                <strong id="diff-critical"></strong><span>Diferencia mínima z·S<sub>d</sub></span>
+              </div>
+            </div>
+            <p id="est-status" class="tct-status" role="status"></p>
+            <p class="explanation" id="diff-explanation" role="status"></p>
+            <div class="tct-help">
+              Cautelas: Kelley necesita la media de una población de referencia adecuada y supone una relación lineal;
+              aplicada a otra población, desplaza mal las puntuaciones. La diferencia supone errores independientes y la
+              misma escala (S<sub>X</sub> común). Una diferencia fiable no es necesariamente relevante, y al comparar
+              muchas parejas aumentan los falsos positivos.
+            </div>
+            <p class="source-note">
+              Spearman (1910) y Brown (1910); Kuder y Richardson (1937); Kelley (1927); Abad et al. (2011), cap. 3.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="card quiz-card">
+        <span class="eyebrow">COMPRUEBA TU INTERPRETACIÓN</span>
+        <h2>Del cálculo al criterio</h2>
+        <div id="tct-quiz" data-quiz="tct" data-module="tct"></div>
+      </section>
+      <section class="card dx-closing" id="cierre-modulo" aria-labelledby="cierre-titulo">
+        <span class="eyebrow">CIERRE DEL MÓDULO</span>
+        <h2 id="cierre-titulo">Antes de terminar</h2>
+        <div class="dx-closing-grid">
+          <div>
+            <h3>¿Han cambiado tus ideas?</h3>
+            <div data-predcheck="tct"></div>
+          </div>
+          <div data-autoexp>
+            <h3>Explícalo con tus palabras</h3>
+            <label for="autoexp-tct">¿Por qué duplicar la longitud de un test no duplica su fiabilidad?</label>
+            <textarea id="autoexp-tct" rows="4"></textarea>
+            <button type="button" class="ghost">Comparar con una respuesta modelo</button>
+            <p class="dx-model" hidden>
+              Porque, con ítems paralelos, la varianza verdadera crece con k² y la de error solo con k: la proporción de
+              varianza verdadera aumenta, pero está acotada en 1. Spearman–Brown, kr/[1 + (k − 1)r], muestra
+              rendimientos decrecientes: con r = 0,50, duplicar da 0,67, no 1.
+            </p>
+          </div>
+        </div>
+        <h3>Ideas clave</h3>
+        <ol>
+          <li>La fiabilidad es una proporción de varianzas en una población, no un porcentaje de aciertos.</li>
+          <li>El EEM depende de la fiabilidad y de la desviación típica; el intervalo se centra en X.</li>
+          <li>
+            Alargar con material paralelo mejora la fiabilidad según Spearman–Brown, con rendimientos decrecientes.
+          </li>
+          <li>α no demuestra unidimensionalidad; crece con la longitud aunque los ítems se relacionen poco.</li>
+          <li>Comparar dos personas exige el error de la diferencia, mayor que el EEM.</li>
+        </ol>
+        <p class="explanation">
+          <strong>Después:</strong> vuelve dentro de una semana al <a href="repaso.html#tct">repaso espaciado</a>;
+          empezará por las preguntas que fallaste.
+        </p>
+        <details class="dx-teacher">
+          <summary>Guía para el docente</summary>
+          <h4>Uso sugerido</h4>
+          <p>
+            45 min. Modelo y fiabilidad proyectados (10 min); EEM y Spearman–Brown en parejas, con la predicción antes
+            de ver el resultado (15 min); α y dos mitades (10 min); cuestionario individual (10 min).
+          </p>
+          <h4>Preguntas para el debate</h4>
+          <ul>
+            <li>¿Qué fiabilidad pediríais para decidir sobre una persona y cuál para comparar grupos?</li>
+            <li>¿Por qué la «Nueva muestra» cambia la correlación entre formas paralelas?</li>
+            <li>¿Cuándo es preferible KR-20 a dos mitades?</li>
+          </ul>
+          <h4>Errores frecuentes que conviene buscar</h4>
+          <ul>
+            <li>Interpretar r = 0,80 como «el 80 % de aciertos».</li>
+            <li>Leer α como prueba de unidimensionalidad.</li>
+            <li>Tratar el intervalo como la probabilidad de que T esté dentro.</li>
+            <li>Comparar dos personas con el EEM en vez del error de la diferencia.</li>
+          </ul>
+          <h4>Qué mirar</h4>
+          <p>
+            Las predicciones de Spearman–Brown: ¿sobrestiman la mejora? En el cuestionario, las preguntas de
+            transferencia (07 y 08).
+          </p>
+          <p>
+            La herramienta no envía datos a ningún servidor: solo el navegador de cada estudiante recuerda las
+            predicciones y qué preguntas falló, para el repaso. Si queréis recoger resultados, cada estudiante puede
+            descargar sus resultados en CSV (con un código, sin su nombre) y entregarlos en el aula virtual.
+          </p>
+        </details>
+      </section>
+      <details class="sources">
+        <summary>Referencias, alcance y verificación</summary>
+        <p>
+          Contenido basado en la app de TCT original de Eduar Ramírez. Abad, Olea, Ponsoda y García (2011),
+          <em>Medición en ciencias sociales y de la salud</em>, capítulo 3. El análisis de ítems y el criterio externo
+          permanecen en el Módulo 2.
+        </p>
+        <p>
+          <a href="https://www.personality-project.org/r/psych/help/alpha.html" target="_blank" rel="noopener"
+            >Documentación de psych::alpha</a
+          >. Los gráficos son demostraciones y no estiman parámetros de una base externa.
+        </p>
+        <p>Consulta docs/VERIFICACION.md para las pruebas y los resultados de la verificación con R.</p>
+      </details>
+      <div class="module-footer" style="margin: 30px 0; padding: 22px; background: #edf5ff; border-radius: 8px">
+        <a href="tri.html">Continuar con el Módulo 4 · Respuesta al ítem →</a>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+# Desde la raiz del proyecto: shiny::runApp("r/tct")
+source("../modules/host.R", local = TRUE)
+psicometria_utf8()
+library(shiny)
+source("../modules/tct.R", local = TRUE)
+source("../modules/tct_math.R", local = TRUE)
+addResourcePath("laboratorio", psicometria_web_root("../.."))
+ui <- fluidPage(tags$head(tags$style(HTML("html,body,.container-fluid{margin:0;padding:0;height:100%;}"))), tctUI("tct"))
+server <- function(input, output, session) { tctServer("tct") }
+shinyApp(ui, server)

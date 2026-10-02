@@ -1,0 +1,261 @@
+.tct-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 6px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.tct-tabs button {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  font-size: 12px;
+}
+.tct-tabs button[aria-selected="true"] {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+[hidden] {
+  display: none !important;
+}
+.tct-panel {
+  padding-top: 25px;
+}
+.tct-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 22px;
+}
+.tct-panel .card {
+  margin-bottom: 20px;
+}
+.formula {
+  background: var(--navy);
+  color: white;
+  padding: 17px;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 22px;
+  margin: 14px 0;
+}
+.explanation {
+  font-size: 13px;
+  color: var(--muted);
+}
+.tct-control {
+  margin: 18px 0;
+}
+.tct-control label {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.tct-control input[type="range"] {
+  padding: 0;
+  margin: 0;
+  accent-color: var(--blue);
+}
+.tct-result {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+.tct-stat {
+  background: #edf5ff;
+  border-radius: 6px;
+  padding: 14px 10px;
+}
+.tct-stat strong {
+  display: block;
+  font-size: 23px;
+  color: var(--blue);
+  line-height: 1.3;
+}
+.tct-stat span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.tct-chart {
+  height: 290px;
+  position: relative;
+}
+.tct-chart.small-chart {
+  height: 215px;
+}
+.tct-help {
+  padding: 12px 15px;
+  background: #edf5ff;
+  border-left: 3px solid var(--blue);
+  font-size: 12px;
+  margin: 16px 0;
+}
+.tct-status {
+  font-size: 12px;
+  color: #a80808;
+}
+.tct-matrix {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+.tct-matrix table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.tct-matrix th {
+  background: var(--navy);
+  color: white;
+  padding: 10px;
+}
+.tct-matrix td {
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+  padding: 6px;
+}
+.tct-matrix input {
+  width: 65px;
+  margin: 0;
+  padding: 7px;
+  text-align: center;
+  font-size: 12px;
+}
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.comparison-grid h3 {
+  font-size: 15px;
+}
+.quiz-card {
+  margin-top: 30px;
+}
+.tct-quiz {
+  border-top: 1px solid var(--line);
+  padding: 18px 0;
+}
+.tct-quiz p {
+  font-weight: 600;
+  font-size: 13px;
+}
+.tct-quiz button {
+  background: white;
+  color: var(--ink);
+  border-color: var(--line);
+  font-size: 12px;
+  margin: 5px 7px 5px 0;
+  font-weight: 400;
+}
+.tct-quiz button[aria-pressed="true"] {
+  border-color: var(--blue);
+  background: #edf5ff;
+}
+.tct-quiz .feedback {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 10px;
+}
+.tct-panel h2 {
+  font-size: 27px;
+}
+.tct-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.tct-field-row input {
+  margin: 0;
+}
+.source-note {
+  margin-top: 25px;
+  font-size: 11px;
+  color: var(--muted);
+}
+@media (max-width: 1100px) {
+  .tct-grid {
+    grid-template-columns: 1fr;
+  }
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .tct-tabs {
+    gap: 6px;
+  }
+  .tct-tabs button {
+    font-size: 11px;
+    padding: 9px;
+  }
+  .tct-result {
+    gap: 6px;
+  }
+  .tct-stat {
+    padding: 11px 7px;
+  }
+  .tct-stat strong {
+    font-size: 20px;
+  }
+  .tct-field-row {
+    grid-template-columns: 1fr;
+  }
+  .tct-chart {
+    height: 270px;
+  }
+}
+/* Módulo 3 · muestras simuladas y panel «Mitades y estimación» (solo clases nuevas). */
+.tct-sample-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 10px 0 4px;
+}
+.tct-sample-row .ghost {
+  background: #fff;
+  color: var(--blue);
+  border-color: var(--sky-soft);
+  font-size: 12px;
+  padding: 8px 14px;
+}
+.tct-sample-row .explanation {
+  margin: 0;
+  flex: 1 1 220px;
+}
+.formula.tct-formula-sm {
+  font-size: 16px;
+  line-height: 1.7;
+}
+.tct-field-row.tct-field-row-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.tct-half-total {
+  font-weight: 700;
+  color: var(--navy);
+}
+.tct-matrix input.tct-cell-invalid {
+  border-color: var(--error);
+  background: var(--error-pale);
+}
+@media (max-width: 760px) {
+  .tct-field-row.tct-field-row-3 {
+    grid-template-columns: 1fr;
+  }
+  .formula.tct-formula-sm {
+    font-size: 14px;
+  }
+}
+.tct-half-table th {
+  white-space: nowrap;
+}
+.tct-matrix .tct-half-table input {
+  width: 46px;
+  padding: 6px 2px;
+}
+.tct-card-fluid {
+  min-width: 0;
+}

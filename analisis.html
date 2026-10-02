@@ -1,0 +1,2535 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Análisis de ítems</title>
+    <link rel="stylesheet" href="assets/css/analisis.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/analisis-theme.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/vendor/chart.umd.min.js"></script>
+    <script defer src="assets/js/modules/analisis/math.js"></script>
+    <script defer src="assets/js/modules/analisis/ui.js"></script>
+    <script defer src="assets/js/modules/analisis/integration.js"></script>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a class="current" href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 02</span><a class="ghost" href="index.html">Volver a diseño</a
+        ><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <nav class="module-nav" aria-label="Secciones de análisis">
+        <button class="nav-btn active" onclick="showSection('intro')"><span class="nav-num">0</span>Intro</button>
+        <button class="nav-btn" onclick="showSection('dificultad')"><span class="nav-num">1</span>Dificultad</button>
+        <button class="nav-btn" onclick="showSection('homogeneidad')">
+          <span class="nav-num">2</span>Homogeneidad
+        </button>
+        <button class="nav-btn" onclick="showSection('validez')"><span class="nav-num">3</span>Validez</button>
+        <button class="nav-btn" onclick="showSection('azar')"><span class="nav-num">4</span>Corrección Azar</button>
+        <button class="nav-btn" onclick="showSection('practica')"><span class="nav-num">5</span>Práctica Global</button>
+      </nav>
+      <div class="module-note">
+        Los puntos de corte son orientaciones del material docente, no reglas automáticas para retener o eliminar. La
+        relación con un criterio es una evidencia de validez. Si no hay variación, la correlación no está definida.
+      </div>
+      <div id="calculation-notice" class="module-note" role="status" hidden></div>
+
+      <!-- ============================== INTRO ============================== -->
+      <section id="intro" class="section active">
+        <div class="section-hero">
+          <div class="badge badge-blue">MÓDULO 02 · ANÁLISIS DE ÍTEMS</div>
+          <section class="dx-start" aria-label="Objetivos y punto de partida">
+            <article class="card dx-goals">
+              <span class="eyebrow">AL TERMINAR PODRÁS…</span>
+              <ol>
+                <li>Calcular e interpretar la dificultad p, también corregida por azar.</li>
+                <li>
+                  Calcular la correlación ítem-resto, la biserial puntual y el índice D, y decidir qué ítems revisar.
+                </li>
+                <li>Diagnosticar distractores que no funcionan.</li>
+                <li>Justificar una decisión sobre un ítem sin aplicar un punto de corte de forma automática.</li>
+              </ol>
+              <div class="dx-meta">
+                <span><strong>Duración:</strong> 45–60 min</span
+                ><span><strong>Modo:</strong> individual y en parejas</span><span><strong>Sin nota</strong></span>
+              </div>
+              <p class="explanation">
+                Recorre las secciones en orden con los botones de arriba; en cada una, calcula antes de mirar el
+                resultado.
+              </p>
+            </article>
+            <article class="card">
+              <span class="eyebrow">ANTES DE EMPEZAR</span>
+              <h2>Tus ideas de partida</h2>
+              <p class="explanation">
+                Responde rápido, sin consultar nada. Al final del módulo comprobarás qué ha cambiado.
+              </p>
+              <div data-predict="analisis"></div>
+            </article>
+          </section>
+
+          <h2>Análisis Cuantitativo<br />de los Ítems</h2>
+          <p>
+            Herramienta interactiva para comprender y practicar los índices de dificultad, homogeneidad, validez y
+            corrección por azar.
+          </p>
+        </div>
+
+        <div class="card">
+          <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 18px">
+            Una vez que construimos un test siguiendo las recomendaciones metodológicas, necesitamos comprobar
+            <strong>empíricamente</strong> si los ítems son buenos indicadores del constructo que queremos medir. Para
+            eso existen tres índices principales:
+          </p>
+          <div class="overview-grid">
+            <div class="overview-card" onclick="showSection('dificultad')">
+              <div class="ov-icon" style="background: #edf5ff">📊</div>
+              <div class="ov-num">Índice 01</div>
+              <div class="ov-title">Dificultad</div>
+              <div class="ov-desc">
+                Cuantifica el grado de dificultad-facilidad de cada ítem. Solo aplica a pruebas de rendimiento óptimo.
+              </div>
+            </div>
+            <div class="overview-card" onclick="showSection('homogeneidad')">
+              <div class="ov-icon" style="background: #edf5ff">🔗</div>
+              <div class="ov-num">Índice 02</div>
+              <div class="ov-title">Homogeneidad</div>
+              <div class="ov-desc">
+                Mide si el ítem está midiendo lo mismo que el test en su conjunto (correlación ítem-test).
+              </div>
+            </div>
+            <div class="overview-card" onclick="showSection('validez')">
+              <div class="ov-icon" style="background: #fff9ee">🎯</div>
+              <div class="ov-num">Índice 03</div>
+              <div class="ov-title">Validez</div>
+              <div class="ov-desc">
+                Relaciona el ítem con un criterio externo: aporta una evidencia, no demuestra por sí sola la validez.
+              </div>
+            </div>
+            <div class="overview-card" onclick="showSection('azar')">
+              <div class="ov-icon" style="background: #ffe0e0">🎲</div>
+              <div class="ov-num">Bonus</div>
+              <div class="ov-title">Corrección Azar</div>
+              <div class="ov-desc">
+                Penaliza errores bajo un modelo de respuesta al azar; su efecto se interpreta en esperanza.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="icon">💡</div>
+            ¿Cómo usar esta herramienta?
+          </div>
+          <div class="info-box">
+            Navega por las secciones usando el menú superior. En cada sección encontrarás: una explicación del concepto,
+            <strong>simuladores interactivos</strong> donde puedes cambiar los valores y ver qué pasa, ejemplos del test
+            de agresividad de la clase, y preguntas de autoevaluación.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== DIFICULTAD ============================== -->
+      <section id="dificultad" class="section">
+        <div class="section-hero">
+          <div class="badge badge-blue">Índice 01</div>
+          <h2>Índice de Dificultad</h2>
+          <p>
+            Mide la proporción de personas que aciertan un ítem. Solo aplicable a pruebas de
+            <strong>rendimiento óptimo</strong> (donde hay respuestas correctas e incorrectas).
+          </p>
+        </div>
+
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="showTab('dif', 'dicotomico')">Dicotómicos (0/1)</button>
+          <button class="tab-btn" onclick="showTab('dif', 'politomico')">Elección múltiple (0/1)</button>
+          <button class="tab-btn" onclick="showTab('dif', 'varianza')">Dificultad y Varianza</button>
+          <button class="tab-btn" onclick="showTab('dif', 'quiz_dif')">Autoevaluación</button>
+        </div>
+
+        <!-- TAB: DICOTÓMICO -->
+        <div id="dif_dicotomico" class="tab-content active">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">🎛️</div>
+                Simulador
+              </div>
+              <div class="formula-wrap">
+                p<sub style="font-size: 0.75em">j</sub> =
+                <span class="frac"
+                  ><span class="frac-num">A<sub style="font-size: 0.7em">j</sub></span
+                  ><span class="frac-den">N<sub style="font-size: 0.7em">j</sub></span></span
+                >
+              </div>
+              <p class="small mb-8">Aciertos en el ítem ÷ Nº de sujetos que contestaron (sin omisiones)</p>
+
+              <div style="margin: 20px 0">
+                <label>Nº de sujetos que contestaron (N)</label>
+                <input type="range" id="dif_N" min="5" max="50" value="20" oninput="calcDificultad()" />
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                  <span class="small">5</span>
+                  <span class="range-val" id="dif_N_val">20</span>
+                  <span class="small">50</span>
+                </div>
+              </div>
+
+              <div style="margin: 20px 0">
+                <label>Nº de aciertos (A)</label>
+                <input type="range" id="dif_A" min="0" max="50" value="12" oninput="calcDificultad()" />
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                  <span class="small">0</span>
+                  <span class="range-val" id="dif_A_val">12</span>
+                  <span class="small" id="dif_A_max">20</span>
+                </div>
+              </div>
+
+              <div id="dif_result" class="result-box">
+                <div class="res-label">Índice de dificultad (p<sub>j</sub>)</div>
+                <div class="res-val" id="dif_res_val">—</div>
+                <div class="res-interp" id="dif_res_interp">—</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">📈</div>
+                Escala orientativa
+              </div>
+              <div class="scale-bar-wrap">
+                <div class="scale-bar-track">
+                  <div class="scale-marker" id="dif_marker" style="left: 60%"></div>
+                </div>
+                <div class="scale-labels">
+                  <span>0 — Muy difícil</span>
+                  <span>0.5 — Varianza máxima</span>
+                  <span>1 — Muy fácil</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 20px">
+                <div class="interp-row" style="background: rgba(168, 8, 8, 0.07)">
+                  <div class="interp-dot" style="background: #a80808"></div>
+                  <div>
+                    <strong>p &lt; 0.20</strong> — Muy difícil: aporta poca información para la mayoría. Revisa clave,
+                    redacción y si el contenido se ha enseñado; puede ser útil si interesa el nivel alto.
+                  </div>
+                </div>
+                <div class="interp-row" style="background: rgba(185, 132, 9, 0.07)">
+                  <div class="interp-dot" style="background: #b98409"></div>
+                  <div><strong>0.20 – 0.40</strong> — Difícil. Útil para diferenciar entre quienes más saben.</div>
+                </div>
+                <div class="interp-row" style="background: rgba(42, 73, 212, 0.08)">
+                  <div class="interp-dot" style="background: #2a49d4"></div>
+                  <div>
+                    <strong>0.40 – 0.60</strong> — Dificultad media: la varianza del ítem (p·q) está cerca de su máximo.
+                    No garantiza discriminación: compruébala con los datos.
+                  </div>
+                </div>
+                <div class="interp-row" style="background: rgba(185, 132, 9, 0.07)">
+                  <div class="interp-dot" style="background: #b98409"></div>
+                  <div><strong>0.60 – 0.80</strong> — Fácil. Menos varianza disponible para discriminar.</div>
+                </div>
+                <div class="interp-row" style="background: rgba(0, 19, 145, 0.07)">
+                  <div class="interp-dot" style="background: #001391"></div>
+                  <div>
+                    <strong>p &gt; 0.80</strong> — Muy fácil. Útil si el objetivo es detectar a quienes no dominan lo
+                    básico.
+                  </div>
+                </div>
+              </div>
+              <p class="small mt-8">
+                Bandas orientativas: el valor adecuado depende del propósito del test (selección, diagnóstico, dominio).
+              </p>
+
+              <div class="info-box mt-16">
+                🎲 <strong>Con adivinación</strong>, el punto de referencia ya no es 0.50: con k opciones, la dificultad
+                que deja más margen para discriminar es aproximadamente <strong>(1 + 1/k)/2</strong>, a medio camino
+                entre el azar (1/k) y el acierto seguro. Con k = 4, ≈ 0.625; con k = 2, 0.75.
+              </div>
+              <div class="info-box mt-16">
+                ⚠️ El índice de dificultad <strong>depende de la muestra</strong>. El mismo ítem puede tener p = 0.80
+                con una muestra muy preparada y p = 0.30 con otra menos preparada. En TRI, los parámetros del ítem solo
+                son invariantes respecto de la muestra si el modelo se ajusta a los datos (y una vez fijada la escala).
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🧮</div>
+              Ejemplo interactivo — Datos de clase
+            </div>
+            <p class="small mb-16">
+              Modifica los aciertos de cada ítem y observa cómo cambia la dificultad en tiempo real.
+            </p>
+            <div style="overflow-x: auto">
+              <table id="dif_table">
+                <thead>
+                  <tr>
+                    <th>Sujeto</th>
+                    <th>Ítem 1</th>
+                    <th>Ítem 2</th>
+                    <th>Ítem 3</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="dif_tbody"></tbody>
+                <tfoot>
+                  <tr style="font-weight: 700; background: var(--light)">
+                    <td>p<sub>j</sub></td>
+                    <td id="dif_d1">—</td>
+                    <td id="dif_d2">—</td>
+                    <td id="dif_d3">—</td>
+                    <td>—</td>
+                  </tr>
+                  <tr style="font-size: 0.8rem; color: var(--muted)">
+                    <td>Interpretación</td>
+                    <td id="dif_i1">—</td>
+                    <td id="dif_i2">—</td>
+                    <td id="dif_i3">—</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="chart-wrap mt-16">
+              <canvas id="dif_chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: POLITÓMICO -->
+        <div id="dif_politomico" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🔢</div>
+              Índice de Dificultad Corregido
+            </div>
+            <p class="small mb-16">
+              Para ítems de <strong>opción múltiple</strong>, se corrige la dificultad descontando los aciertos
+              esperables por azar.
+            </p>
+            <div class="formula-wrap">
+              p<sup style="font-size: 0.8em">c</sup><sub style="font-size: 0.7em">j</sub> = p<sub
+                style="font-size: 0.7em"
+                >j</sub
+              >
+              −
+              <span class="frac">
+                <span class="frac-num"
+                  >F<sub style="font-size: 0.7em">j</sub>/N<sub style="font-size: 0.7em">j</sub></span
+                >
+                <span class="frac-den">k − 1</span>
+              </span>
+            </div>
+            <p class="small" style="text-align: center; margin-top: 6px">
+              Donde F<sub>j</sub> = nº fallos, N<sub>j</sub> = nº sujetos que contestaron, k = nº de opciones
+            </p>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">🎛️</div>
+                Calculadora
+              </div>
+
+              <div style="margin-bottom: 16px">
+                <label>Nº de sujetos (N)</label>
+                <input type="number" id="pol_N" value="20" min="2" max="200" oninput="calcPolitomico()" />
+              </div>
+              <div style="margin-bottom: 16px">
+                <label>Nº de aciertos (A)</label>
+                <input type="number" id="pol_A" value="12" min="0" max="200" oninput="calcPolitomico()" />
+              </div>
+              <div style="margin-bottom: 16px">
+                <label>Nº de opciones de respuesta (k)</label>
+                <select id="pol_k" onchange="calcPolitomico()">
+                  <option value="2">2 opciones (V/F)</option>
+                  <option value="3">3 opciones</option>
+                  <option value="4" selected>4 opciones</option>
+                  <option value="5">5 opciones</option>
+                </select>
+              </div>
+
+              <div class="stat-row">
+                <div class="stat-chip">
+                  <div class="val" id="pol_Dj">0.60</div>
+                  <div class="lbl">p<sub>j</sub> sin corregir</div>
+                </div>
+                <div class="stat-chip">
+                  <div class="val" id="pol_Dc">0.47</div>
+                  <div class="lbl">p<sup>c</sup><sub>j</sub> corregido</div>
+                </div>
+                <div class="stat-chip">
+                  <div class="val" id="pol_diff">0.13</div>
+                  <div class="lbl">Diferencia</div>
+                </div>
+              </div>
+
+              <div id="pol_result" class="result-box mt-16">
+                <div class="res-label">Interpretación</div>
+                <div class="res-interp" id="pol_interp">—</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">💬</div>
+                ¿Por qué corregir?
+              </div>
+              <div class="info-box">
+                Con 4 opciones de respuesta, un sujeto que responde <strong>completamente al azar</strong>
+                tiene un 25% de probabilidad de acertar. El índice corregido descuenta estos aciertos casuales, dándonos
+                una imagen más fiel de la verdadera dificultad del ítem.
+              </div>
+              <div class="info-box warn mt-16">
+                ⚠️ El índice corregido puede ser <strong>negativo</strong>: ocurre cuando hay más errores de los que
+                produciría adivinar al azar (p<sub>j</sub> &lt; 1/k). Suele indicar que un distractor atrae de forma
+                sistemática: revisa la clave, la redacción y el análisis de distractores.
+              </div>
+              <div class="chart-wrap mt-16">
+                <canvas id="pol_chart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: VARIANZA -->
+        <div id="dif_varianza" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📐</div>
+              Dificultad y Varianza — Relación Clave
+            </div>
+            <p class="small mb-16">
+              La varianza de un ítem dicotómico depende directamente de su dificultad. Cuando p = 0.5 la varianza es
+              <strong>máxima (0.25)</strong>, sin que ello garantice una alta discriminación.
+            </p>
+            <div class="formula-wrap">
+              s²<sub style="font-size: 0.75em">j</sub> = p<sub style="font-size: 0.75em">j</sub> · q<sub
+                style="font-size: 0.75em"
+                >j</sub
+              >
+              = p<sub style="font-size: 0.75em">j</sub> (1 − p<sub style="font-size: 0.75em">j</sub>)
+            </div>
+
+            <p class="small" style="text-align: center">
+              Varianza del ítem j con denominador N. Alfa usa N − 1 en ítems y total; el cociente no cambia si se usa el
+              mismo denominador en ambos.
+            </p>
+            <div style="margin: 24px 0 8px">
+              <label>Mueve el índice de dificultad p<sub>j</sub> y observa cómo cambia la varianza:</label>
+              <input type="range" id="var_D" min="0" max="100" value="50" oninput="calcVarianza()" />
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px">
+                <span class="small">p = 0 (nadie acierta)</span>
+                <span class="range-val" id="var_D_val">p = 0.50</span>
+                <span class="small">p = 1 (todos aciertan)</span>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-chip">
+                <div class="val" id="var_dval">0.50</div>
+                <div class="lbl">p<sub>j</sub></div>
+              </div>
+              <div class="stat-chip" style="background: #edf5ff">
+                <div class="val text-accent" id="var_sval">0.25</div>
+                <div class="lbl">Varianza s²<sub>j</sub></div>
+              </div>
+              <div class="stat-chip">
+                <div class="val" id="var_pct">100%</div>
+                <div class="lbl">% del máximo</div>
+              </div>
+            </div>
+
+            <div class="chart-wrap-tall mt-16">
+              <canvas id="var_chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: QUIZ DIFICULTAD -->
+        <div id="dif_quiz_dif" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🧩</div>
+              Autoevaluación — Índice de Dificultad
+            </div>
+            <div id="quiz_dif_container" data-quiz="analisis_dif" data-module="analisis"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== HOMOGENEIDAD ============================== -->
+      <section id="homogeneidad" class="section">
+        <div class="section-hero">
+          <div class="badge badge-gold">Índice 02</div>
+          <h2>Índice de Homogeneidad</h2>
+          <p>
+            Correlación ítem-test (mejor, ítem-resto): indica si el ítem ordena a las personas como el resto del test.
+            Es uno de los <strong>índices de discriminación</strong>; también se usan el índice D de grupos extremos y
+            el análisis de distractores.
+          </p>
+        </div>
+
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="showTab('hom', 'hom_concepto')">¿Qué es?</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_discrimina')">Discriminación</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_mc')">Grupos extremos y distractores</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_corregido')">Sin corregir vs Corregido</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_alpha')">Consistencia interna (α)</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_calc')">Calculadora</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_paso')">Paso a Paso</button>
+          <button class="tab-btn" onclick="showTab('hom', 'hom_quiz')">Autoevaluación</button>
+        </div>
+
+        <!-- CONCEPTO -->
+        <div id="hom_hom_concepto" class="tab-content active">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">📌</div>
+                ¿Qué mide?
+              </div>
+              <p style="font-size: 0.9rem; line-height: 1.7; color: var(--ink)">
+                El índice de homogeneidad es la <strong>correlación de Pearson</strong> entre las puntuaciones en un
+                ítem y las puntuaciones totales del test. Si el ítem se puntúa 0/1, esa correlación de Pearson
+                <em>es</em> la correlación biserial-puntual (r<sub>bp</sub>). Un ítem con alta homogeneidad:
+              </p>
+              <div style="margin: 14px 0">
+                <div class="interp-row" style="background: var(--light)">
+                  ✅ Mide lo mismo que el test en su conjunto
+                </div>
+                <div class="interp-row" style="background: var(--light); margin-top: 6px">
+                  ✅ Discrimina bien entre personas con alta y baja puntuación
+                </div>
+                <div class="interp-row" style="background: var(--light); margin-top: 6px">
+                  ✅ Contribuye a la consistencia interna (α de Cronbach)
+                </div>
+              </div>
+              <div class="formula-wrap">
+                r<sub style="font-size: 0.75em">Xj·X</sub> = Correlación(Ítem<sub>j</sub>, Total)
+              </div>
+              <div style="margin-top: 14px; background: var(--light); border-radius: 12px; padding: 14px 16px">
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.07em;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                  "
+                >
+                  Ejemplo concreto
+                </div>
+                <div style="font-size: 0.88rem; line-height: 1.6; color: var(--text)">
+                  Ítem: <em>"En negociaciones que percibo injustas, actúo con mucha calma"</em><br />
+                  Si este ítem <strong>correlaciona alto</strong> con el total del test de agresividad → mide
+                  agresividad (baja calma = alta agresividad).<br />
+                  Si <strong>correlaciona cerca de 0</strong> → mide otra cosa, o está mal formulado.
+                </div>
+              </div>
+              <div class="info-box mt-16">
+                Convención frecuente: revisar con atención los ítems cuya correlación <strong>ítem-resto</strong> sea
+                inferior a <strong>0.30</strong> (p. ej., Nunnally y Bernstein, 1994). Es una orientación, no una regla:
+                el umbral depende del uso del test, de su longitud y de la cobertura del contenido.
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">📊</div>
+                Guía orientativa (r ítem-resto)
+              </div>
+              <div class="interp-row" style="background: rgba(168, 8, 8, 0.07); margin-bottom: 8px">
+                <div class="interp-dot" style="background: #a80808"></div>
+                <div>
+                  <strong>r &lt; 0</strong> — Relación inversa. Comprueba si es un ítem inverso sin recodificar o un
+                  error de clave.
+                </div>
+              </div>
+              <div class="interp-row" style="background: rgba(185, 132, 9, 0.07); margin-bottom: 8px">
+                <div class="interp-dot" style="background: #b98409"></div>
+                <div><strong>0 ≤ r &lt; 0.20</strong> — Relación muy débil. Revisa contenido y redacción.</div>
+              </div>
+              <div class="interp-row" style="background: rgba(185, 132, 9, 0.07); margin-bottom: 8px">
+                <div class="interp-dot" style="background: #b98409"></div>
+                <div><strong>0.20 ≤ r &lt; 0.30</strong> — Relación débil. Zona de revisión.</div>
+              </div>
+              <div class="interp-row" style="background: rgba(42, 73, 212, 0.08); margin-bottom: 8px">
+                <div class="interp-dot" style="background: #2a49d4"></div>
+                <div><strong>0.30 ≤ r &lt; 0.50</strong> — Adecuada para muchos usos.</div>
+              </div>
+              <div class="interp-row" style="background: rgba(0, 19, 145, 0.07); margin-bottom: 8px">
+                <div class="interp-dot" style="background: #001391"></div>
+                <div><strong>r ≥ 0.50</strong> — Alta. Si es muy alta, comprueba que el ítem no sea redundante.</div>
+              </div>
+
+              <div class="chart-wrap mt-16">
+                <canvas id="hom_concepto_chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🔬</div>
+              Ejemplo del test de Agresividad
+            </div>
+            <p class="small mb-16">
+              Test de 34 ítems (Escala Likert 1-5). ¿Qué ítem contribuye más a la consistencia interna?
+            </p>
+            <div style="overflow-x: auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ítem</th>
+                    <th>Enunciado</th>
+                    <th>r<sub>xy</sub></th>
+                    <th>Interpretación</th>
+                    <th>Orientación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="bold">Ítem 1</td>
+                    <td style="text-align: left; font-size: 0.85rem">Soy una persona que explota cuando me enfado</td>
+                    <td class="highlight">0.638</td>
+                    <td class="good-cell">Alta</td>
+                    <td class="good-cell">✅ Adecuado</td>
+                  </tr>
+                  <tr>
+                    <td class="bold">Ítem 2</td>
+                    <td style="text-align: left; font-size: 0.85rem">Suelo actuar impulsivamente</td>
+                    <td>0.348</td>
+                    <td style="color: #322806; font-size: 0.82rem">Adecuada</td>
+                    <td class="good-cell">✅ Adecuado</td>
+                  </tr>
+                  <tr>
+                    <td class="bold">Ítem ?</td>
+                    <td style="text-align: left; font-size: 0.85rem">Ítem inverso no tratado (hipotético)</td>
+                    <td style="color: #a80808; font-weight: 700">−0.42</td>
+                    <td class="bad-cell">Discrimina en sentido inverso</td>
+                    <td class="bad-cell">⚠️ Recodificar (6 − x) y recalcular</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-box success mt-16">
+              🏆 El <strong>Ítem 1</strong> (r=0.638) contribuye más a la consistencia interna que el Ítem 2 (r=0.348)
+              porque tiene mayor correlación con la puntuación total de agresividad. Ser alguien que "explota al
+              enfadarse" se relaciona más con el constructo de agresividad que "actuar impulsivamente".
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: DISCRIMINACIÓN -->
+        <div id="hom_hom_discrimina" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">⚖️</div>
+              ¿Qué significa que un ítem "discrimine"?
+            </div>
+            <p style="font-size: 0.92rem; line-height: 1.8; margin-bottom: 16px">
+              Un ítem <strong>discrimina</strong> cuando las personas que puntúan
+              <em>alto en el constructo</em> obtienen también puntuaciones altas en ese ítem, y las que puntúan
+              <em>bajo en el constructo</em>
+              obtienen puntuaciones bajas. Si todos responden igual, el ítem no aporta información diferencial.
+            </p>
+
+            <!-- ROW 1: Good item -->
+            <div
+              style="
+                background: linear-gradient(135deg, #070e46, #0c3d00);
+                border-radius: 14px;
+                padding: 22px 24px;
+                color: white;
+                margin-bottom: 16px;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: rgba(255, 255, 255, 0.55);
+                  margin-bottom: 6px;
+                "
+              >
+                ✅ Ítem que SÍ discrimina — r alto (~0.64)
+              </div>
+              <div
+                style="font-size: 0.97rem; font-style: italic; margin-bottom: 16px; color: rgba(255, 255, 255, 0.92)"
+              >
+                "Soy una persona que explota cuando me enfado"
+              </div>
+              <div style="display: flex; gap: 10px; align-items: flex-end">
+                <div style="flex: 1; text-align: center">
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.15);
+                      border-radius: 8px 8px 0 0;
+                      padding: 6px 4px;
+                      font-size: 0.75rem;
+                      color: rgba(255, 255, 255, 0.7);
+                    "
+                  >
+                    Baja agresividad
+                  </div>
+                  <div
+                    style="
+                      background: #a80808;
+                      border-radius: 0 0 8px 8px;
+                      height: 36px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 0.82rem;
+                      font-weight: 700;
+                    "
+                  >
+                    Nunca (1)
+                  </div>
+                </div>
+                <div style="flex: 1; text-align: center">
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.15);
+                      border-radius: 8px 8px 0 0;
+                      padding: 6px 4px;
+                      font-size: 0.75rem;
+                      color: rgba(255, 255, 255, 0.7);
+                    "
+                  >
+                    Media agresividad
+                  </div>
+                  <div
+                    style="
+                      background: #b98409;
+                      border-radius: 0 0 8px 8px;
+                      height: 60px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 0.82rem;
+                      font-weight: 700;
+                    "
+                  >
+                    A veces (3)
+                  </div>
+                </div>
+                <div style="flex: 1; text-align: center">
+                  <div
+                    style="
+                      background: rgba(255, 255, 255, 0.15);
+                      border-radius: 8px 8px 0 0;
+                      padding: 6px 4px;
+                      font-size: 0.75rem;
+                      color: rgba(255, 255, 255, 0.7);
+                    "
+                  >
+                    Alta agresividad
+                  </div>
+                  <div
+                    style="
+                      background: #2a49d4;
+                      border-radius: 0 0 8px 8px;
+                      height: 84px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 0.82rem;
+                      font-weight: 700;
+                    "
+                  >
+                    Siempre (5)
+                  </div>
+                </div>
+              </div>
+              <div style="font-size: 0.82rem; color: rgba(255, 255, 255, 0.65); margin-top: 12px">
+                → Quienes <strong>más agresivos son</strong>, más puntúan en este ítem. El ítem
+                <strong>ordena igual</strong> que el test.
+              </div>
+            </div>
+
+            <!-- ROW 2: Non-discriminating items side by side -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px" class="disc-grid">
+              <div style="background: #a80808; border-radius: 14px; padding: 20px; color: white">
+                <div
+                  style="
+                    font-size: 0.72rem;
+                    letter-spacing: 0.09em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-bottom: 6px;
+                  "
+                >
+                  ⚠️ Discrimina, pero al revés — ítem inverso sin recodificar
+                </div>
+                <div
+                  style="font-size: 0.88rem; font-style: italic; margin-bottom: 14px; color: rgba(255, 255, 255, 0.9)"
+                >
+                  "Soy una persona tranquila"
+                </div>
+                <div style="display: flex; gap: 8px; align-items: flex-end">
+                  <div style="flex: 1; text-align: center">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.12);
+                        border-radius: 6px 6px 0 0;
+                        padding: 4px;
+                        font-size: 0.7rem;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      Baja agresividad
+                    </div>
+                    <div
+                      style="
+                        background: #a80808;
+                        border-radius: 0 0 6px 6px;
+                        height: 70px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.78rem;
+                        font-weight: 700;
+                      "
+                    >
+                      Siempre (5)
+                    </div>
+                  </div>
+                  <div style="flex: 1; text-align: center">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.12);
+                        border-radius: 6px 6px 0 0;
+                        padding: 4px;
+                        font-size: 0.7rem;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      Media agresividad
+                    </div>
+                    <div
+                      style="
+                        background: #a80808;
+                        border-radius: 0 0 6px 6px;
+                        height: 55px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.78rem;
+                        font-weight: 700;
+                      "
+                    >
+                      A veces (3)
+                    </div>
+                  </div>
+                  <div style="flex: 1; text-align: center">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.12);
+                        border-radius: 6px 6px 0 0;
+                        padding: 4px;
+                        font-size: 0.7rem;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      Alta agresividad
+                    </div>
+                    <div
+                      style="
+                        background: #a80808;
+                        border-radius: 0 0 6px 6px;
+                        height: 30px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.78rem;
+                        font-weight: 700;
+                      "
+                    >
+                      Nunca (1)
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin-top: 10px">
+                  → La correlación sale <strong>negativa</strong> (p. ej., r = −0.42): el ítem sí ordena a las personas,
+                  pero en sentido contrario, porque está redactado al revés y <strong>no se ha recodificado</strong>.
+                  Recodifica x′ = mín + máx − x (en una escala 1–5, x′ = 6 − x) y recalcula sus índices.
+                </div>
+              </div>
+
+              <div
+                style="
+                  background: linear-gradient(135deg, #322806, #322806);
+                  border-radius: 14px;
+                  padding: 20px;
+                  color: white;
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.72rem;
+                    letter-spacing: 0.09em;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-bottom: 6px;
+                  "
+                >
+                  ❌ No discrimina — ítem ambiguo
+                </div>
+                <div
+                  style="font-size: 0.88rem; font-style: italic; margin-bottom: 14px; color: rgba(255, 255, 255, 0.9)"
+                >
+                  "En ocasiones es adecuado mostrar el enfado"
+                </div>
+                <div style="display: flex; gap: 8px; align-items: flex-end">
+                  <div style="flex: 1; text-align: center">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.12);
+                        border-radius: 6px 6px 0 0;
+                        padding: 4px;
+                        font-size: 0.7rem;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      Baja agresividad
+                    </div>
+                    <div
+                      style="
+                        background: #b98409;
+                        border-radius: 0 0 6px 6px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.78rem;
+                        font-weight: 700;
+                      "
+                    >
+                      A veces (3)
+                    </div>
+                  </div>
+                  <div style="flex: 1; text-align: center">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.12);
+                        border-radius: 6px 6px 0 0;
+                        padding: 4px;
+                        font-size: 0.7rem;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      Media agresividad
+                    </div>
+                    <div
+                      style="
+                        background: #b98409;
+                        border-radius: 0 0 6px 6px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.78rem;
+                        font-weight: 700;
+                      "
+                    >
+                      A veces (3)
+                    </div>
+                  </div>
+                  <div style="flex: 1; text-align: center">
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.12);
+                        border-radius: 6px 6px 0 0;
+                        padding: 4px;
+                        font-size: 0.7rem;
+                        color: rgba(255, 255, 255, 0.6);
+                      "
+                    >
+                      Alta agresividad
+                    </div>
+                    <div
+                      style="
+                        background: #b98409;
+                        border-radius: 0 0 6px 6px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.78rem;
+                        font-weight: 700;
+                      "
+                    >
+                      A veces (3)
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin-top: 10px">
+                  → La mayoría responde igual porque la afirmación es <strong>socialmente aceptable</strong> para todos.
+                  r ≈ 0: no diferencia niveles de agresividad.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🎛️</div>
+              Simulador de Discriminación — visualización scatter
+            </div>
+            <p class="small mb-16">
+              Mueve el slider para ver cómo cambia la nube de puntos entre el ítem y el total del test según el nivel de
+              discriminación.
+            </p>
+            <div style="margin-bottom: 16px">
+              <label>Índice de homogeneidad r (nivel de discriminación del ítem)</label>
+              <input type="range" id="disc_r" min="-90" max="95" value="65" oninput="updateDiscriminacion()" />
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px">
+                <span class="small">−0.9 (inverso)</span>
+                <span class="range-val" id="disc_r_val">r = 0.65</span>
+                <span class="small">+0.95 (perfecto)</span>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="chart-wrap-tall">
+                <canvas id="disc_scatter_chart"></canvas>
+              </div>
+              <div>
+                <div id="disc_result_box" class="result-box" style="margin-bottom: 14px">
+                  <div class="res-label">Interpretación del ítem</div>
+                  <div class="res-val" id="disc_r_display">0.65</div>
+                  <div class="res-interp" id="disc_interp">—</div>
+                </div>
+                <div class="info-box" id="disc_advice">—</div>
+
+                <div style="margin-top: 16px; padding: 16px; background: var(--light); border-radius: 12px">
+                  <div
+                    style="
+                      font-size: 0.82rem;
+                      font-weight: 700;
+                      color: var(--navy);
+                      margin-bottom: 10px;
+                      text-transform: uppercase;
+                      letter-spacing: 0.05em;
+                    "
+                  >
+                    ¿Cómo leer el gráfico?
+                  </div>
+                  <div style="font-size: 0.85rem; line-height: 1.7; color: var(--text)">
+                    Cada punto es un sujeto. El eje X es su puntuación en el ítem, el eje Y es su puntuación total en el
+                    test.
+                    <br /><br />
+                    Cuanto más alineados están los puntos en diagonal ascendente → mayor discriminación → mayor r.
+                    <br /><br />
+                    Una nube dispersa horizontal indica que el ítem no distingue entre personas con alto y bajo
+                    constructo.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🔬</div>
+              Homogeneidad y discriminación: dos énfasis, varios índices
+            </div>
+            <div class="grid-2">
+              <div
+                style="
+                  border: 2px solid rgba(0, 19, 145, 0.3);
+                  border-radius: 14px;
+                  padding: 20px;
+                  background: rgba(0, 19, 145, 0.04);
+                "
+              >
+                <div style="font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 10px">
+                  Índice de Homogeneidad
+                </div>
+                <p style="font-size: 0.88rem; line-height: 1.7; color: var(--text)">
+                  Hace hincapié en que el ítem es <strong>consistente con el test</strong> — mide el mismo constructo
+                  que el conjunto. Se usa más en psicología de la personalidad y tests de rasgo donde interesa que todos
+                  los ítems apunten al mismo constructo.
+                </p>
+              </div>
+              <div
+                style="
+                  border: 2px solid rgba(42, 73, 212, 0.3);
+                  border-radius: 14px;
+                  padding: 20px;
+                  background: rgba(42, 73, 212, 0.04);
+                "
+              >
+                <div style="font-size: 1rem; font-weight: 700; color: var(--success); margin-bottom: 10px">
+                  Índice de Discriminación
+                </div>
+                <p style="font-size: 0.88rem; line-height: 1.7; color: var(--text)">
+                  Hace hincapié en que el ítem <strong>diferencia a los sujetos</strong> — separa a quienes puntúan alto
+                  de quienes puntúan bajo en el constructo. Se usa más en tests de rendimiento y selección de personal
+                  donde importa distinguir niveles.
+                </p>
+              </div>
+            </div>
+            <div class="info-box mt-16">
+              La correlación ítem-total (o ítem-resto) sirve para ambas ideas, y por eso a veces se usan como sinónimos.
+              Pero la discriminación también se estima con otros índices que <strong>no son el mismo cálculo</strong>:
+              el índice <strong>D</strong> de grupos extremos (diferencia de proporciones de acierto), la
+              <strong>biserial-puntual</strong> r<sub>bp</sub> (que coincide con Pearson cuando el ítem es 0/1) y la
+              <strong>biserial</strong>, que supone una variable continua normal tras el acierto. Practícalos en
+              <a
+                href="#"
+                onclick="
+                  showTab('hom', 'hom_mc');
+                  return false;
+                "
+                >Grupos extremos y distractores</a
+              >.
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: GRUPOS EXTREMOS Y DISTRACTORES -->
+        <div id="hom_hom_mc" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">⚖️</div>
+              Discriminación en elección múltiple
+            </div>
+            <p class="small mb-16">
+              Al terminar podrás calcular e interpretar D, r<sub>bp</sub> y la correlación ítem-resto, y decidir qué
+              distractores revisar. Unos 15 minutos.
+            </p>
+            <div class="grid-2">
+              <div>
+                <p class="small mb-8" style="font-weight: 600; color: var(--navy)">Índice D de grupos extremos</p>
+                <div class="formula-wrap">D = p<sub>S</sub> − p<sub>I</sub></div>
+                <p class="small">
+                  p<sub>S</sub> y p<sub>I</sub>: proporción de aciertos en el 27 % de personas con mayor y con menor
+                  puntuación total (Kelley, 1939). Si hay empates en el punto de corte, aquí se incluyen todas las
+                  personas empatadas, de modo que el resultado no depende del orden de las filas.
+                </p>
+              </div>
+              <div>
+                <p class="small mb-8" style="font-weight: 600; color: var(--navy)">Correlación biserial-puntual</p>
+                <div class="formula-wrap">
+                  r<sub>bp</sub> =
+                  <span class="frac"
+                    ><span class="frac-num">M<sub>p</sub> − M<sub>q</sub></span
+                    ><span class="frac-den">S<sub>X</sub></span></span
+                  >
+                  · √(p·q)
+                </div>
+                <p class="small">
+                  M<sub>p</sub> y M<sub>q</sub>: media del total de quienes aciertan y de quienes fallan; S<sub>X</sub>
+                  con denominador N. Es <strong>exactamente</strong> la correlación de Pearson entre el ítem 0/1 y el
+                  total. La <strong>biserial</strong>, r<sub>b</sub> = r<sub>bp</sub> · √(p·q)/y (y: ordenada de la
+                  normal en el punto que deja una proporción p por encima), supone una variable continua y normal tras
+                  el acierto; es mayor que r<sub>bp</sub> y puede superar 1.
+                </p>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>Orientación para D</strong> (Ebel, 1965): ≥ 0.40 muy buena · 0.30–0.39 buena · 0.20–0.29 marginal,
+              mejorable · &lt; 0.20 pobre, revisar. Son convenciones para pruebas de aula, no reglas de eliminación. En
+              un test corto, D y r<sub>bp</sub> se inflan porque el propio ítem forma parte del total que define los
+              grupos; la correlación ítem-resto no tiene ese sesgo.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📝</div>
+              Respuestas de 24 personas a 8 ítems (opciones A–D)
+            </div>
+            <p class="small mb-16">
+              Datos simulados con fines didácticos. Edita cualquier respuesta o la clave; una celda vacía es una omisión
+              y puntúa 0. Sombreado: respuesta que coincide con la clave. S/I: grupo superior/inferior.
+            </p>
+            <div class="mc-scroll">
+              <table class="matrix-table mc-table">
+                <thead id="mc_thead"></thead>
+                <tbody id="mc_tbody"></tbody>
+              </table>
+            </div>
+            <div class="mc-toolbar">
+              <button class="btn btn-outline" type="button" id="mc_reset">Restaurar datos de ejemplo</button>
+              <span class="small" id="mc_groups"></span>
+            </div>
+            <p class="small mc-status" id="mc_status" role="status"></p>
+          </div>
+
+          <div class="card" id="mc_predict_card">
+            <div class="card-title">
+              <div class="icon">🤔</div>
+              Antes de calcular: predice
+            </div>
+            <p class="small mb-16">
+              Observa las columnas sin calcular nada. ¿Qué ítem crees que <strong>discrimina peor</strong> entre el
+              grupo superior (S) y el inferior (I)? Fíjate en cómo responden unas y otras filas.
+            </p>
+            <div class="mc-predict">
+              <div>
+                <label for="mc_guess">Mi predicción</label>
+                <select id="mc_guess"></select>
+              </div>
+              <button class="btn btn-primary" type="button" id="mc_check">Comprobar y ver los índices</button>
+              <button class="btn btn-outline" type="button" id="mc_skip">Ver sin predecir</button>
+            </div>
+            <div class="info-box" id="mc_feedback" role="status" hidden></div>
+            <p class="dx-pair">
+              Compara tu predicción con la de un compañero antes de ver los índices. ¿En qué os habéis fijado?
+            </p>
+          </div>
+
+          <div id="mc_results" hidden>
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">📊</div>
+                Índices por ítem
+              </div>
+              <div class="mc-scroll">
+                <table class="mc-items">
+                  <thead>
+                    <tr>
+                      <th>Ítem</th>
+                      <th>Clave</th>
+                      <th>p</th>
+                      <th>p<sub>S</sub></th>
+                      <th>p<sub>I</sub></th>
+                      <th>D</th>
+                      <th>r<sub>bp</sub><br /><small style="font-weight: 400">(ítem-total)</small></th>
+                      <th>r ítem-resto</th>
+                      <th>Lectura orientativa</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mc_items_body"></tbody>
+                </table>
+              </div>
+              <div class="stat-row">
+                <div class="stat-chip">
+                  <div class="val" id="mc_alpha">—</div>
+                  <div class="lbl">α (KR-20) de los 8 ítems</div>
+                </div>
+                <div class="stat-chip">
+                  <div class="val" id="mc_chance">0.625</div>
+                  <div class="lbl">p de referencia con k = 4: (1 + 1/k)/2</div>
+                </div>
+              </div>
+              <p class="small">
+                Compara las columnas r<sub>bp</sub> e ítem-resto: con solo 8 ítems, la primera está inflada. Un ítem
+                puede tener D aceptable y, aun así, una correlación ítem-resto baja.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">🔎</div>
+                Análisis de distractores
+              </div>
+              <div class="mc-item-select">
+                <label for="mc_item">Ítem que quieres analizar</label>
+                <select id="mc_item"></select>
+              </div>
+              <div class="mc-scroll">
+                <table class="mc-dist">
+                  <thead>
+                    <tr>
+                      <th>Opción</th>
+                      <th>Total</th>
+                      <th>Grupo S</th>
+                      <th>Grupo I</th>
+                      <th>S − I</th>
+                      <th>Diagnóstico orientativo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mc_dist_body"></tbody>
+                </table>
+              </div>
+              <div class="info-box" id="mc_dist_comment" role="status"></div>
+              <div class="info-box warn">
+                Un buen distractor atrae más a quienes menos saben (S − I negativo). Si atrae más al grupo superior,
+                revisa si esa opción también es defendible o si el enunciado es ambiguo. Si nadie lo elige, no funciona:
+                sustitúyelo por un error plausible o elimínalo (tres opciones pueden bastar). Con grupos de 6 personas,
+                una sola respuesta cambia la proporción en 0.17: interpreta con cautela.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: CONSISTENCIA INTERNA -->
+        <div id="hom_hom_alpha" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🔗</div>
+              Homogeneidad y Consistencia Interna: la conexión
+            </div>
+            <p style="font-size: 0.92rem; line-height: 1.8; margin-bottom: 18px">
+              El <strong>alfa de Cronbach (α)</strong> es el indicador más usado de la consistencia interna de un test.
+              Hay una relación directa:
+              <em>cuanto mayores son los índices de homogeneidad de los ítems, mayor es el alfa del test</em>. Un ítem
+              con r bajo "arrastra hacia abajo" el alfa. Un ítem con r alto lo "sube".
+            </p>
+            <div class="grid-2">
+              <div>
+                <p class="small mb-8" style="font-weight: 600; color: var(--navy)">Fórmula del α de Cronbach:</p>
+                <div class="formula-wrap">
+                  α = <span class="frac"><span class="frac-num">k</span><span class="frac-den">k − 1</span></span> ×
+                  <span>(1 − </span>
+                  <span class="frac"
+                    ><span class="frac-num">Σs²<sub style="font-size: 0.7em">j</sub></span
+                    ><span class="frac-den">s²<sub style="font-size: 0.7em">X</sub></span></span
+                  >
+                  <span>)</span>
+                </div>
+                <p class="small mt-8" style="text-align: center">
+                  k = nº ítems · Σs²<sub>j</sub> = suma varianzas de ítems · s²<sub>X</sub> = varianza total
+                </p>
+              </div>
+              <div>
+                <p class="small mb-8" style="font-weight: 600; color: var(--navy)">Versión con correlaciones medias:</p>
+                <div class="formula-wrap" style="font-size: 0.95rem">
+                  α =
+                  <span class="frac"
+                    ><span class="frac-num">k · <span style="color: #85c8ff">r̄</span></span
+                    ><span class="frac-den">1 + (k − 1) · <span style="color: #85c8ff">r̄</span></span></span
+                  >
+                </div>
+                <p class="small mt-8" style="text-align: center">
+                  r̄ = media de las correlaciones entre ítems (inter-ítem)
+                </p>
+              </div>
+            </div>
+            <div class="info-box mt-16 success">
+              💡 La segunda fórmula deja claro el vínculo:
+              <strong>mayor r̄ (ítems más relacionados entre sí) → mayor α</strong>. Además, con r̄ positiva y constante,
+              añadir ítems (k mayor) <strong>siempre</strong> aumenta α, con rendimientos decrecientes. Por eso un α
+              alto puede deberse a muchos ítems moderadamente relacionados, no necesariamente a ítems muy homogéneos.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🎛️</div>
+              Simulador: ¿cómo afectan los ítems al alfa?
+            </div>
+            <p class="small mb-16">
+              Ajusta el número de ítems y la correlación media inter-ítem para ver cómo cambia el α de Cronbach en
+              tiempo real.
+            </p>
+            <div class="grid-2">
+              <div>
+                <div style="margin-bottom: 20px">
+                  <label>Número de ítems (k)</label>
+                  <input type="range" id="alpha_k" min="2" max="30" value="10" oninput="calcAlpha()" />
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px">
+                    <span class="small">2</span>
+                    <span class="range-val" id="alpha_k_val">10 ítems</span>
+                    <span class="small">30</span>
+                  </div>
+                </div>
+                <div style="margin-bottom: 20px">
+                  <label>Correlación media entre ítems (r̄)</label>
+                  <input type="range" id="alpha_r" min="1" max="90" value="35" oninput="calcAlpha()" />
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px">
+                    <span class="small">0.01</span>
+                    <span class="range-val" id="alpha_r_val">r̄ = 0.35</span>
+                    <span class="small">0.90</span>
+                  </div>
+                </div>
+                <div id="alpha_result" class="result-box">
+                  <div class="res-label">α de Cronbach estimado</div>
+                  <div class="res-val" id="alpha_val">—</div>
+                  <div class="res-interp" id="alpha_interp">—</div>
+                </div>
+                <div class="info-box mt-16">
+                  <strong>Orientaciones según el uso</strong> (Nunnally y Bernstein, 1994):<br />
+                  ≈ 0.70 puede bastar en fases iniciales de investigación;<br />
+                  ≈ 0.80 en investigación básica o comparaciones entre grupos;<br />
+                  ≥ 0.90 (mejor ≈ 0.95) si se toman decisiones importantes sobre personas.<br />
+                  No son etiquetas universales: α depende de la muestra y de la longitud, y no prueba que el test mida
+                  una sola dimensión.
+                </div>
+              </div>
+              <div>
+                <div class="chart-wrap-tall">
+                  <canvas id="alpha_chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🗑️</div>
+              ¿Qué pasa cuando eliminamos un ítem de bajo r?
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px">
+              En el output de JASP aparece la columna <em>"Coefficient α if item dropped"</em>. Si al eliminar un ítem
+              el alfa <strong>sube</strong>, ese ítem encaja peor con el resto y conviene revisarlo. Si baja, el ítem
+              aporta a la consistencia interna. En ambos casos, la decisión considera también el contenido.
+            </p>
+
+            <div style="overflow-x: auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ítem (HAM)</th>
+                    <th>r ítem-resto (corregida)</th>
+                    <th>α si se elimina</th>
+                    <th>α del test completo</th>
+                    <th>Decisión</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="bold">HAM_17</td>
+                    <td class="highlight">0.761</td>
+                    <td>0.849</td>
+                    <td style="font-weight: 600">0.869</td>
+                    <td class="good-cell">✅ Conservar (α baja si se elimina)</td>
+                  </tr>
+                  <tr>
+                    <td class="bold">HAM_11</td>
+                    <td>0.629</td>
+                    <td>0.854</td>
+                    <td style="font-weight: 600">0.869</td>
+                    <td class="good-cell">✅ Conservar</td>
+                  </tr>
+                  <tr>
+                    <td class="bold">HAM_3</td>
+                    <td style="color: #7a5600; font-weight: 700">0.223</td>
+                    <td style="color: #a80808; font-weight: 700">0.880</td>
+                    <td style="font-weight: 600">0.869</td>
+                    <td class="bad-cell">⚠️ Revisar (α sube si se elimina)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-box warn mt-16">
+              ⚠️ <strong>HAM_3</strong> tiene el r más bajo (0.223) y si se eliminara el alfa subiría de 0.869 a 0.880.
+              Sugiere que ese ítem encaja peor con el resto. En la práctica, habría que revisar si mide realmente el
+              mismo constructo o si tiene problemas de redacción, y valorar qué contenido se perdería al retirarlo.
+            </div>
+
+            <div style="margin-top: 20px">
+              <div class="card-title" style="margin-bottom: 14px">
+                <div class="icon">🎛️</div>
+                Simula el efecto de eliminar un ítem sobre el α
+              </div>
+              <div class="grid-2">
+                <div>
+                  <label for="elim_item">Ítem a eliminar de la tabla de calidad de vida</label
+                  ><select id="elim_item" onchange="calcEliminar()">
+                    <option value="0">Ítem 1</option>
+                    <option value="1">Ítem 2</option>
+                    <option value="2">Ítem 3</option>
+                  </select>
+                  <p class="small mt-16">
+                    El cálculo usa los datos editables de «Sin corregir vs Corregido» (4 personas × 3 ítems).
+                    Modifícalos allí para comprobar el efecto. Alfa = k/(k−1) × [1−Σ varianzas de ítems / varianza del
+                    total]. No puede deducirse exactamente a partir de alfa, número de ítems y una sola correlación.
+                  </p>
+                </div>
+                <div>
+                  <div id="elim_result" class="result-box">
+                    <div class="res-label">α calculado tras eliminar el ítem</div>
+                    <div class="res-val" id="elim_new_alpha">—</div>
+                    <div class="res-interp" id="elim_verdict">—</div>
+                  </div>
+                  <div class="stat-row mt-16">
+                    <div class="stat-chip">
+                      <div class="val" id="elim_before">—</div>
+                      <div class="lbl">α antes</div>
+                    </div>
+                    <div class="stat-chip" style="background: #edf5ff">
+                      <div class="val text-accent" id="elim_after">—</div>
+                      <div class="lbl">α después</div>
+                    </div>
+                    <div class="stat-chip">
+                      <div class="val" id="elim_change">—</div>
+                      <div class="lbl">Δ cambio</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALCULADORA -->
+        <div id="hom_hom_calc" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🧮</div>
+              Calculadora de Correlación de Pearson (ítem-test)
+            </div>
+
+            <!-- What this calculator does -->
+            <div
+              style="
+                background: var(--navy);
+                border-radius: 12px;
+                padding: 18px 22px;
+                margin-bottom: 20px;
+                color: white;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: rgba(255, 255, 255, 0.5);
+                  margin-bottom: 10px;
+                "
+              >
+                ¿Qué hace esta calculadora?
+              </div>
+              <p style="font-size: 0.9rem; line-height: 1.7; color: rgba(255, 255, 255, 0.85)">
+                Calcula la <strong>correlación de Pearson entre un ítem y el total del test</strong> — es decir, el
+                índice de homogeneidad sin corregir. Solo tienes que introducir dos columnas de datos; el resto se
+                calcula automáticamente:
+              </p>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px">
+                <div
+                  style="
+                    background: rgba(0, 19, 145, 0.35);
+                    border: 1px solid rgba(133, 200, 255, 0.4);
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    flex: 1;
+                    min-width: 120px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.08em;
+                      color: rgba(255, 255, 255, 0.5);
+                      margin-bottom: 4px;
+                    "
+                  >
+                    ✏️ Tú introduces
+                  </div>
+                  <div style="font-weight: 700; font-size: 0.95rem">
+                    X — puntuación del sujeto en el ítem<br />Y — puntuación total del sujeto en el test
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    flex: 1;
+                    min-width: 120px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.08em;
+                      color: rgba(255, 255, 255, 0.5);
+                      margin-bottom: 4px;
+                    "
+                  >
+                    ⚙️ Se calcula solo
+                  </div>
+                  <div style="font-weight: 700; font-size: 0.95rem">
+                    X², Y², XY por cada sujeto<br />Fila Σ (suma de cada columna)
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: rgba(185, 132, 9, 0.25);
+                    border: 1px solid rgba(185, 132, 9, 0.4);
+                    border-radius: 8px;
+                    padding: 10px 14px;
+                    flex: 1;
+                    min-width: 120px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      text-transform: uppercase;
+                      letter-spacing: 0.08em;
+                      color: rgba(255, 255, 255, 0.5);
+                      margin-bottom: 4px;
+                    "
+                  >
+                    📊 Resultado final
+                  </div>
+                  <div style="font-weight: 700; font-size: 0.95rem">
+                    r<sub>xy</sub> aplicando la fórmula de Pearson con las sumas
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="small mb-16">
+              Puedes introducir de 2 a 8 sujetos. Deja vacías las filas que no uses — se ignoran automáticamente.
+            </p>
+
+            <div style="overflow-x: auto">
+              <table class="matrix-table">
+                <thead>
+                  <tr>
+                    <th>Sujeto</th>
+                    <th>X (ítem)</th>
+                    <th>Y (total)</th>
+                    <th>X²</th>
+                    <th>Y²</th>
+                    <th>XY</th>
+                  </tr>
+                </thead>
+                <tbody id="pearson_tbody"></tbody>
+                <tfoot>
+                  <tr style="font-weight: 700; background: var(--navy); color: white; font-size: 0.9rem">
+                    <td style="text-align: left; padding-left: 14px">
+                      Σ <span style="font-weight: 400; font-size: 0.75rem; opacity: 0.6">(auto)</span>
+                    </td>
+                    <td id="p_sumX">—</td>
+                    <td id="p_sumY">—</td>
+                    <td id="p_sumX2">—</td>
+                    <td id="p_sumY2">—</td>
+                    <td id="p_sumXY">—</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div class="formula-wrap mt-16" style="font-size: 0.85rem; letter-spacing: 0">
+              r<sub>xy</sub> = [N·ΣXY − ΣX·ΣY] / [√(N·ΣX² − (ΣX)²) × √(N·ΣY² − (ΣY)²)]
+            </div>
+            <div
+              style="
+                background: var(--light);
+                border-radius: 10px;
+                padding: 12px 16px;
+                margin-top: 10px;
+                font-size: 0.82rem;
+                line-height: 1.8;
+                color: var(--text);
+              "
+            >
+              <strong>Leyenda:</strong> N = nº de sujetos con datos · ΣX = suma col. X · ΣY = suma col. Y · ΣX² = suma
+              col. X² · ΣY² = suma col. Y² · ΣXY = suma col. XY.
+              <strong>Todas las sumas las calcula la herramienta automáticamente</strong> a partir de los valores X e Y
+              que introduces.
+            </div>
+
+            <div id="pearson_result" class="result-box mt-16">
+              <div class="res-label">Correlación de Pearson r<sub>xy</sub></div>
+              <div class="res-val" id="pearson_r">—</div>
+              <div class="res-interp" id="pearson_interp">Introduce datos para calcular</div>
+            </div>
+
+            <div class="scale-bar-wrap mt-16">
+              <div
+                class="scale-bar-track"
+                style="
+                  background: linear-gradient(
+                    to right,
+                    #a80808 0%,
+                    #b98409 30%,
+                    #b98409 45%,
+                    #2a49d4 60%,
+                    #001391 100%
+                  );
+                "
+              >
+                <div class="scale-marker" id="pearson_marker" style="left: 50%"></div>
+              </div>
+              <div class="scale-labels">
+                <span>-1</span><span>-0.5</span><span>0</span><span>0.5</span><span>1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CORREGIDO -->
+        <div id="hom_hom_corregido" class="tab-content">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">🔧</div>
+                ¿Por qué corregir?
+              </div>
+              <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 14px">
+                El total incluye el propio ítem, así que correlacionarlo con el total es en parte correlacionarlo
+                <em>consigo mismo</em>: la correlación se infla. El efecto es mayor cuanto menos ítems tiene el test y
+                más pesa ese ítem en el total.
+              </p>
+              <div
+                style="
+                  background: var(--navy);
+                  border-radius: 14px;
+                  padding: 18px 20px;
+                  color: var(--white);
+                  margin-bottom: 14px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.78rem;
+                    letter-spacing: 0.08em;
+                    color: rgba(255, 255, 255, 0.5);
+                    text-transform: uppercase;
+                    margin-bottom: 10px;
+                  "
+                >
+                  Sin corregir
+                </div>
+                <div style="font-size: 0.95rem; text-align: center">
+                  r(Ítem<sub>j</sub>, <span style="color: #b98409; font-weight: 700">Total<sub>completo</sub></span
+                  >)
+                </div>
+                <div style="text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-top: 6px">
+                  Total incluye el propio ítem j → <span style="color: #ffe761">inflación</span>
+                </div>
+              </div>
+              <div
+                style="
+                  background: linear-gradient(135deg, #070e46, #070e46);
+                  border-radius: 14px;
+                  padding: 18px 20px;
+                  color: var(--white);
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.78rem;
+                    letter-spacing: 0.08em;
+                    color: rgba(255, 255, 255, 0.5);
+                    text-transform: uppercase;
+                    margin-bottom: 10px;
+                  "
+                >
+                  Corregido (item-rest)
+                </div>
+                <div style="font-size: 0.95rem; text-align: center">
+                  r(Ítem<sub>j</sub>, <span style="color: #85c8ff; font-weight: 700">Total<sub>resto</sub></span
+                  >)
+                </div>
+                <div style="text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); margin-top: 6px">
+                  Total excluye el ítem j → correlación ítem-resto
+                </div>
+              </div>
+              <div class="info-box mt-16">
+                <strong>Regla práctica:</strong> El total incluye el propio ítem: esto añade una relación parte-todo. La
+                diferencia depende de las varianzas y covarianzas; no se obtiene solo del número de ítems.
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                <div class="icon">🎛️</div>
+                Simulador: del total al resto
+              </div>
+              <p class="small mb-16">
+                Introduce la razón de desviaciones típicas del ítem y del total. La transformación usa r y SD del ítem /
+                SD del total.
+              </p>
+              <div style="margin-bottom: 16px">
+                <label>Razón SD del ítem / SD del total (q)</label>
+                <input type="range" id="sim_q" min="1" max="100" value="30" oninput="simCorreccion()" />
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px">
+                  <span class="small">0.01</span>
+                  <span class="range-val" id="sim_q_val">0.30</span>
+                  <span class="small">1.00</span>
+                </div>
+              </div>
+              <div style="margin-bottom: 16px">
+                <label>r sin corregir hipotético</label>
+                <input type="range" id="sim_r" min="0" max="95" value="70" oninput="simCorreccion()" />
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px">
+                  <span class="small">0</span>
+                  <span class="range-val" id="sim_r_val">r = 0.70</span>
+                  <span class="small">0.95</span>
+                </div>
+              </div>
+              <div class="stat-row">
+                <div class="stat-chip">
+                  <div class="val" id="sim_rsin">0.70</div>
+                  <div class="lbl">r sin corregir</div>
+                </div>
+                <div class="stat-chip" style="background: #edf5ff">
+                  <div class="val text-accent" id="sim_rcorr">—</div>
+                  <div class="lbl">r ítem-resto exacto</div>
+                </div>
+                <div class="stat-chip" style="background: rgba(168, 8, 8, 0.07)">
+                  <div class="val" style="color: #a80808" id="sim_rdiff">—</div>
+                  <div class="lbl">Diferencia</div>
+                </div>
+              </div>
+              <div class="info-box warn mt-8" id="sim_msg">—</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📋</div>
+              Tabla comparativa — Test de Calidad de Vida (3 ítems)
+            </div>
+            <p class="small mb-16">
+              Modifica los valores y observa en tiempo real cómo cambian ambos índices para cada ítem.
+            </p>
+            <div style="overflow-x: auto; margin-bottom: 20px">
+              <table class="matrix-table">
+                <thead>
+                  <tr>
+                    <th>Sujeto</th>
+                    <th>Ítem 1</th>
+                    <th>Ítem 2</th>
+                    <th>Ítem 3</th>
+                    <th style="background: #0c3d00">Total completo</th>
+                    <th style="background: #070e46">Resto Í1</th>
+                    <th style="background: #070e46">Resto Í2</th>
+                    <th style="background: #070e46">Resto Í3</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>S1</td>
+                    <td><input class="item-input" id="cv_11" value="3" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_12" value="2" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_13" value="3" oninput="calcHomCorr()" /></td>
+                    <td id="cv_t1" style="color: var(--success); font-weight: 700">8</td>
+                    <td id="cv_rest1_1" style="color: var(--blue-mid)">5</td>
+                    <td id="cv_rest2_1" style="color: var(--blue-mid)">6</td>
+                    <td id="cv_rest3_1" style="color: var(--blue-mid)">5</td>
+                  </tr>
+                  <tr>
+                    <td>S2</td>
+                    <td><input class="item-input" id="cv_21" value="2" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_22" value="3" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_23" value="4" oninput="calcHomCorr()" /></td>
+                    <td id="cv_t2" style="color: var(--success); font-weight: 700">9</td>
+                    <td id="cv_rest1_2" style="color: var(--blue-mid)">7</td>
+                    <td id="cv_rest2_2" style="color: var(--blue-mid)">6</td>
+                    <td id="cv_rest3_2" style="color: var(--blue-mid)">5</td>
+                  </tr>
+                  <tr>
+                    <td>S3</td>
+                    <td><input class="item-input" id="cv_31" value="5" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_32" value="5" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_33" value="5" oninput="calcHomCorr()" /></td>
+                    <td id="cv_t3" style="color: var(--success); font-weight: 700">15</td>
+                    <td id="cv_rest1_3" style="color: var(--blue-mid)">10</td>
+                    <td id="cv_rest2_3" style="color: var(--blue-mid)">10</td>
+                    <td id="cv_rest3_3" style="color: var(--blue-mid)">10</td>
+                  </tr>
+                  <tr>
+                    <td>S4</td>
+                    <td><input class="item-input" id="cv_41" value="1" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_42" value="1" oninput="calcHomCorr()" /></td>
+                    <td><input class="item-input" id="cv_43" value="3" oninput="calcHomCorr()" /></td>
+                    <td id="cv_t4" style="color: var(--success); font-weight: 700">5</td>
+                    <td id="cv_rest1_4" style="color: var(--blue-mid)">4</td>
+                    <td id="cv_rest2_4" style="color: var(--blue-mid)">4</td>
+                    <td id="cv_rest3_4" style="color: var(--blue-mid)">2</td>
+                  </tr>
+                </tbody>
+                <tfoot class="hc-foot">
+                  <tr style="background: var(--navy); color: var(--white); font-weight: 700; font-size: 0.82rem">
+                    <th scope="row">r sin corregir</th>
+                    <td id="hc_r1_bot" style="color: #85c8ff">—</td>
+                    <td id="hc_r2_bot" style="color: #85c8ff">—</td>
+                    <td id="hc_r3_bot" style="color: #85c8ff">—</td>
+                    <td colspan="4" class="hc-note">con el total completo</td>
+                  </tr>
+                  <tr style="background: var(--navy); color: var(--white); font-weight: 700; font-size: 0.82rem">
+                    <th scope="row">r corregido</th>
+                    <td id="hc_rc1_bot" style="color: #85c8ff">—</td>
+                    <td id="hc_rc2_bot" style="color: #85c8ff">—</td>
+                    <td id="hc_rc3_bot" style="color: #85c8ff">—</td>
+                    <td colspan="4" class="hc-note">con el resto (columna «Resto Íj»)</td>
+                  </tr>
+                  <tr style="background: rgba(168, 8, 8, 0.12); font-size: 0.8rem; font-weight: 600">
+                    <th scope="row" style="color: var(--danger)">Diferencia (inflación)</th>
+                    <td id="hc_diff1" style="color: var(--danger)">—</td>
+                    <td id="hc_diff2" style="color: var(--danger)">—</td>
+                    <td id="hc_diff3" style="color: var(--danger)">—</td>
+                    <td colspan="4" class="hc-note" style="color: var(--danger)">sin corregir − corregido</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="chart-wrap-tall">
+              <canvas id="hom_corr_chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- PASO A PASO -->
+        <div id="hom_hom_paso" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🔬</div>
+              Calculadora Paso a Paso — Índice Corregido
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px">
+              Introduce los datos de tu test. La herramienta calcula automáticamente, para cada ítem, la
+              <strong>suma del resto</strong> de ítems y obtiene ambas correlaciones mostrando cada paso del proceso.
+            </p>
+
+            <div class="grid-2" style="margin-bottom: 16px">
+              <div>
+                <label>Número de ítems</label>
+                <select id="paso_nitems" onchange="buildPasoTable()">
+                  <option value="3" selected>3 ítems</option>
+                  <option value="4">4 ítems</option>
+                  <option value="5">5 ítems</option>
+                  <option value="6">6 ítems</option>
+                </select>
+              </div>
+              <div>
+                <label>Número de sujetos</label>
+                <select id="paso_nsuj" onchange="buildPasoTable()">
+                  <option value="4">4 sujetos</option>
+                  <option value="5">5 sujetos</option>
+                  <option value="6">6 sujetos</option>
+                  <option value="7" selected>7 sujetos</option>
+                  <option value="8">8 sujetos</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto">
+              <table class="matrix-table" id="paso_data_table">
+                <thead id="paso_thead"></thead>
+                <tbody id="paso_tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card" id="paso_steps_card">
+            <div class="card-title">
+              <div class="icon">📐</div>
+              Selecciona un ítem para ver el cálculo detallado
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px" id="paso_item_btns"></div>
+            <div id="paso_detail"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📊</div>
+              Resumen comparativo de todos los ítems
+            </div>
+            <div style="overflow-x: auto; margin-bottom: 16px">
+              <table id="paso_summary_table">
+                <thead>
+                  <tr>
+                    <th>Ítem</th>
+                    <th>r sin corregir<br /><small style="font-weight: 400">(con total)</small></th>
+                    <th>r corregido<br /><small style="font-weight: 400">(con resto)</small></th>
+                    <th>Diferencia<br /><small style="font-weight: 400">(inflación)</small></th>
+                    <th>Decisión</th>
+                  </tr>
+                </thead>
+                <tbody id="paso_summary_body"></tbody>
+              </table>
+            </div>
+            <div class="chart-wrap-tall">
+              <canvas id="paso_chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUIZ HOMOGENEIDAD -->
+        <div id="hom_hom_quiz" class="tab-content">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🧩</div>
+              Autoevaluación — Homogeneidad
+            </div>
+            <div id="quiz_hom_container" data-quiz="analisis_hom" data-module="analisis"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== VALIDEZ ============================== -->
+      <section id="validez" class="section">
+        <div class="section-hero">
+          <div class="badge badge-blue">Índice 03</div>
+          <h2>Índice de Validez</h2>
+          <p>
+            Correlación entre el ítem y un <strong>criterio externo</strong> al test. Aporta evidencia de relación con
+            ese criterio; no demuestra por sí sola qué constructo mide el ítem.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🎯</div>
+              ¿Qué es el criterio externo?
+            </div>
+            <div class="formula-wrap">
+              V<sub style="font-size: 0.75em">j</sub> = r<sub style="font-size: 0.75em">jY</sub>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.7; margin-top: 14px">
+              El <strong>criterio de validación</strong> es una medida diferente al test que refleja el mismo rasgo u
+              otro muy relacionado. Si el test mide lo que pretende, los ítems deben correlacionar con el criterio en la
+              dirección esperada.
+            </p>
+            <div class="info-box mt-16">
+              <strong>Ejemplo:</strong> Si la literatura dice que la agresividad predice el consumo de alcohol (relación
+              positiva), los ítems de un test de agresividad deberían correlacionar <strong>positivamente</strong> con
+              las puntuaciones en un test de consumo de alcohol.
+            </div>
+            <div class="info-box warn mt-8">
+              ⚠️ En este enfoque, el índice de validez <strong>no basta por sí solo para eliminar ítems</strong>: se
+              interpreta junto con la homogeneidad y el contenido (salvo en tests construidos expresamente para predecir
+              un criterio). Un ítem puede relacionarse con el criterio y poco con el resto del test, y viceversa.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📊</div>
+              Porcentaje de varianza explicada
+            </div>
+            <p class="small mb-16">
+              El cuadrado de la correlación (r²) indica qué porcentaje de la varianza del criterio explica el ítem.
+            </p>
+
+            <div style="margin-bottom: 20px">
+              <label>Correlación ítem-criterio (r)</label>
+              <input type="range" id="val_r" min="-100" max="100" value="35" oninput="calcValidez()" />
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px">
+                <span class="small">−1</span>
+                <span class="range-val" id="val_r_val">r = 0.35</span>
+                <span class="small">+1</span>
+              </div>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-chip">
+                <div class="val" id="val_r_disp">0.35</div>
+                <div class="lbl">r (validez)</div>
+              </div>
+              <div class="stat-chip" style="background: #edf5ff">
+                <div class="val text-accent" id="val_r2">0.12</div>
+                <div class="lbl">r² (varianza)</div>
+              </div>
+              <div class="stat-chip" style="background: #edf5ff">
+                <div class="val" style="color: #070e46" id="val_pct">12.3%</div>
+                <div class="lbl">% explicado</div>
+              </div>
+            </div>
+
+            <div id="val_result" class="result-box mt-16">
+              <div class="res-label">Interpretación</div>
+              <div class="res-interp" id="val_interp">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="icon">🧪</div>
+            Ejemplo: Agresividad → Consumo de Alcohol
+          </div>
+          <p class="small mb-16">
+            Test de agresividad (3 ítems). Criterio: puntuación en test de consumo de alcohol (CA). ¿Qué ítem predice
+            mejor el CA?
+          </p>
+          <div style="overflow-x: auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ítem</th>
+                  <th>Enunciado</th>
+                  <th>r<sub>hom</sub> (vs total A)</th>
+                  <th>r<sub>val</sub> (vs CA)</th>
+                  <th>r² val</th>
+                  <th>% varianza CA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="bold">1</td>
+                  <td style="text-align: left; font-size: 0.82rem">Exploto cuando me enfado</td>
+                  <td class="highlight">0.638</td>
+                  <td>0.213</td>
+                  <td>0.045</td>
+                  <td>4.5%</td>
+                </tr>
+                <tr>
+                  <td class="bold">2</td>
+                  <td style="text-align: left; font-size: 0.82rem">Actúo impulsivamente</td>
+                  <td>0.348</td>
+                  <td class="highlight">0.348</td>
+                  <td>0.121</td>
+                  <td class="good-cell">12.1%</td>
+                </tr>
+                <tr>
+                  <td class="bold">3</td>
+                  <td style="text-align: left; font-size: 0.82rem">Pienso que los demás me quieren fastidiar</td>
+                  <td>0.215</td>
+                  <td>0.020</td>
+                  <td>0.000</td>
+                  <td class="bad-cell">0.04%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid-2 mt-16">
+            <div class="info-box">
+              🏆 El <strong>Ítem 2</strong> (actuar impulsivamente) es mejor predictor del consumo de alcohol aunque
+              tenga menor homogeneidad que el Ítem 1. Explica el 12.1% de la varianza del CA.
+            </div>
+            <div class="info-box warn">
+              ❓ El <strong>Ítem 3</strong> apenas se relaciona con el CA (0.04 %), pero eso no significa que sea un mal
+              ítem: esa faceta de la agresividad puede no estar relacionada con el consumo de alcohol. Si se revisa, la
+              decisión se apoya sobre todo en la <em>homogeneidad y el contenido</em>, no solo en este criterio.
+            </div>
+          </div>
+
+          <div class="chart-wrap mt-16">
+            <canvas id="val_chart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="icon">🔍</div>
+            Comparación: Homogeneidad vs Validez
+          </div>
+          <div style="overflow-x: auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Característica</th>
+                  <th>Índice de Homogeneidad</th>
+                  <th>Índice de Validez</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: left; font-weight: 600">¿Con qué correlaciona?</td>
+                  <td>Total del propio test</td>
+                  <td>Criterio externo</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; font-weight: 600">¿Para qué sirve?</td>
+                  <td>Consistencia interna</td>
+                  <td>Validez de criterio</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; font-weight: 600">¿Orienta la revisión de ítems?</td>
+                  <td class="good-cell">Sí: r ítem-resto bajo (p. ej., &lt; 0.30, orientativo)</td>
+                  <td class="bad-cell">No por sí solo</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; font-weight: 600">¿Requiere criterio?</td>
+                  <td class="bad-cell">No</td>
+                  <td class="good-cell">Sí (variable externa)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== AZAR ============================== -->
+      <section id="azar" class="section">
+        <div class="section-hero">
+          <div class="badge badge-gold">Corrección</div>
+          <h2>Corrección por Respuestas al Azar</h2>
+          <p>
+            Descuenta los aciertos esperables por adivinación. En promedio (en esperanza) equipara a quienes omiten con
+            quienes responden al azar; no recupera la puntuación de una persona concreta.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="icon">📐</div>
+            Fórmulas
+          </div>
+          <div class="grid-2">
+            <div>
+              <p class="small mb-8">Puntuación corregida:</p>
+              <div class="formula-wrap">
+                X<sup style="font-size: 0.8em">c</sup> = X −
+                <span class="frac"><span class="frac-num">E</span><span class="frac-den">k − 1</span></span>
+              </div>
+              <p class="small mt-8" style="text-align: center">
+                X = aciertos · E = errores (las omisiones no cuentan) · k = nº de opciones
+              </p>
+            </div>
+            <div>
+              <p class="small mb-8">Errores esperados al responder R<sub>a</sub> ítems al azar:</p>
+              <div class="formula-wrap">
+                E = R<sub style="font-size: 0.8em">a</sub> ×
+                <span class="frac"><span class="frac-num">k − 1</span><span class="frac-den">k</span></span>
+              </div>
+              <p class="small mt-8" style="text-align: center">
+                R<sub>a</sub> = nº de ítems respondidos al azar; aciertos esperados = R<sub>a</sub>/k. Por eso E/(k − 1)
+                = R<sub>a</sub>/k: se descuentan justo los aciertos esperados por azar.
+              </p>
+            </div>
+          </div>
+          <div class="info-box mt-16 warn">
+            ⚠️ <strong>Limitaciones:</strong> (1) Supone que <em>todos</em> los errores proceden de adivinar de forma
+            uniforme entre las k opciones; un error por conocimiento equivocado también se penaliza. (2) Si la persona
+            descarta alguna opción antes de adivinar, su probabilidad de acierto supera 1/k y la fórmula corrige de
+            menos. (3) Corrige en esperanza: una persona concreta puede acertar por azar más o menos de lo esperado.
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">🎛️</div>
+              Simulador Interactivo
+            </div>
+
+            <div style="margin-bottom: 16px">
+              <label>Total de ítems en el test</label>
+              <input type="number" id="az_total" value="100" min="10" max="200" oninput="calcAzar()" />
+            </div>
+            <div style="margin-bottom: 16px">
+              <label>Ítems respondidos con conocimiento (aciertos seguros)</label>
+              <input type="range" id="az_conoce" min="0" max="100" value="60" oninput="calcAzar()" />
+              <div style="display: flex; justify-content: space-between; margin-top: 4px">
+                <span class="small">0</span>
+                <span class="range-val" id="az_con_val">60</span>
+                <span class="small" id="az_con_max">100</span>
+              </div>
+            </div>
+            <div style="margin-bottom: 16px">
+              <label>Estrategia con ítems restantes</label>
+              <select id="az_estrategia" onchange="calcAzar()">
+                <option value="omite">Omite (no responde)</option>
+                <option value="azar" selected>Responde al azar</option>
+              </select>
+            </div>
+            <div id="az_azar_opts" style="margin-bottom: 16px">
+              <label>Nº de opciones por ítem (k)</label>
+              <select id="az_k" onchange="calcAzar()">
+                <option value="2">2 (V/F)</option>
+                <option value="3">3 opciones</option>
+                <option value="4" selected>4 opciones</option>
+                <option value="5">5 opciones</option>
+              </select>
+            </div>
+
+            <div id="az_result" class="result-box">
+              <div class="res-label">Puntuación sin corregir vs. corregida</div>
+              <div style="display: flex; gap: 20px; align-items: baseline; margin-top: 6px">
+                <div>
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: rgba(255, 255, 255, 0.5);
+                      text-transform: uppercase;
+                      letter-spacing: 0.08em;
+                    "
+                  >
+                    Sin corregir
+                  </div>
+                  <div class="res-val" id="az_Xsin">—</div>
+                </div>
+                <div style="font-size: 1.5rem; color: rgba(255, 255, 255, 0.4)">→</div>
+                <div>
+                  <div
+                    style="
+                      font-size: 0.72rem;
+                      color: rgba(255, 255, 255, 0.5);
+                      text-transform: uppercase;
+                      letter-spacing: 0.08em;
+                    "
+                  >
+                    Corregida
+                  </div>
+                  <div class="res-val" id="az_Xc">—</div>
+                </div>
+              </div>
+              <div class="res-interp" id="az_interp">—</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">⚖️</div>
+              ¿Por qué importa la corrección?
+            </div>
+            <div class="info-box mb-16">
+              Sin corrección, dos sujetos con el mismo conocimiento real tendrían puntuaciones distintas según si omiten
+              o responden al azar. La corrección <strong>equipara sus puntuaciones</strong>.
+            </div>
+            <div style="overflow-x: auto; margin-bottom: 16px">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sujeto</th>
+                    <th>Sabe</th>
+                    <th>Estrategia</th>
+                    <th>X (bruta)</th>
+                    <th>X<sup>c</sup> (corregida)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="bold">S1</td>
+                    <td>60 ítems</td>
+                    <td>Omite 40</td>
+                    <td>60</td>
+                    <td class="good-cell">60 − 0/3 = 60</td>
+                  </tr>
+                  <tr>
+                    <td class="bold">S2</td>
+                    <td>60 ítems</td>
+                    <td>Azar en 40 (acierta 10, falla 30)</td>
+                    <td>70</td>
+                    <td class="good-cell">70 − 30/3 = 60</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small mb-16">
+              Test de 100 ítems con k = 4 opciones, como en los valores iniciales del simulador. Valores esperados: al
+              adivinar 40 ítems se esperan 40/4 = 10 aciertos y 30 errores.
+            </p>
+            <div class="chart-wrap">
+              <canvas id="az_chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================== PRÁCTICA GLOBAL ============================== -->
+      <section id="practica" class="section">
+        <div class="section-hero">
+          <div class="badge badge-gold">Práctica Global</div>
+          <h2>Ejercicio Completo</h2>
+          <p>
+            Analiza un test completo: medias, homogeneidad sin corregir y corregida, validez frente a un criterio y
+            consistencia interna (α). Modifica los datos y observa cómo cambia el análisis.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <div class="icon">📝</div>
+            Matriz de datos
+          </div>
+          <p class="small mb-16">
+            Test de 4 ítems (escala 1-5). Modifica cualquier celda para ver el análisis actualizado.
+          </p>
+          <div style="overflow-x: auto">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Sujeto</th>
+                  <th>Ítem 1</th>
+                  <th>Ítem 2</th>
+                  <th>Ítem 3</th>
+                  <th>Ítem 4</th>
+                  <th>Total</th>
+                  <th>Criterio Y</th>
+                </tr>
+              </thead>
+              <tbody id="practica_tbody"></tbody>
+              <tfoot>
+                <tr style="background: var(--light); font-size: 0.82rem; font-weight: 600; color: var(--navy)">
+                  <td>Media</td>
+                  <td id="pr_m1">—</td>
+                  <td id="pr_m2">—</td>
+                  <td id="pr_m3">—</td>
+                  <td id="pr_m4">—</td>
+                  <td id="pr_mt">—</td>
+                  <td>—</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📊</div>
+              Análisis de Ítems
+            </div>
+            <div style="overflow-x: auto">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ítem</th>
+                    <th>Media</th>
+                    <th>r hom.<br /><small style="font-weight: 400">(sin corr.)</small></th>
+                    <th style="background: #0c3d00">r hom.<br /><small style="font-weight: 400">(corregido)</small></th>
+                    <th>r val.</th>
+                    <th>α sin el ítem</th>
+                    <th>Lectura orientativa</th>
+                  </tr>
+                </thead>
+                <tbody id="pr_analysis"></tbody>
+              </table>
+            </div>
+            <div class="stat-row">
+              <div class="stat-chip">
+                <div class="val" id="pr_alpha">—</div>
+                <div class="lbl">α del test (4 ítems)</div>
+              </div>
+              <div class="stat-chip">
+                <div class="val" id="pr_min_rest">—</div>
+                <div class="lbl">r ítem-resto mínima</div>
+              </div>
+            </div>
+            <div class="info-box warn" id="pr_comment" role="status">—</div>
+            <div class="info-box mt-16">
+              <strong>Nota:</strong> Con 4 ítems (test corto), usa el <strong>índice corregido</strong> para decidir. La
+              columna verde muestra la correlación del ítem con la suma del <em>resto</em> de ítems, sin incluirse a sí
+              mismo. Los datos iniciales están construidos para mostrar un caso problemático.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <div class="icon">📈</div>
+              Comparativa visual
+            </div>
+            <div class="stat-row" style="margin-bottom: 8px">
+              <div class="stat-chip">
+                <div
+                  style="width: 14px; height: 14px; border-radius: 3px; background: #001391; margin: 0 auto 4px"
+                ></div>
+                <div class="lbl">r sin corregir</div>
+              </div>
+              <div class="stat-chip" style="background: #edf5ff">
+                <div
+                  style="width: 14px; height: 14px; border-radius: 3px; background: #2a49d4; margin: 0 auto 4px"
+                ></div>
+                <div class="lbl">r corregido</div>
+              </div>
+              <div class="stat-chip">
+                <div
+                  style="width: 14px; height: 14px; border-radius: 3px; background: #b98409; margin: 0 auto 4px"
+                ></div>
+                <div class="lbl">r validez</div>
+              </div>
+            </div>
+            <div class="chart-wrap-tall">
+              <canvas id="practica_chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card dx-closing" id="cierre-modulo" aria-labelledby="cierre-titulo">
+        <span class="eyebrow">CIERRE DEL MÓDULO</span>
+        <h2 id="cierre-titulo">Antes de terminar</h2>
+        <div class="dx-closing-grid">
+          <div>
+            <h3>¿Han cambiado tus ideas?</h3>
+            <div data-predcheck="analisis"></div>
+          </div>
+          <div data-autoexp>
+            <h3>Explícalo con tus palabras</h3>
+            <label for="autoexp-analisis"
+              >¿Por qué la correlación ítem-total sobrestima la discriminación de un ítem?</label
+            >
+            <textarea id="autoexp-analisis" rows="4"></textarea>
+            <button type="button" class="ghost">Comparar con una respuesta modelo</button>
+            <p class="dx-model" hidden>
+              Porque el total incluye al propio ítem: parte de la correlación se debe a que el ítem se correlaciona
+              consigo mismo. La ítem-resto excluye el ítem del total y elimina esa relación parte-todo; la diferencia es
+              mayor en tests cortos y con ítems de varianza alta.
+            </p>
+          </div>
+        </div>
+        <h3>Ideas clave</h3>
+        <ol>
+          <li>
+            La dificultad p solo tiene sentido en pruebas de rendimiento óptimo; con azar, la referencia es (1 + 1/k)/2.
+          </li>
+          <li>La correlación ítem-resto evita el efecto parte-todo de la ítem-total.</li>
+          <li>Con un ítem 0/1, Pearson con el total es la biserial puntual; D compara grupos extremos.</li>
+          <li>Un distractor que atrae al grupo superior es una señal para revisar el ítem.</li>
+          <li>Los puntos de corte (0,30, 0,40…) orientan; la decisión se justifica con el contenido y el uso.</li>
+        </ol>
+        <p class="explanation">
+          <strong>Después:</strong> vuelve dentro de una semana al <a href="repaso.html#analisis">repaso espaciado</a>;
+          empezará por las preguntas que fallaste.
+        </p>
+        <details class="dx-teacher">
+          <summary>Guía para el docente</summary>
+          <h4>Uso sugerido</h4>
+          <p>
+            45–60 min. Cada sección dura 8–10 min; la pestaña de grupos extremos y distractores funciona bien en
+            parejas, con la predicción antes de ver la tabla.
+          </p>
+          <h4>Preguntas para el debate</h4>
+          <ul>
+            <li>¿Eliminaríais un ítem con ítem-resto 0,25 que cubre un contenido único?</li>
+            <li>¿Qué ocurre con p y con D si la muestra es muy homogénea?</li>
+            <li>¿Por qué un distractor que nadie elige es un problema?</li>
+          </ul>
+          <h4>Errores frecuentes que conviene buscar</h4>
+          <ul>
+            <li>Llamar «dificultad» a la media de un ítem Likert.</li>
+            <li>Usar la ítem-total en lugar de la ítem-resto.</li>
+            <li>Eliminar ítems solo por un punto de corte.</li>
+            <li>No recodificar los ítems inversos antes de analizar.</li>
+          </ul>
+          <h4>Qué mirar</h4>
+          <p>
+            Cuántos estudiantes justifican la decisión con el contenido y no solo con el número; los errores con
+            seguridad «alta» del cuestionario.
+          </p>
+          <p>
+            La herramienta no envía datos a ningún servidor: solo el navegador de cada estudiante recuerda las
+            predicciones y qué preguntas falló, para el repaso. Si queréis recoger resultados, cada estudiante puede
+            descargar sus resultados en CSV (con un código, sin su nombre) y entregarlos en el aula virtual.
+          </p>
+        </details>
+      </section>
+      <footer class="module-footer">
+        <p><a href="tct.html">Continuar al Módulo 3 · Teoría clásica de los tests →</a></p>
+        Contenidos y herramientas originales de Eduar Ramírez.
+      </footer>
+    </main>
+  </body>
+</html>

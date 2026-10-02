@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Análisis factorial confirmatorio</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/tct.css" />
+    <link rel="stylesheet" href="assets/css/factor.css" />
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/vendor/chart.umd.min.js"></script>
+    <script defer src="assets/js/modules/factor/math.js"></script>
+    <script defer src="assets/js/modules/factor/examples.js"></script>
+    <script defer src="assets/js/modules/factor/common-ui.js"></script>
+    <script defer src="assets/js/modules/factor/afc-ui.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a class="current" href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 06</span><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">ANÁLISIS FACTORIAL CONFIRMATORIO</div>
+        <h1>Una hipótesis clara.<br />Una prueba con límites.</h1>
+        <p>
+          Especifica la estructura del instrumento y aprende a interpretar χ², RMSEA, CFI, TLI y SRMR sin reducirlos a
+          una decisión automática.
+        </p>
+        <div class="hero-meta">
+          <span>Evidencia de estructura</span><span>Decisiones justificadas</span><span>Interpretación</span>
+        </div>
+      </section>
+      <section class="dx-start" aria-label="Objetivos y punto de partida">
+        <article class="card dx-goals">
+          <span class="eyebrow">AL TERMINAR PODRÁS…</span>
+          <ol>
+            <li>Especificar un modelo de medida y explicar cómo se identifica.</li>
+            <li>Calcular los grados de libertad de un modelo sencillo.</li>
+            <li>Interpretar χ², RMSEA, CFI, TLI y SRMR como evidencias, no como veredictos.</li>
+            <li>Comparar modelos anidados con la prueba adecuada al estimador.</li>
+          </ol>
+          <div class="dx-meta">
+            <span><strong>Duración:</strong> 45 min</span><span><strong>Modo:</strong> individual y en parejas</span
+            ><span><strong>Sin nota</strong></span>
+          </div>
+          <p class="explanation">
+            Primero los fundamentos; en «Comparar modelos», calcula los gl antes de ver el resultado.
+          </p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">ANTES DE EMPEZAR</span>
+          <h2>Tus ideas de partida</h2>
+          <p class="explanation">
+            Responde rápido, sin consultar nada. Al final del módulo comprobarás qué ha cambiado.
+          </p>
+          <div data-predict="afc"></div>
+        </article>
+      </section>
+
+      <div class="tct-tabs" role="tablist" data-pager aria-label="Apartados de AFC">
+        <button
+          role="tab"
+          id="tab-cfa-fundamentos"
+          aria-controls="cfa-fundamentos"
+          aria-selected="true"
+          data-panel="cfa-fundamentos"
+        >
+          01 · Qué confirma</button
+        ><button
+          role="tab"
+          id="tab-cfa-modelos"
+          aria-controls="cfa-modelos"
+          aria-selected="false"
+          data-panel="cfa-modelos"
+          tabindex="-1"
+        >
+          02 · Comparar modelos</button
+        ><button
+          role="tab"
+          id="tab-cfa-ajuste"
+          aria-controls="cfa-ajuste"
+          aria-selected="false"
+          data-panel="cfa-ajuste"
+          tabindex="-1"
+        >
+          03 · Interpretar el ajuste
+        </button>
+      </div>
+      <section class="tct-panel" id="cfa-fundamentos" role="tabpanel" aria-labelledby="tab-cfa-fundamentos">
+        <div class="tct-grid">
+          <article class="card">
+            <h2>La estructura se propone antes</h2>
+            <p class="explanation">
+              El AFC evalúa un modelo de medición explícito: qué indicadores se vinculan con cada factor, qué cargas se
+              fijan a cero y qué factores pueden correlacionar. La pregunta es si ese modelo reproduce razonablemente
+              los datos.
+            </p>
+            <div class="formula">Σ = ΛΦΛ′ + Θ</div>
+            <p class="explanation">
+              Los datos no deciden por sí solos qué flechas dibujar. La especificación se justifica por teoría y
+              evidencias previas. En modelos de estructura simple habituales, cada indicador carga en su factor y las
+              cargas restantes se fijan a cero.
+            </p>
+            <p class="tct-help">
+              No es un AFE con una rotación elegida. Identificación: la escala de cada factor necesita fijarse y deben
+              existir suficientes indicadores y restricciones. Hay dos convenios equivalentes: fijar a 1 la varianza de
+              cada factor (std.lv, el que se usa aquí) o fijar a 1 la carga de un indicador marcador por factor. Dan el
+              mismo ajuste y las mismas cargas estandarizadas.
+            </p>
+            <p class="explanation">
+              Condición necesaria: gl = momentos − parámetros libres ≥ 0. Con p indicadores continuos hay p(p + 1)/2
+              varianzas y covarianzas; con 9 indicadores, 45. El modelo de tres factores estima 9 cargas, 9 varianzas
+              residuales y 3 correlaciones entre factores: 45 − 21 = 24 gl. No es suficiente: un factor aislado necesita
+              al menos tres indicadores, o dos si se correlaciona con otros factores. Con gl = 0 el modelo está saturado
+              y χ², RMSEA, CFI y TLI no evalúan su ajuste.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Explorar y confirmar son pasos distintos</h3>
+            <p class="explanation">
+              Probar una estructura descubierta con el mismo conjunto de datos aporta menos evidencia que evaluarla en
+              otra muestra. Dividir una muestra requiere que cada parte sea suficientemente informativa.
+            </p>
+            <p class="explanation">
+              Convergencia, parámetros admisibles y residuos deben revisarse antes de interpretar los índices. Varianzas
+              negativas, correlaciones latentes problemáticas o errores estándar muy grandes requieren investigar.
+            </p>
+            <p class="explanation">
+              Las modificaciones guiadas solo por índices pueden ajustar peculiaridades de la muestra. Si se cambia el
+              modelo, hay que justificarlo y reconocer el componente exploratorio.
+            </p>
+            <a href="afe.html">Volver al Módulo 5 · AFE →</a>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="cfa-modelos" role="tabpanel" aria-labelledby="tab-cfa-modelos" hidden>
+        <article class="card">
+          <h2>Mismos datos, dos hipótesis</h2>
+          <div class="factor-control-grid">
+            <div>
+              <label for="cfa-data">Naturaleza de los indicadores</label
+              ><select id="cfa-data">
+                <option value="continua">Continuos · ML</option>
+                <option value="ordinal">Ordinales de cinco categorías · WLSMV</option>
+              </select>
+            </div>
+            <div>
+              <label for="cfa-model">Estructura propuesta</label
+              ><select id="cfa-model">
+                <option value="tres">Tres factores relacionados · tres indicadores por factor</option>
+                <option value="uno">Un único factor · todos los indicadores</option>
+              </select>
+            </div>
+          </div>
+          <p class="explanation">
+            Estos ejemplos se ajustaron realmente con lavaan sobre 600 personas simuladas. Cambiar el selector carga
+            otro ajuste calculado, no modifica artificialmente sus índices. Los datos fueron generados con tres dominios
+            relacionados; conocer ese origen no garantiza un ajuste perfecto en la muestra.
+          </p>
+          <p id="cfa-estimator" class="factor-note"></p>
+          <p id="cfa-status" class="factor-note" role="status"></p>
+          <pre id="cfa-syntax" class="factor-code"></pre>
+          <p id="cfa-df" class="explanation"></p>
+        </article>
+        <div class="factor-plots">
+          <article class="card">
+            <h3>El modelo de medición</h3>
+            <div style="overflow-x: auto">
+              <svg
+                id="cfa-diagram"
+                viewBox="0 0 600 440"
+                style="display: block; width: 100%; min-width: 480px"
+                role="img"
+                aria-label="Diagrama del modelo confirmatorio seleccionado"
+              ></svg>
+            </div>
+            <p class="explanation">
+              Círculos: factores. Rectángulos: indicadores. Flechas simples: cargas estandarizadas. Flechas de dos
+              puntas: a la izquierda, correlaciones entre factores; sobre cada factor, su varianza fijada a 1; a la
+              derecha, la varianza residual estandarizada de cada indicador (1 − λ²). La matriz Φ se repite debajo. En
+              pantallas estrechas, desliza el diagrama en horizontal.
+            </p>
+            <div id="cfa-phi" class="factor-table"></div>
+          </article>
+          <article class="card">
+            <h3>Resultados del ajuste</h3>
+            <div id="cfa-indices" class="factor-index-grid"></div>
+            <div id="cfa-loadings" class="factor-table"></div>
+            <p class="explanation">
+              Las cargas mostradas son estandarizadas. Ajuste global adecuado y cargas interpretables son evidencias
+              complementarias, no pruebas de validez completa.
+            </p>
+          </article>
+        </div>
+        <div class="factor-plots">
+          <article class="card">
+            <h3>Comparar modelos anidados</h3>
+            <p id="cfa-comparison" class="explanation"></p>
+            <p id="cfa-comparison-note" class="tct-help"></p>
+          </article>
+          <article class="card">
+            <h3>Dos formas de fijar la escala</h3>
+            <div id="cfa-identification" class="factor-table"></div>
+            <p id="cfa-identification-note" class="explanation"></p>
+          </article>
+        </div>
+      </section>
+      <section class="tct-panel" id="cfa-ajuste" role="tabpanel" aria-labelledby="tab-cfa-ajuste" hidden>
+        <p class="dx-pair">
+          Antes de leer las tarjetas: con los modelos de uno y de tres factores, ¿cuál defenderíais y con qué tres
+          evidencias además del CFI? Escribidlas y comparadlas al final del apartado.
+        </p>
+        <div class="factor-interpret-grid">
+          <article class="card">
+            <h3>χ² y grados de libertad</h3>
+            <p class="explanation">
+              Contrasta ajuste exacto. Es sensible al tamaño muestral y a desviaciones pequeñas. Un p significativo no
+              explica qué parte falla; un p no significativo no prueba la verdad del modelo.
+            </p>
+            <p class="explanation">
+              gl = momentos no redundantes − parámetros libres. Con ML, lavaan usa χ² = N·F<sub>ML</sub>.
+            </p>
+          </article>
+          <article class="card">
+            <h3>RMSEA e intervalo</h3>
+            <div class="formula tct-formula-sm">RMSEA = √[máx(χ² − gl, 0) / (gl·N)]</div>
+            <p class="explanation">
+              Resume discrepancia aproximada por grado de libertad. Menor suele indicar mejor ajuste, pero influyen
+              grados de libertad, muestra y estimador. Examina su intervalo de confianza; con gl bajos puede comportarse
+              mal. lavaan usa N; otros textos usan N − 1.
+            </p>
+          </article>
+          <article class="card">
+            <h3>CFI</h3>
+            <div class="formula tct-formula-sm">
+              CFI = 1 − máx(χ²<sub>M</sub> − gl<sub>M</sub>, 0) / máx(χ²<sub>M</sub> − gl<sub>M</sub>, χ²<sub>B</sub> −
+              gl<sub>B</sub>, 0)
+            </div>
+            <p class="explanation">
+              Compara el modelo M con una referencia B de independencia. Valores mayores suelen indicar mejor ajuste
+              relativo. Depende de esa referencia: no es el porcentaje de respuestas explicado.
+            </p>
+          </article>
+          <article class="card">
+            <h3>TLI</h3>
+            <div class="formula tct-formula-sm">
+              TLI = [χ²<sub>B</sub>/gl<sub>B</sub> − χ²<sub>M</sub>/gl<sub>M</sub>] / [χ²<sub>B</sub>/gl<sub>B</sub> −
+              1]
+            </div>
+            <p class="explanation">
+              Índice comparativo con penalización por complejidad. No está restringido siempre a 0–1. Se informa sin
+              convertirlo en un semáforo universal.
+            </p>
+          </article>
+          <article class="card">
+            <h3>SRMR</h3>
+            <p class="explanation">
+              Resume residuos estandarizados entre asociaciones observadas e implicadas. Un promedio pequeño puede
+              ocultar residuos locales relevantes.
+            </p>
+          </article>
+          <article class="card">
+            <h3>AIC y BIC</h3>
+            <div class="formula tct-formula-sm">AIC = −2 lnL + 2q<br />BIC = −2 lnL + q·ln N</div>
+            <p class="explanation">
+              q es el número de parámetros libres. Comparan modelos ajustados a los mismos datos y variables: menor es
+              preferible. No miden ajuste absoluto y requieren verosimilitud, así que no se calculan con WLSMV.
+            </p>
+          </article>
+        </div>
+        <article class="card">
+          <h3>Puntos de corte, solo como orientación</h3>
+          <p class="explanation">
+            Hu y Bentler (1999) propusieron, para ML con datos continuos, valores cercanos a CFI y TLI ≥ 0,95, RMSEA ≤
+            0,06 y SRMR ≤ 0,08. Su comportamiento cambia con el tamaño del modelo, n, cargas, estimador y tipo de datos;
+            no son reglas de decisión.
+          </p>
+          <p class="explanation">
+            Considera estimador, naturaleza de los datos, convergencia, parámetros, residuos, teoría y replicación.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Las fórmulas con números</h3>
+          <p id="cfa-formula-example" class="explanation"></p>
+        </article>
+        <article class="card">
+          <h3>Continuas y ordinales necesitan decisiones distintas</h3>
+          <p class="explanation">
+            ML normal es una opción para indicadores continuos bajo sus supuestos; con no normalidad puede requerirse ML
+            robusto. Para indicadores ordinales, lavaan con ordered utiliza WLSMV: DWLS para parámetros y correcciones
+            para errores y χ². Se informa el χ² escalado y desplazado y las versiones robustas de RMSEA, CFI y TLI
+            (Savalei, 2021), que no se obtienen sustituyendo el χ² escalado en las fórmulas anteriores.
+          </p>
+          <p id="cfa-robust-example" class="explanation"></p>
+          <p class="explanation">
+            La diferencia entre χ² escalados no es por sí sola una prueba de diferencia: se usa una prueba ajustada
+            (Satorra, 2000), como la de lavTestLRT en «Comparar modelos».
+          </p>
+        </article>
+      </section>
+      <section class="card quiz-card">
+        <span class="eyebrow">COMPRUEBA TU INTERPRETACIÓN</span>
+        <h2>Decide con criterio</h2>
+        <div id="factor-quiz" data-quiz="afc" data-module="afc"></div>
+      </section>
+      <section class="card dx-closing" id="cierre-modulo" aria-labelledby="cierre-titulo">
+        <span class="eyebrow">CIERRE DEL MÓDULO</span>
+        <h2 id="cierre-titulo">Antes de terminar</h2>
+        <div class="dx-closing-grid">
+          <div>
+            <h3>¿Han cambiado tus ideas?</h3>
+            <div data-predcheck="afc"></div>
+          </div>
+          <div data-autoexp>
+            <h3>Explícalo con tus palabras</h3>
+            <label for="autoexp-afc">¿Por qué un buen CFI no basta para aceptar un modelo?</label>
+            <textarea id="autoexp-afc" rows="4"></textarea>
+            <button type="button" class="ghost">Comparar con una respuesta modelo</button>
+            <p class="dx-model" hidden>
+              Porque el CFI es un índice global y relativo: compara con un modelo de independencia y puede ser alto
+              aunque haya residuos locales grandes, parámetros impropios o modelos alternativos con ajuste parecido. La
+              decisión se apoya también en la teoría, en los residuos y en la replicación en otra muestra.
+            </p>
+          </div>
+        </div>
+        <h3>Ideas clave</h3>
+        <ol>
+          <li>En el AFC la estructura se especifica antes: qué cargas son libres y cuáles se fijan a cero.</li>
+          <li>
+            gl = momentos − parámetros libres; con gl = 0 el modelo está saturado y no se puede evaluar su ajuste.
+          </li>
+          <li>Los puntos de corte de los índices son orientaciones derivadas en condiciones concretas.</li>
+          <li>
+            Con indicadores ordinales, WLSMV e índices robustos; la diferencia de χ² escalados necesita una prueba
+            ajustada.
+          </li>
+          <li>Un buen ajuste no demuestra que el modelo sea el único posible: hace falta teoría y replicación.</li>
+        </ol>
+        <p class="explanation">
+          <strong>Después:</strong> vuelve dentro de una semana al <a href="repaso.html#afc">repaso espaciado</a>;
+          empezará por las preguntas que fallaste.
+        </p>
+        <details class="dx-teacher">
+          <summary>Guía para el docente</summary>
+          <h4>Uso sugerido</h4>
+          <p>
+            45 min. Fundamentos (10 min), con el cálculo de gl; comparar modelos en parejas (20 min), prediciendo los gl
+            antes de verlos; interpretación del ajuste y cuestionario (15 min).
+          </p>
+          <h4>Preguntas para el debate</h4>
+          <ul>
+            <li>¿Qué haríais si el modelo de tres factores ajusta bien pero un residuo es grande?</li>
+            <li>¿Por qué no se pueden restar directamente χ² escalados?</li>
+            <li>¿Qué aporta confirmar en una muestra independiente?</li>
+          </ul>
+          <h4>Errores frecuentes que conviene buscar</h4>
+          <ul>
+            <li>Aplicar los cortes de Hu y Bentler como un aprobado o suspenso.</li>
+            <li>Usar Δχ² ingenuo con WLSMV.</li>
+            <li>Olvidar contar las correlaciones entre factores en los gl.</li>
+            <li>Confundir un buen ajuste con la verdad del modelo.</li>
+          </ul>
+          <h4>Qué mirar</h4>
+          <p>Las predicciones de gl y la pregunta de transferencia sobre la comparación con WLSMV.</p>
+          <p>
+            La herramienta no envía datos a ningún servidor: solo el navegador de cada estudiante recuerda las
+            predicciones y qué preguntas falló, para el repaso. Si queréis recoger resultados, cada estudiante puede
+            descargar sus resultados en CSV (con un código, sin su nombre) y entregarlos en el aula virtual.
+          </p>
+        </details>
+      </section>
+      <details class="sources">
+        <summary>Fuentes, alcance y reproducción</summary>
+        <p>
+          Watkins (2021), <em>A Step-by-Step Guide to Exploratory Factor Analysis with R and RStudio</em>, capítulos
+          6–16 y 18. Abad et al. (2011), <em>Medición en ciencias sociales y de la salud</em>, capítulos 6 y 10.
+        </p>
+        <p>
+          Las matrices y soluciones de ejemplo se generaron con
+          <a href="https://personality-project.org/r/psych/help/fa.html" target="_blank" rel="noopener">psych</a> y
+          <a href="https://lavaan.ugent.be/tutorial/" target="_blank" rel="noopener">lavaan</a>. Las fuentes y la
+          verificación reproducible están en docs/FUENTES.md y docs/VERIFICACION.md.
+        </p>
+        <p>
+          La web consulta análisis R ya calculados para ejemplos reproducibles. No ajusta un AFE/AFC a datos nuevos en
+          JavaScript. Los diagnósticos de la matriz editable sí se recalculan en el navegador, y el laboratorio de
+          rotación rota cualquier matriz de cargas. Para analizar un CSV propio usa la carpeta r/factor.
+        </p>
+        <p>
+          Hu, L. y Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance structure analysis: Conventional
+          criteria versus new alternatives.
+          <em>Structural Equation Modeling, 6</em>(1), 1–55. Satorra, A. (2000). Scaled and adjusted restricted tests in
+          multi-sample analysis of moment structures. En <em>Innovations in multivariate statistical analysis</em>
+          (pp. 233–247). Kluwer.
+          <a href="https://doi.org/10.1080/00273171.2020.1717922" target="_blank" rel="noopener">Savalei, V. (2021)</a>.
+          Improving fit indices in structural equation modeling with categorical data.
+          <em>Multivariate Behavioral Research, 56</em>(3), 390–407.
+        </p>
+        <p>Diseño, contenidos y dirección: Eduar Ramírez.</p>
+      </details>
+      <div class="module-footer"><a class="home-link" href="index.html">← Volver a la página principal</a></div>
+    </main>
+  </body>
+</html>

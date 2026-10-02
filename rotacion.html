@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Laboratorio de rotación factorial</title>
+    <meta
+      name="description"
+      content="Laboratorio interactivo para entender la rotación factorial: ortogonal y oblicua, Varimax, Oblimin, Promax y Geomin, patrón frente a estructura y Φ."
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/tct.css" />
+    <link rel="stylesheet" href="assets/css/factor.css" />
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <link rel="stylesheet" href="assets/css/rotacion.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/vendor/chart.umd.min.js"></script>
+    <script defer src="assets/js/modules/factor/rotation.js"></script>
+    <script defer src="assets/js/modules/factor/examples.js"></script>
+    <script defer src="assets/js/modules/factor/rotacion-ui.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a class="current" href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 05 · LABORATORIO</span
+        ><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">LABORATORIO DE ROTACIÓN FACTORIAL</div>
+        <h1>Rotar no cambia los datos:<br />cambia el punto de vista.</h1>
+        <p>
+          Gira los ejes con tus manos, mira qué se conserva y qué cambia, y descubre qué buscan Varimax, Oblimin y
+          Promax antes de usarlos con datos reales.
+        </p>
+        <div class="hero-meta">
+          <span>25–35 min</span><span>Individual o en parejas</span><span>Ordenador o móvil</span>
+        </div>
+      </section>
+
+      <section class="card rot-goals" aria-labelledby="rot-goals-title">
+        <h2 id="rot-goals-title">Al terminar podrás…</h2>
+        <ol>
+          <li>Explicar por qué una rotación no cambia las comunalidades ni el ajuste del modelo.</li>
+          <li>Girar dos ejes hasta una estructura simple y reconocer qué criterio optimizan Varimax y Oblimin.</li>
+          <li>Leer patrón, estructura y Φ en una solución oblicua, y calcular una a partir de las otras.</li>
+          <li>Justificar si informar una rotación ortogonal u oblicua en un caso nuevo.</li>
+        </ol>
+        <p class="explanation">
+          Cómo usarlo: avanza por los apartados en orden. Antes de cada revelación se te pedirá una predicción o una
+          decisión; no cuenta como nota. Los datos son poblaciones simuladas o ejemplos ya analizados en R.
+        </p>
+      </section>
+
+      <div class="tct-tabs rot-tabs" role="tablist" aria-label="Apartados del laboratorio de rotación">
+        <button role="tab" id="tab-predice" aria-controls="predice" aria-selected="true" data-panel="predice">
+          01 · Predice</button
+        ><button
+          role="tab"
+          id="tab-ortogonal"
+          aria-controls="ortogonal"
+          aria-selected="false"
+          data-panel="ortogonal"
+          tabindex="-1"
+        >
+          02 · Gira ejes ortogonales</button
+        ><button
+          role="tab"
+          id="tab-oblicua"
+          aria-controls="oblicua"
+          aria-selected="false"
+          data-panel="oblicua"
+          tabindex="-1"
+        >
+          03 · Ejes oblicuos</button
+        ><button
+          role="tab"
+          id="tab-metodos"
+          aria-controls="metodos"
+          aria-selected="false"
+          data-panel="metodos"
+          tabindex="-1"
+        >
+          04 · Qué optimiza cada método</button
+        ><button
+          role="tab"
+          id="tab-espacio"
+          aria-controls="espacio"
+          aria-selected="false"
+          data-panel="espacio"
+          tabindex="-1"
+        >
+          05 · Espacio 3D</button
+        ><button
+          role="tab"
+          id="tab-calculadora"
+          aria-controls="calculadora"
+          aria-selected="false"
+          data-panel="calculadora"
+          tabindex="-1"
+        >
+          06 · Tus cargas</button
+        ><button
+          role="tab"
+          id="tab-cierre"
+          aria-controls="cierre"
+          aria-selected="false"
+          data-panel="cierre"
+          tabindex="-1"
+        >
+          07 · Comprueba y cierra
+        </button>
+      </div>
+      <p class="rot-progress" aria-live="polite"><span id="rot-progress-text">Apartado 1 de 7</span></p>
+
+      <!-- 01 · PREDICE -->
+      <section class="tct-panel" id="predice" role="tabpanel" aria-labelledby="tab-predice">
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">PUNTO DE PARTIDA</span>
+            <h2>Una solución recién extraída</h2>
+            <p class="explanation">
+              Una escala breve de <strong>hábitos de estudio</strong> tiene ocho ítems: O1–O4 tratan de
+              <em>organización</em> («Planifico la semana de estudio») y M1–M4 de <em>motivación</em> («Estudio porque
+              me interesa la materia»). La extracción de dos factores, sin rotar, da esta matriz.
+            </p>
+            <div id="predict-table" class="factor-table rot-heat"></div>
+            <p class="tct-help">
+              La extracción coloca F1 en la dirección que más varianza común explica. Por eso casi todos los ítems
+              cargan alto en F1 y F2 queda bipolar. Esta orientación es una convención del algoritmo.
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">ANTES DE TOCAR NADA</span>
+            <h2>¿Qué crees que ocurrirá?</h2>
+            <form id="predict-form" class="rot-predict">
+              <fieldset>
+                <legend>1. Todos los ítems cargan más de 0,40 en F1. Eso significa que…</legend>
+                <label><input type="radio" name="p1" value="a" /> la escala mide un único factor.</label>
+                <label
+                  ><input type="radio" name="p1" value="b" /> no permite concluirlo: que todos carguen en F1 se debe a
+                  cómo orienta los ejes la extracción.</label
+                >
+                <label><input type="radio" name="p1" value="c" /> los ítems están mal redactados.</label>
+              </fieldset>
+              <fieldset>
+                <legend>2. Si giramos los dos ejes 40°, la comunalidad h² de O1…</legend>
+                <label><input type="radio" name="p2" value="a" /> aumenta.</label>
+                <label><input type="radio" name="p2" value="b" /> disminuye.</label>
+                <label><input type="radio" name="p2" value="c" /> no cambia.</label>
+              </fieldset>
+              <fieldset>
+                <legend>3. ¿Qué agrupación esperas tras rotar?</legend>
+                <label><input type="radio" name="p3" value="a" /> O1–O4 en un factor y M1–M4 en el otro.</label>
+                <label><input type="radio" name="p3" value="b" /> Todos en un factor general.</label>
+                <label><input type="radio" name="p3" value="c" /> Ítems pares frente a impares.</label>
+              </fieldset>
+              <fieldset class="rot-confidence">
+                <legend>¿Cuánta seguridad tienes en tus respuestas?</legend>
+                <label><input type="radio" name="pconf" value="seguro" /> Seguro</label>
+                <label><input type="radio" name="pconf" value="dudo" /> Dudo</label>
+                <label><input type="radio" name="pconf" value="adivino" /> Adivino</label>
+              </fieldset>
+              <button type="submit">Guardar mis predicciones y empezar</button>
+              <p id="predict-status" class="hint" role="status"></p>
+            </form>
+            <p class="tct-help">
+              Las comprobarás al terminar el apartado 02. Comenta tu respuesta 2 con tu compañero antes de seguir.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 02 · ORTOGONAL -->
+      <section class="tct-panel" id="ortogonal" role="tabpanel" aria-labelledby="tab-ortogonal" hidden>
+        <div class="card rot-task">
+          <span class="eyebrow">TAREA</span>
+          <h2>Busca la estructura simple girando los ejes</h2>
+          <p class="explanation">
+            Arrastra el extremo de un eje o usa el deslizador. Intenta que cada ítem tenga
+            <strong>una carga alta en un factor y casi nula en el otro</strong>. Los puntos (los ítems) no se mueven:
+            solo cambias desde dónde los miras. Cuando creas que lo tienes, pulsa «He terminado».
+          </p>
+          <div class="factor-control-grid">
+            <div>
+              <label for="orth-preset">Datos</label
+              ><select id="orth-preset"></select>
+            </div>
+            <div class="tct-control">
+              <label for="orth-angle">Giro de los ejes <output id="orth-angle-value">0°</output></label
+              ><input id="orth-angle" type="range" min="-90" max="90" step="1" value="0" />
+            </div>
+            <div class="rot-buttons">
+              <button type="button" id="orth-reset" class="ghost">Volver a sin rotar</button>
+            </div>
+          </div>
+        </div>
+        <div class="tct-grid rot-workspace">
+          <article class="card">
+            <h3>Plano factorial</h3>
+            <div class="rot-plane-wrap">
+              <svg
+                id="orth-plane"
+                class="rot-plane"
+                viewBox="-1.25 -1.25 2.5 2.5"
+                role="img"
+                aria-labelledby="orth-plane-desc"
+              ></svg>
+            </div>
+            <p id="orth-plane-desc" class="sr-only" aria-live="polite"></p>
+            <ul class="rot-legend">
+              <li><span class="key key-axis"></span> Ejes rotados F1′ y F2′ (arrastra el círculo del extremo)</li>
+              <li><span class="key key-original"></span> Ejes sin rotar</li>
+              <li><span class="key key-a"></span> Organización (O) · <span class="key key-b"></span> Motivación (M)</li>
+              <li><span class="key key-circle"></span> Círculo h² = 1: ningún ítem puede salir de él</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Cargas en los ejes que estás mirando</h3>
+            <div id="orth-table" class="factor-table rot-heat"></div>
+            <div class="tct-result">
+              <div class="tct-stat">
+                <strong id="orth-varimax"></strong><span>Criterio Varimax (más alto = más simple)</span>
+              </div>
+              <div class="tct-stat">
+                <strong id="orth-simple"></strong><span>Ítems con una carga ≥ 0,40 y la otra &lt; 0,20</span>
+              </div>
+              <div class="tct-stat"><strong id="orth-total"></strong><span>Σh² · varianza común total</span></div>
+            </div>
+            <p id="orth-contrib" class="explanation"></p>
+            <p id="orth-note" class="factor-note" hidden>
+              Con factores independientes y de distinto peso, los ejes de la extracción ya coinciden con la estructura
+              simple: el criterio Varimax es máximo sin girar. Compruébalo moviendo el deslizador.
+            </p>
+            <button type="button" id="orth-done">He terminado: comparar con Varimax</button>
+          </article>
+        </div>
+        <div id="orth-reveal" class="card rot-reveal" hidden>
+          <span class="eyebrow">COMPARA TU SOLUCIÓN</span>
+          <h2>Lo que hace Varimax de forma automática</h2>
+          <div class="tct-grid">
+            <div>
+              <p id="orth-feedback" class="factor-note" role="status"></p>
+              <div class="tct-chart factor-chart rot-curve">
+                <canvas id="orth-curve" role="img" aria-label="Criterio Varimax según el giro de los ejes"></canvas>
+              </div>
+              <button type="button" id="orth-animate">Ver el giro hasta Varimax</button>
+            </div>
+            <div>
+              <h3>Varimax en una frase</h3>
+              <p class="explanation">
+                Busca el giro que hace <strong>máxima la varianza de las cargas al cuadrado</strong> en cada columna:
+                cargas muy altas o muy cercanas a cero, pocas intermedias.
+              </p>
+              <div class="formula rot-formula">
+                V = Σ<sub>j</sub> var<sub>i</sub>( λ̃²<sub>ij</sub> ), &nbsp; λ̃<sub>ij</sub> = λ<sub>ij</sub> / h<sub
+                  >i</sub
+                >
+              </div>
+              <p class="explanation">
+                Dividir por h<sub>i</sub> (normalización de Kaiser, la opción por defecto de stats::varimax y psych::fa)
+                evita que los ítems con comunalidad alta dominen el giro. La curva se repite cada 90°: girar 90° solo
+                intercambia o refleja los factores, así que su orden y su signo no tienen significado sustantivo.
+              </p>
+            </div>
+          </div>
+          <div id="predict-check" class="rot-predict-check"></div>
+        </div>
+      </section>
+
+      <!-- 03 · OBLICUA -->
+      <section class="tct-panel" id="oblicua" role="tabpanel" aria-labelledby="tab-oblicua" hidden>
+        <div class="card rot-task">
+          <span class="eyebrow">TAREA</span>
+          <h2>Ahora cada eje gira por su cuenta</h2>
+          <p class="explanation">
+            En una rotación oblicua los ejes dejan de ser perpendiculares. Llévalos hasta que
+            <strong>cada eje atraviese su grupo de ítems</strong>. El ángulo entre ejes define la correlación entre
+            factores: φ = cos(ángulo).
+          </p>
+          <div class="factor-control-grid">
+            <div>
+              <label for="obl-preset">Datos</label
+              ><select id="obl-preset"></select>
+            </div>
+            <div class="tct-control">
+              <label for="obl-a1">Eje F1′ <output id="obl-a1-value">0°</output></label
+              ><input id="obl-a1" type="range" min="-90" max="90" step="1" value="0" />
+            </div>
+            <div class="tct-control">
+              <label for="obl-a2">Eje F2′ <output id="obl-a2-value">90°</output></label
+              ><input id="obl-a2" type="range" min="-90" max="180" step="1" value="90" />
+            </div>
+          </div>
+          <div class="factor-control-grid">
+            <div>
+              <label for="obl-item">Ítem para ver sus proyecciones</label
+              ><select id="obl-item"></select>
+            </div>
+            <div class="rot-buttons">
+              <button type="button" id="obl-oblimin">Buscar Oblimin</button
+              ><button type="button" id="obl-varimax" class="ghost">Poner Varimax</button
+              ><button type="button" id="obl-reset" class="ghost">Sin rotar</button>
+            </div>
+            <div>
+              <label class="rot-check"
+                ><input type="checkbox" id="obl-truth" /> Mostrar la estructura de la población</label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="tct-grid rot-workspace">
+          <article class="card">
+            <h3>Patrón y estructura en el plano</h3>
+            <div class="rot-plane-wrap">
+              <svg
+                id="obl-plane"
+                class="rot-plane"
+                viewBox="-1.25 -1.25 2.5 2.5"
+                role="img"
+                aria-labelledby="obl-plane-desc"
+              ></svg>
+            </div>
+            <p id="obl-plane-desc" class="sr-only" aria-live="polite"></p>
+            <ul class="rot-legend">
+              <li>
+                <span class="key key-pattern"></span> Patrón: coordenadas <strong>paralelas</strong> a los ejes (p₁, p₂)
+              </li>
+              <li>
+                <span class="key key-structure"></span> Estructura: proyecciones <strong>perpendiculares</strong> (s₁,
+                s₂)
+              </li>
+              <li>Haz clic en un ítem para seleccionarlo. Arrastra el círculo del extremo de cada eje.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Tres matrices de una solución oblicua</h3>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="obl-phi"></strong><span>φ entre F1′ y F2′</span></div>
+              <div class="tct-stat"><strong id="obl-angle"></strong><span>Ángulo entre ejes</span></div>
+              <div class="tct-stat">
+                <strong id="obl-quartimin"></strong><span>Criterio Quartimin (más bajo = más simple)</span>
+              </div>
+            </div>
+            <div id="obl-table" class="factor-table rot-heat"></div>
+            <p id="obl-status" class="factor-note" role="status"></p>
+            <div id="obl-truth-box" class="tct-help" hidden></div>
+          </article>
+        </div>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">EJEMPLO RESUELTO</span>
+            <h3>De patrón a estructura: S = P·Φ</h3>
+            <p class="explanation">
+              Con dos factores, la estructura de un ítem es su carga de patrón más la del otro factor ponderada por φ:
+            </p>
+            <div class="formula rot-formula">
+              s<sub>1</sub> = p<sub>1</sub> + φ·p<sub>2</sub> &nbsp;&nbsp; s<sub>2</sub> = p<sub>2</sub> + φ·p<sub
+                >1</sub
+              >
+            </div>
+            <p id="worked-example" class="explanation rot-worked"></p>
+            <p class="explanation">
+              Y la comunalidad usa ambas: h² = p₁s₁ + p₂s₂ = p₁² + p₂² + 2φp₁p₂. En oblicuas,
+              <strong>sumar los cuadrados del patrón no da h²</strong>.
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">TU TURNO</span>
+            <h3>Calcula la estructura de otro ítem</h3>
+            <p id="practice-prompt" class="explanation"></p>
+            <div class="factor-control-grid rot-practice">
+              <div>
+                <label for="practice-answer">s₁ (con tres decimales)</label
+                ><input id="practice-answer" type="text" inputmode="decimal" autocomplete="off" />
+              </div>
+              <div class="rot-buttons">
+                <button type="button" id="practice-check">Comprobar</button
+                ><button type="button" id="practice-hint" class="ghost">Pista</button>
+              </div>
+            </div>
+            <p id="practice-feedback" class="hint" role="status" aria-live="polite"></p>
+            <details class="rot-discuss">
+              <summary>Para comentar en parejas</summary>
+              <p class="explanation">
+                Con el ejemplo «Factores muy relacionados (Φ = 0,60)», pulsa «Poner Varimax» y luego «Buscar Oblimin».
+                ¿Por qué Varimax deja cargas cruzadas de 0,17–0,24 que Oblimin elimina? ¿Qué le diríais a alguien que
+                usa esas cargas cruzadas para eliminar ítems?
+              </p>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <!-- 04 · MÉTODOS -->
+      <section class="tct-panel" id="metodos" role="tabpanel" aria-labelledby="tab-metodos" hidden>
+        <div class="card">
+          <span class="eyebrow">MISMOS DATOS, CINCO CRITERIOS</span>
+          <h2>Cada método define «simple» de otra manera</h2>
+          <div class="factor-control-grid">
+            <div>
+              <label for="methods-data">Datos</label
+              ><select id="methods-data"></select>
+            </div>
+            <div class="tct-control">
+              <label for="methods-gamma">γ de Oblimin <output id="methods-gamma-value">0</output></label
+              ><input id="methods-gamma" type="range" min="-1" max="0.8" step="0.1" value="0" />
+            </div>
+            <div class="tct-control">
+              <label for="methods-kappa">κ de Promax <output id="methods-kappa-value">4</output></label
+              ><input id="methods-kappa" type="range" min="2" max="6" step="1" value="4" />
+            </div>
+          </div>
+          <div id="methods-predict" class="rot-predict-inline">
+            <p>
+              <strong>Antes de ver la tabla:</strong> ¿qué método crees que dará la correlación entre factores más alta?
+            </p>
+            <div class="rot-buttons" role="group" aria-label="Predicción">
+              <button type="button" class="ghost" data-guess="varimax">Varimax</button
+              ><button type="button" class="ghost" data-guess="oblimin">Oblimin</button
+              ><button type="button" class="ghost" data-guess="promax">Promax</button
+              ><button type="button" class="ghost" data-guess="none">Ninguno: todos dan Φ = I</button>
+            </div>
+            <p id="methods-guess-feedback" class="hint" role="status"></p>
+          </div>
+          <div id="methods-results" hidden>
+            <div id="methods-summary" class="factor-table"></div>
+            <div id="methods-grid" class="rot-methods-grid"></div>
+            <p class="tct-help">
+              Las celdas se sombrean según |λ|. Las comunalidades son idénticas en todas las columnas: los métodos solo
+              reparten de otra manera la misma varianza común.
+            </p>
+          </div>
+        </div>
+        <div class="rot-method-cards">
+          <article class="card">
+            <span class="eyebrow">ORTOGONAL</span>
+            <h3>Varimax</h3>
+            <p class="explanation">
+              Maximiza la varianza de λ² dentro de cada factor (columnas simples). Impone Φ = I.
+            </p>
+            <p class="explanation">
+              <strong>Úsala si</strong> la teoría exige factores independientes o si la Φ estimada con una rotación
+              oblicua es casi nula.
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">ORTOGONAL</span>
+            <h3>Quartimax</h3>
+            <p class="explanation">
+              Maximiza Σλ⁴ en toda la matriz (filas simples): cada ítem en el menor número de factores. Tiende a crear
+              un factor general.
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">OBLICUA</span>
+            <h3>Oblimin (γ)</h3>
+            <p class="explanation">
+              Minimiza el solapamiento Σ λ²<sub>ij</sub>λ²<sub>ik</sub> entre pares de factores. γ = 0 es
+              <em>quartimin</em>, la opción por defecto de psych; γ negativo acerca los ejes a la ortogonalidad y γ alto
+              permite más correlación (con γ &gt; 0 pueden aparecer soluciones degeneradas).
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">OBLICUA</span>
+            <h3>Promax (κ)</h3>
+            <p class="explanation">
+              1) Varimax. 2) Objetivo: eleva cada carga a κ conservando el signo (las pequeñas casi desaparecen). 3)
+              Ajusta por mínimos cuadrados una rotación oblicua hacia ese objetivo. κ = 4 es lo habitual en R y SPSS.
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">OBLICUA</span>
+            <h3>Geomin</h3>
+            <p class="explanation">
+              Minimiza la media geométrica de λ² + δ por ítem. Tolera ítems con dos cargas moderadas; es la opción por
+              defecto de Mplus. Aquí δ = 0,01, el valor de GPArotation (Mplus ajusta δ al número de factores).
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 05 · ESPACIO 3D -->
+      <section class="tct-panel" id="espacio" role="tabpanel" aria-labelledby="tab-espacio" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">TRES FACTORES · DATOS DEL MÓDULO 5</span>
+            <h2>Los ítems son flechas; los ejes, una elección</h2>
+            <p class="explanation">
+              Cada ítem es un vector de longitud √h² en el espacio de los tres factores sin rotar. La rotación coloca
+              tres ejes nuevos; los vectores no se mueven.
+            </p>
+            <div class="factor-control-grid rot-3d-controls">
+              <div>
+                <label for="space-data">Ejemplo</label
+                ><select id="space-data">
+                  <option value="continua_pearson">Continuos · Pearson</option>
+                  <option value="ordinal_poly">Ordinales · policóricas</option>
+                </select>
+              </div>
+              <div>
+                <label for="space-rotation">Ejes</label
+                ><select id="space-rotation">
+                  <option value="none">Sin rotar</option>
+                  <option value="varimax">Varimax</option>
+                  <option value="oblimin" selected>Oblimin</option>
+                  <option value="promax">Promax</option>
+                </select>
+              </div>
+            </div>
+            <div class="factor-control-grid">
+              <div class="tct-control">
+                <label for="space-yaw">Giro de cámara</label
+                ><input id="space-yaw" type="range" min="-180" max="180" value="35" />
+              </div>
+              <div class="tct-control">
+                <label for="space-pitch">Altura de cámara</label
+                ><input id="space-pitch" type="range" min="-80" max="80" value="20" />
+              </div>
+              <div class="rot-buttons"><button type="button" id="space-animate">Animar desde sin rotar</button></div>
+            </div>
+            <ol class="rot-guided">
+              <li>Con «Sin rotar», localiza los tres grupos de ítems. ¿Hacia dónde apunta F1?</li>
+              <li>
+                <strong>Predice</strong> antes de cambiar: con Varimax, ¿atravesará cada eje el centro de su grupo?
+              </li>
+              <li>Compara Varimax y Oblimin. Mira el ángulo entre ejes de la tabla y relaciónalo con Φ.</li>
+            </ol>
+          </article>
+          <article class="card">
+            <canvas
+              id="space-canvas"
+              class="rot-space"
+              role="img"
+              aria-label="Vectores de los ítems y ejes factoriales en tres dimensiones; arrastra para girar la cámara"
+            ></canvas>
+            <p class="hint">
+              Arrastra para girar la cámara. Las líneas finas unen cada ítem con su sombra en el plano F1–F2 sin rotar.
+            </p>
+            <div id="space-table" class="factor-table"></div>
+            <p id="space-summary" class="explanation" aria-live="polite"></p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 06 · CALCULADORA -->
+      <section class="tct-panel" id="calculadora" role="tabpanel" aria-labelledby="tab-calculadora" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">ROTA TU PROPIA SOLUCIÓN</span>
+            <h2>Pega cargas sin rotar</h2>
+            <p class="explanation">
+              Una fila por ítem y una columna por factor. Admite tabuladores (copiar desde una hoja de cálculo), punto y
+              coma o espacios, y coma o punto decimal. Una primera columna con nombres y una fila de cabecera son
+              opcionales.
+            </p>
+            <label for="calc-input">Cargas sin rotar</label>
+            <textarea id="calc-input" rows="10" spellcheck="false"></textarea>
+            <div class="factor-control-grid">
+              <div>
+                <label for="calc-method">Rotación</label
+                ><select id="calc-method">
+                  <option value="oblimin">Oblimin (γ)</option>
+                  <option value="promax">Promax (κ)</option>
+                  <option value="geominQ">Geomin oblicua (δ = 0,01)</option>
+                  <option value="varimax">Varimax</option>
+                  <option value="quartimax">Quartimax</option>
+                  <option value="none">Sin rotar</option>
+                </select>
+              </div>
+              <div>
+                <label for="calc-param">Parámetro <span id="calc-param-name">γ</span></label
+                ><input id="calc-param" type="number" step="0.1" value="0" />
+              </div>
+            </div>
+            <div class="rot-options">
+              <label class="rot-check"
+                ><input type="checkbox" id="calc-kaiser" /> Normalización de Kaiser en Quartimax, Oblimin y Geomin
+                (Varimax y Promax ya la usan)</label
+              ><label class="rot-check"
+                ><input type="checkbox" id="calc-starts" checked /> Varios inicios (12) para no quedarse en un óptimo
+                local</label
+              >
+            </div>
+            <div class="rot-buttons">
+              <button type="button" id="calc-run">Rotar</button
+              ><button type="button" id="calc-example" class="ghost">Cargar ejemplo</button
+              ><button type="button" id="calc-to-manual" class="ghost" disabled>Abrir en el plano (2 factores)</button>
+            </div>
+            <p id="calc-status" class="factor-note" role="status"></p>
+            <p class="tct-help">
+              Rota la solución sin rotar de la misma extracción. Con las mismas cargas, los resultados coinciden con
+              psych::fa(), stats::varimax() y GPArotation (Varimax con Kaiser; Oblimin y Geomin sin Kaiser, como psych).
+              Los factores se reflejan y ordenan como en psych: el orden y el signo no tienen significado.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Resultado</h3>
+            <div id="calc-output"></div>
+            <div class="rot-buttons">
+              <button type="button" id="calc-download" class="ghost" disabled>Descargar CSV</button>
+            </div>
+            <details>
+              <summary>Código R equivalente</summary>
+              <pre id="calc-code" class="rot-code"></pre>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <!-- 07 · CIERRE -->
+      <section class="tct-panel" id="cierre" role="tabpanel" aria-labelledby="tab-cierre" hidden>
+        <article class="card quiz-card">
+          <span class="eyebrow">RECUPERA SIN MIRAR ATRÁS</span>
+          <h2>Comprueba tu interpretación</h2>
+          <p class="explanation">
+            Elige tu seguridad antes de responder. Si fallas, verás por qué atrae esa opción y podrás pedir una pista;
+            tras dos intentos puedes ver la solución explicada.
+          </p>
+          <div id="rot-quiz" data-quiz="rotacion" data-module="rotacion"></div>
+        </article>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">AUTOEXPLICACIÓN</span>
+            <h3>Explícalo con tus palabras</h3>
+            <label for="self-explain">¿Por qué rotar no cambia la comunalidad de un ítem, pero sí sus cargas?</label>
+            <textarea id="self-explain" rows="5"></textarea>
+            <button type="button" id="self-explain-show" class="ghost">Comparar con una respuesta modelo</button>
+            <p id="self-explain-model" class="factor-note" hidden>
+              La comunalidad es la longitud al cuadrado del vector del ítem en el espacio factorial común (h² =
+              diag(ΛΦΛ′)). Rotar cambia los ejes desde los que se describen esos vectores, no los vectores: cambian sus
+              coordenadas (cargas de patrón) y sus proyecciones (estructura), pero no su longitud. Por eso ΛΦΛ′, h², los
+              residuos y el ajuste son los mismos con cualquier rotación del mismo número de factores.
+            </p>
+          </article>
+          <article class="card">
+            <span class="eyebrow">IDEAS CLAVE</span>
+            <h3>Para llevarte</h3>
+            <ol class="rot-keys">
+              <li>
+                Con más de un factor hay infinitas soluciones con el mismo ajuste: rotar elige la más interpretable.
+              </li>
+              <li>
+                h², la matriz reproducida, los residuos y el ajuste no cambian; las cargas y la varianza de cada factor,
+                sí.
+              </li>
+              <li>Ortogonal impone Φ = I. Oblicua estima Φ; si sale casi nula, ambas soluciones convergen.</li>
+              <li>
+                En oblicuas, informa patrón, estructura y Φ: el patrón da contribuciones únicas y la estructura,
+                correlaciones.
+              </li>
+              <li>El orden y el signo de los factores son arbitrarios; nómbralos por el contenido de sus ítems.</li>
+            </ol>
+          </article>
+        </div>
+        <details class="card rot-teacher">
+          <summary>Guía para el docente</summary>
+          <h3>Uso sugerido (25–35 min)</h3>
+          <p class="explanation">
+            Tras explicar la extracción. 01 (3 min) individual; 02 (8 min) en parejas, con puesta en común de los
+            ángulos encontrados; 03 (8 min) con el ejemplo resuelto y el cálculo; 04 y 05 (8 min) proyectados por el
+            docente; 07 (5 min) individual. 06 sirve para rotar las soluciones sin rotar de prácticas con R, SPSS o
+            Jamovi.
+          </p>
+          <h3>Preguntas para el debate</h3>
+          <ul class="explanation">
+            <li>¿Por qué la solución sin rotar parece unidimensional y deja de parecerlo al rotar?</li>
+            <li>Si Oblimin da φ = 0,05, ¿qué ganáis o perdéis informando Varimax?</li>
+            <li>¿Puede una rotación «mejorar el ajuste»? ¿Qué diríais a quien elige la rotación con mejor RMSR?</li>
+          </ul>
+          <h3>Errores frecuentes que conviene buscar</h3>
+          <ul class="explanation">
+            <li>Calcular h² sumando los cuadrados del patrón en una solución oblicua.</li>
+            <li>Interpretar la estructura como contribución única o el patrón como correlación.</li>
+            <li>Eliminar ítems por cargas cruzadas que solo existen porque se forzó una rotación ortogonal.</li>
+            <li>Dar significado al orden (F1, F2) o al signo de un factor.</li>
+          </ul>
+          <h3>Qué mirar en clase</h3>
+          <p class="explanation">
+            En 02, la dispersión de ángulos elegidos: suele concentrarse cerca del óptimo de Varimax o de su equivalente
+            a 90°. En 07, cuántas respuestas «seguro» fueron incorrectas (calibración). La herramienta no guarda ni
+            envía datos: si queréis recogerlos, pedid a cada pareja que anote su ángulo y su criterio.
+          </p>
+        </details>
+      </section>
+
+      <details class="sources">
+        <summary>Fuentes, alcance y reproducción</summary>
+        <p>
+          Algoritmos: Kaiser (1958), <em>Psychometrika</em>, 23, 187–200 (Varimax); Hendrickson y White (1964),
+          <em>British Journal of Statistical Psychology</em>, 17, 65–70 (Promax); Jennrich y Sampson (1966),
+          <em>Psychometrika</em>, 31, 313–323 (Oblimin directo); Yates (1987) (Geomin); Browne (2001),
+          <em>Multivariate Behavioral Research</em>, 36, 111–150 (revisión de rotaciones analíticas); Bernaards y
+          Jennrich (2005), <em>Educational and Psychological Measurement</em>, 65, 676–696 (proyección del gradiente).
+        </p>
+        <p>
+          Docencia: Abad, Olea, Ponsoda y García (2011), <em>Medición en ciencias sociales y de la salud</em>, cap. 6;
+          Lloret-Segura, Ferreres-Traver, Hernández-Baeza y Tomás-Marco (2014), <em>Anales de Psicología</em>, 30,
+          1151–1169; Watkins (2021), <em>A Step-by-Step Guide to Exploratory Factor Analysis with R and RStudio</em>.
+        </p>
+        <p>
+          El motor de rotación del navegador reproduce stats::varimax, GPArotation (proyección del gradiente) y
+          psych::Promax/kaiser, incluido el orden y la reflexión de factores de psych::fa. Se contrasta con R en
+          tests/rotation.test.cjs. Los ejemplos de dos factores son poblaciones simuladas (sin error muestral); los de
+          tres factores son las soluciones sin rotar del Módulo 5 calculadas con psych.
+        </p>
+      </details>
+      <div class="module-footer">
+        <a class="home-link" href="afe.html">← Volver al Módulo 5</a>
+        <a class="home-link" href="index.html">Página principal</a>
+      </div>
+    </main>
+  </body>
+</html>
