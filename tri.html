@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Psicometría · Respuesta al ítem</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/tct.css" />
+    <link rel="stylesheet" href="assets/css/tri.css" />
+    <link rel="stylesheet" href="assets/css/didactica.css" />
+    <script defer src="assets/js/core/preguntas.js"></script>
+    <script defer src="assets/js/core/didactica.js"></script>
+    <script defer src="assets/vendor/chart.umd.min.js"></script>
+    <script defer src="assets/js/modules/tri/math.js"></script>
+    <script defer src="assets/js/modules/tri/ui.js"></script>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Ir al contenido</a>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="mark">ψ</span>
+        <div>PSICOMETRÍA<small>LABORATORIO INTERACTIVO</small></div>
+      </div>
+      <p class="nav-label">ITINERARIO DE APRENDIZAJE</p>
+      <nav aria-label="Módulos">
+        <a href="index.html"><span>01</span> Diseño de tests <small>Disponible</small></a
+        ><a href="analisis.html"><span>02</span> Análisis de ítems <small>Disponible</small></a
+        ><a href="tct.html"><span>03</span> Teoría clásica <small>Disponible</small></a
+        ><a class="current" href="tri.html"><span>04</span> Respuesta al ítem <small>Disponible</small></a
+        ><a href="afe.html"><span>05</span> Factorial exploratorio <small>Disponible</small></a
+        ><a href="rotacion.html"><span>5b</span> Laboratorio de rotación <small>Nuevo</small></a
+        ><a href="afc.html"><span>06</span> Factorial confirmatorio <small>Disponible</small></a
+        ><a href="repaso.html"><span>↻</span> Repaso espaciado <small>Todos los módulos</small></a>
+      </nav>
+      <div class="sidebar-note">
+        De la idea al instrumento.
+        <p>Aprende a justificar cada decisión antes de recoger datos.</p>
+      </div>
+      <footer>Diseño, contenidos y dirección:<br />Eduar Ramírez</footer>
+    </aside>
+    <main id="main">
+      <header class="topbar">
+        <span>GRADO EN PSICOLOGÍA <b>/</b> MÓDULO 04</span><a href="tct.html">Teoría clásica →</a
+        ><a class="home-link" href="index.html">← Página principal</a>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">TEORÍA DE RESPUESTA AL ÍTEM</div>
+        <h1>Cada ítem informa<br />en una zona del rasgo.</h1>
+        <p>
+          Relaciona nivel de rasgo, probabilidad de respuesta y precisión. Compara modelos y explora qué cambia al mover
+          sus parámetros.
+        </p>
+        <div class="hero-meta">
+          <span>Curvas de respuesta</span><span>Información</span><span>Categorías ordenadas</span>
+        </div>
+      </section>
+      <section class="dx-start" aria-label="Objetivos y punto de partida">
+        <article class="card dx-goals">
+          <span class="eyebrow">AL TERMINAR PODRÁS…</span>
+          <ol>
+            <li>Relacionar los parámetros a, b, c y d con la forma de la curva característica.</li>
+            <li>Localizar dónde informa más un ítem y un test, y relacionarlo con el error condicional.</li>
+            <li>Interpretar los umbrales del modelo de respuesta graduada.</li>
+            <li>Elegir ítems para un propósito de medida concreto (por ejemplo, un punto de corte).</li>
+          </ol>
+          <div class="dx-meta">
+            <span><strong>Duración:</strong> 45 min</span><span><strong>Modo:</strong> individual y en parejas</span
+            ><span><strong>Sin nota</strong></span>
+          </div>
+          <p class="explanation">
+            Mueve un parámetro cada vez y predice qué pasará con la curva antes de soltar el deslizador.
+          </p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">ANTES DE EMPEZAR</span>
+          <h2>Tus ideas de partida</h2>
+          <p class="explanation">
+            Responde rápido, sin consultar nada. Al final del módulo comprobarás qué ha cambiado.
+          </p>
+          <div data-predict="tri"></div>
+        </article>
+      </section>
+
+      <section class="card tri-intro">
+        <span class="eyebrow">ANTES DE EXPLORAR LAS CURVAS</span>
+        <h2>De la puntuación total a cada respuesta</h2>
+        <div class="tri-intro-grid">
+          <div>
+            <h3>TCT</h3>
+            <p>
+              Parte de la puntuación total: X = T + E. La fiabilidad resume la precisión en un grupo; el EEM común
+              ofrece una referencia global. También existen métodos clásicos de error condicional.
+            </p>
+          </div>
+          <div>
+            <h3>TRI</h3>
+            <p>
+              Relaciona cada respuesta con el nivel de rasgo θ. Permite estudiar qué ítems informan más en cada zona y
+              cómo cambia el error a lo largo del rasgo. Sus ventajas dependen del ajuste del modelo y de una escala
+              común.
+            </p>
+          </div>
+        </div>
+        <details>
+          <summary>Dos requisitos que hay que comprobar</summary>
+          <p>
+            <strong>Unidimensionalidad:</strong> los modelos de este laboratorio suponen que un rasgo dominante explica
+            las respuestas. No se comprueba mirando una CCI; se necesita estudiar la estructura del test.
+          </p>
+          <p>
+            <strong>Independencia local:</strong> entre personas con el mismo θ, conocer una respuesta no debería
+            aportar información adicional sobre otra. Dos ítems que se dan pistas o dependen del mismo enunciado pueden
+            presentar dependencia local. La correlación entre ítems por compartir el rasgo no implica por sí sola
+            incumplir este supuesto.
+          </p>
+        </details>
+        <p class="explanation">
+          La TRI es una familia más amplia: hay <strong>modelos multidimensionales</strong> para varios rasgos y
+          <strong>modelos no paramétricos</strong> que no fijan una forma logística concreta, como los modelos de
+          Mokken. Este laboratorio se centra en modelos paramétricos unidimensionales.
+        </p>
+      </section>
+      <div class="tct-help">
+        Este laboratorio explora <strong>parámetros conocidos</strong>. No ajusta modelos a respuestas ni estima el
+        rasgo de una persona. θ es el nivel de rasgo en una escala elegida; no es una puntuación directa ni un
+        diagnóstico.
+      </div>
+      <div class="tri-global">
+        <div>
+          <label for="metric">Métrica logística D</label
+          ><select id="metric">
+            <option value="1">D = 1 · logística</option>
+            <option value="1.702">D = 1,702 · aproximación a métrica normal</option>
+          </select>
+        </div>
+        <p>
+          Se aplica el mismo D a todos los ítems. Abad utiliza D = 1,702 en sus ejemplos; aquí comienza en D = 1. Al
+          comparar escalas, la pendiente efectiva es D·a.
+        </p>
+      </div>
+      <div class="tct-tabs" role="tablist" data-pager aria-label="Familias de modelos">
+        <button
+          role="tab"
+          id="tab-dicotomicos"
+          aria-controls="dicotomicos"
+          aria-selected="true"
+          data-panel="dicotomicos"
+        >
+          01 · Dicotómicos · 1PL–4PL</button
+        ><button
+          role="tab"
+          id="tab-graduada"
+          aria-controls="graduada"
+          aria-selected="false"
+          data-panel="graduada"
+          tabindex="-1"
+        >
+          02 · Politómicos · Samejima</button
+        ><button
+          role="tab"
+          id="tab-criterio"
+          aria-controls="criterio"
+          aria-selected="false"
+          data-panel="criterio"
+          tabindex="-1"
+        >
+          03 · Interpretación
+        </button>
+      </div>
+      <section id="dicotomicos" class="tct-panel" role="tabpanel" aria-labelledby="tab-dicotomicos">
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">RENDIMIENTO ÓPTIMO · RESPUESTAS 0 / 1</span>
+            <h2>Una familia, cuatro modelos</h2>
+            <p class="dx-pair">
+              Uno fija a, b y c de un ítem sin enseñar la pantalla; el otro dibuja a mano su curva y dónde informará
+              más. Comparad con el gráfico y cambiad los papeles.
+            </p>
+            <label for="model">Modelo del test didáctico</label
+            ><select id="model">
+              <option>1PL</option>
+              <option selected>2PL</option>
+              <option>3PL</option>
+              <option>4PL</option>
+            </select>
+            <div class="formula">P(θ) = c + (d − c) / [1 + e<sup>−Da(θ−b)</sup>]</div>
+            <p id="model-description" class="explanation"></p>
+            <div class="tri-bank-controls">
+              <div>
+                <label for="d-count">Ítems del test dicotómico</label
+                ><select id="d-count">
+                  <option value="10">10 ítems</option>
+                  <option value="15">15 ítems</option>
+                  <option value="20">20 ítems</option>
+                  <option value="30">30 ítems</option>
+                </select>
+              </div>
+              <button id="d-generate" class="secondary">Generar otro banco</button>
+            </div>
+            <p class="explanation">
+              Banco didáctico con parámetros variados. Generar otro banco sustituye las ediciones de esta familia; no
+              calibra respuestas reales.
+            </p>
+            <label for="selected-item">Ítem que quieres explorar</label
+            ><select id="selected-item"></select>
+            <div class="tct-control">
+              <label for="item-a"><span>a · discriminación</span><output id="item-a-val"></output></label
+              ><input id="item-a" type="range" min="0.2" max="3" step="0.01" value="1.4" />
+            </div>
+            <div class="tct-control">
+              <label for="item-b"><span>b · parámetro de dificultad</span><output id="item-b-val"></output></label
+              ><input id="item-b" type="range" min="-3" max="3" step="0.01" value="0" />
+            </div>
+            <div class="tct-control">
+              <label for="item-c"><span>c · parámetro de conjetura</span><output id="item-c-val"></output></label
+              ><input id="item-c" type="range" min="0" max="0.5" step="0.01" value="0.2" />
+            </div>
+            <div class="tct-control">
+              <label for="item-d"><span>d · asíntota superior</span><output id="item-d-val"></output></label
+              ><input id="item-d" type="range" min="0.55" max="1" step="0.01" value="0.95" />
+            </div>
+            <label for="cci-view">Qué comparar en la CCI</label
+            ><select id="cci-view">
+              <option value="items">Varios ítems del modelo elegido</option>
+              <option value="single">Solo el ítem elegido</option>
+              <option value="models">1PL–4PL del ítem elegido</option>
+            </select>
+            <fieldset id="cci-picker">
+              <legend>Ítems que aparecen en el gráfico</legend>
+              <div id="cci-items" class="tri-item-picks"></div>
+              <button type="button" id="cci-all" class="secondary">Ver todos</button
+              ><button type="button" id="cci-chosen" class="secondary">Ver el elegido</button>
+            </fieldset>
+            <p class="tct-help">
+              1PL fija a = 1 para todos los ítems en esta demostración. 2PL añade a libre; 3PL añade c; 4PL añade d. c
+              es el parámetro de conjetura y fija la asíntota inferior; no equivale a la probabilidad exacta de adivinar
+              de una persona; d &lt; 1 representa una asíntota superior.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Un test para comparar ítems</h3>
+            <p class="explanation">
+              Los controles editan el ítem elegido. Los demás conservan sus parámetros. El selector de modelo se aplica
+              a todo el banco; la tabla muestra los valores efectivos.
+            </p>
+            <div class="tct-matrix">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Ítem</th>
+                    <th scope="col">a</th>
+                    <th scope="col">b</th>
+                    <th scope="col">c</th>
+                    <th scope="col">d</th>
+                  </tr>
+                </thead>
+                <tbody id="dich-table"></tbody>
+              </table>
+            </div>
+            <div class="tct-control">
+              <label for="theta-d"><span>Nivel de rasgo θ</span><output id="theta-d-val"></output></label
+              ><input id="theta-d" type="range" min="-4" max="4" step="0.05" value="0" />
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="d-prob"></strong><span>P del ítem elegido</span></div>
+              <div class="tct-stat"><strong id="d-info"></strong><span>Información del test</span></div>
+              <div class="tct-stat"><strong id="d-sem"></strong><span>Error condicional de θ</span></div>
+            </div>
+            <p id="d-expected" class="explanation"></p>
+            <p id="d-midpoint" class="tct-help"></p>
+            <p id="d-maxinfo" class="tct-help"></p>
+            <button id="reset-d" class="secondary">Restablecer test</button>
+          </article>
+        </div>
+        <div class="tri-plots">
+          <article class="card">
+            <h3>Curva característica del ítem</h3>
+            <div class="tct-chart">
+              <canvas id="d-cci" role="img" aria-label="Curva característica del ítem"></canvas>
+            </div>
+            <p class="chart-caption" id="d-cci-caption"></p>
+          </article>
+          <article class="card">
+            <h3 id="d-precision-title">Información y error del test</h3>
+            <label for="d-precision">Ámbito del gráfico</label
+            ><select id="d-precision">
+              <option value="test">Test completo</option>
+              <option value="item">Ítem elegido</option>
+            </select>
+            <div class="tct-chart">
+              <canvas id="d-information" role="img" aria-label="Información y error del test"></canvas>
+            </div>
+            <p class="chart-caption" id="d-information-caption"></p>
+          </article>
+          <article class="card">
+            <h3>Puntuación esperada del test</h3>
+            <div class="tct-chart">
+              <canvas id="d-score" role="img" aria-label="Puntuación esperada del test"></canvas>
+            </div>
+            <p class="chart-caption" id="d-score-caption"></p>
+          </article>
+          <article class="card">
+            <h3>Fiabilidad condicional</h3>
+            <label for="d-rel-method">Definición</label
+            ><select id="d-rel-method">
+              <option value="latent">Con varianza latente σ² · acotada entre 0 y 1</option>
+              <option value="raju">Raju et al. (2007) · con varianza observada Var(θ̂)</option>
+            </select>
+            <label for="d-variance" id="d-variance-label">Varianza latente σ² de θ en la población de referencia</label
+            ><input id="d-variance" type="number" min="0.01" max="10" step="0.1" value="1" />
+            <div class="tri-formula" id="d-rel-formula">ρ(θ) = σ²·I(θ) / [σ²·I(θ) + 1] = σ² / [σ² + EE²(θ)]</div>
+            <p class="explanation" id="d-rel-explanation"></p>
+            <p id="d-reliability-status" class="tct-status" role="status"></p>
+            <div class="tct-chart">
+              <canvas id="d-reliability" role="img" aria-label="Fiabilidad condicional del test"></canvas>
+            </div>
+            <p class="chart-caption" id="d-reliability-caption"></p>
+          </article>
+        </div>
+      </section>
+      <section id="graduada" class="tct-panel" role="tabpanel" aria-labelledby="tab-graduada" hidden>
+        <div class="tct-grid">
+          <article class="card">
+            <span class="eyebrow">RENDIMIENTO TÍPICO · CATEGORÍAS ORDENADAS</span>
+            <h2>Respuesta graduada de Samejima</h2>
+            <div class="formula">
+              C<sub>k</sub>(θ) = P(X ≥ k | θ)<br />P(X = k | θ) = C<sub>k</sub> − C<sub>k+1</sub>
+            </div>
+            <p class="explanation">
+              Categorías 0,…,K−1. C₀ = 1 y C<sub>K</sub> = 0. Cada umbral b<sub>k</sub> es el punto donde la
+              probabilidad de elegir la categoría k o una superior es 0,5; no donde P(X = k) vale 0,5.
+            </p>
+            <label for="g-categories">Categorías por ítem</label
+            ><select id="g-categories">
+              <option value="3">3 categorías · 0, 1, 2</option>
+              <option value="4">4 categorías · 0, 1, 2, 3</option>
+              <option value="5" selected>5 categorías · 0, 1, 2, 3, 4</option>
+            </select>
+            <div class="tri-bank-controls">
+              <div>
+                <label for="g-count">Ítems del test graduado</label
+                ><select id="g-count">
+                  <option value="10">10 ítems</option>
+                  <option value="15">15 ítems</option>
+                  <option value="20">20 ítems</option>
+                  <option value="30">30 ítems</option>
+                </select>
+              </div>
+              <button id="g-generate" class="secondary">Generar otro banco</button>
+            </div>
+            <p class="explanation">
+              Banco didáctico con parámetros variados. Generar otro banco sustituye las ediciones de esta familia; no
+              calibra respuestas reales.
+            </p>
+            <label for="g-selected">Ítem que quieres explorar</label
+            ><select id="g-selected"></select>
+            <div class="tct-control">
+              <label for="g-a"><span>a · discriminación</span><output id="g-a-val"></output></label
+              ><input id="g-a" type="range" min="0.2" max="3" step="0.01" value="1.2" />
+            </div>
+            <p class="explanation">
+              Escribe umbrales estrictamente crecientes. No se ordenan automáticamente: su orden forma parte del modelo.
+            </p>
+            <div id="g-thresholds" class="tri-thresholds"></div>
+            <p id="g-status" class="tct-status" role="status"></p>
+            <label for="g-mode">Curvas de respuesta</label
+            ><select id="g-mode">
+              <option value="category">Probabilidad de cada categoría</option>
+              <option value="cumulative">Probabilidad acumulada: categoría k o superior</option></select
+            ><button id="reset-g" class="secondary">Restablecer test</button>
+          </article>
+          <article class="card">
+            <h3>Un banco, una escala de respuesta</h3>
+            <p class="explanation">
+              Los parámetros de cada ítem se editan por separado. Al cambiar el número de categorías se restablecen los
+              umbrales de todo el test.
+            </p>
+            <div class="tct-matrix">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Ítem</th>
+                    <th scope="col">a</th>
+                    <th scope="col">Umbrales b</th>
+                  </tr>
+                </thead>
+                <tbody id="g-table"></tbody>
+              </table>
+            </div>
+            <div class="tct-control">
+              <label for="theta-g"><span>Nivel de rasgo θ</span><output id="theta-g-val"></output></label
+              ><input id="theta-g" type="range" min="-4" max="4" step="0.05" value="0" />
+            </div>
+            <div class="tct-result">
+              <div class="tct-stat"><strong id="g-sum"></strong><span>Suma de probabilidades</span></div>
+              <div class="tct-stat"><strong id="g-info"></strong><span>Información del test</span></div>
+              <div class="tct-stat"><strong id="g-sem"></strong><span>Error condicional de θ</span></div>
+            </div>
+            <p id="g-expected" class="explanation"></p>
+            <div id="g-probabilities" class="tri-probabilities"></div>
+            <p class="tct-help">
+              La categoría central no tiene por qué ser la más probable en θ = 0. La localización y separación de
+              umbrales, junto con a, determinan la forma de las curvas.
+            </p>
+          </article>
+        </div>
+        <div class="tri-plots">
+          <article class="card">
+            <h3>Curvas de respuesta del ítem</h3>
+            <div class="tct-chart">
+              <canvas id="g-cci" role="img" aria-label="Curvas de respuesta del ítem"></canvas>
+            </div>
+            <p class="chart-caption" id="g-cci-caption"></p>
+          </article>
+          <article class="card">
+            <h3>Información y error del test</h3>
+            <div class="tct-chart">
+              <canvas id="g-information" role="img" aria-label="Información y error del test"></canvas>
+            </div>
+            <p class="chart-caption" id="g-information-caption"></p>
+          </article>
+          <article class="card">
+            <h3>Puntuación esperada del test</h3>
+            <div class="tct-chart">
+              <canvas id="g-score" role="img" aria-label="Puntuación esperada del test"></canvas>
+            </div>
+            <p class="chart-caption" id="g-score-caption"></p>
+          </article>
+          <article class="card">
+            <h3>Fiabilidad condicional</h3>
+            <label for="g-rel-method">Definición</label
+            ><select id="g-rel-method">
+              <option value="latent">Con varianza latente σ² · acotada entre 0 y 1</option>
+              <option value="raju">Raju et al. (2007) · con varianza observada Var(θ̂)</option>
+            </select>
+            <label for="g-variance" id="g-variance-label">Varianza latente σ² de θ en la población de referencia</label
+            ><input id="g-variance" type="number" min="0.01" max="10" step="0.1" value="1" />
+            <div class="tri-formula" id="g-rel-formula">ρ(θ) = σ²·I(θ) / [σ²·I(θ) + 1] = σ² / [σ² + EE²(θ)]</div>
+            <p class="explanation" id="g-rel-explanation"></p>
+            <p id="g-reliability-status" class="tct-status" role="status"></p>
+            <div class="tct-chart">
+              <canvas id="g-reliability" role="img" aria-label="Fiabilidad condicional del test"></canvas>
+            </div>
+            <p class="chart-caption" id="g-reliability-caption"></p>
+          </article>
+        </div>
+      </section>
+      <section id="criterio" class="tct-panel" role="tabpanel" aria-labelledby="tab-criterio" hidden>
+        <div class="comparison-grid">
+          <article class="card">
+            <h3>Qué supone el modelo</h3>
+            <p class="explanation">
+              Aquí θ es un único rasgo. La independencia local exige que, condicionado a θ, las respuestas a diferentes
+              ítems sean independientes. Ítems que comparten pistas, enunciados o dependencias pueden incumplirla.
+            </p>
+            <p class="explanation">
+              No basta con curvas suaves: antes de usar TRI con datos hay que examinar dimensionalidad, independencia
+              local, ajuste y adecuación del modelo.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Información ≠ fiabilidad global</h3>
+            <div class="formula">I<sub>test</sub>(θ) = Σ I<sub>j</sub>(θ)</div>
+            <p class="explanation">
+              Bajo independencia local, las informaciones se suman. En un ítem dicotómico I = [P′(θ)]² / [P(θ)(1−P(θ))].
+              En el MRG I = Σ [P′<sub>k</sub>(θ)]² / P<sub>k</sub>(θ).
+            </p>
+            <p class="explanation">
+              I es no negativa y puede superar 1. La fiabilidad marginal necesita definir la distribución del rasgo y el
+              procedimiento de estimación. El panel condicional usa por defecto ρ(θ) = σ²·I(θ)/[σ²·I(θ) + 1], con σ² la
+              varianza latente; la variante de Raju et al. (2007), 1 − EE²(θ)/Var(θ̂), requiere la varianza observada de
+              las estimaciones, mayor que σ². Ninguna es fiabilidad marginal ni una propiedad de un individuo aislado.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Precisión donde importa</h3>
+            <div class="formula">EE(θ) ≈ 1 / √I<sub>test</sub>(θ)</div>
+            <p class="explanation">
+              Es la relación asintótica de información de Fisher con el error de estimación de θ por máxima
+              verosimilitud, con parámetros de ítems conocidos. No es el EEM común de TCT ni una desviación posterior de
+              EAP/MAP.
+            </p>
+            <p class="explanation">
+              No incorpora la incertidumbre de calibración. Un máximo de información señala una zona precisa, no el
+              “mejor test” para todos los usos.
+            </p>
+            <p class="explanation">
+              En el 2PL, la información del ítem es máxima en θ = b y vale I<sub>max</sub> = D²a²/4. En el 3PL el máximo
+              se desplaza por encima de b: θ<sub>max</sub> = b + ln[(1 + √(1 + 8c))/2]/(D·a), con I<sub>max</sub>
+              = D²a²[1 − 20c − 8c² + (1 + 8c)<sup>3/2</sup>]/[8(1 − c)²], menor que con c = 0.
+            </p>
+          </article>
+        </div>
+        <article class="card">
+          <h3>Cuando se ajusta un modelo a datos</h3>
+          <p class="explanation">
+            La estimación requiere suficientes respuestas y categorías observadas, identificación de la escala y
+            comprobación de convergencia. Parámetros extremos, errores estándar grandes o falta de convergencia obligan
+            a revisar los datos y el modelo antes de interpretar. Este módulo no realiza esa estimación: cambiar un
+            control modifica parámetros, no descubre los de una muestra.
+          </p>
+          <p class="explanation">
+            La invarianza de parámetros —los de los ítems no dependen del grupo y θ no depende de los ítems aplicados—
+            solo se sostiene si el modelo se ajusta en las poblaciones consideradas, y salvo una transformación lineal:
+            la escala de θ está indeterminada. Con θ* = kθ + m, a* = a/k y b* = kb + m, todas las probabilidades quedan
+            iguales (c y d no cambian). Por eso se fija una métrica, por ejemplo media 0 y varianza 1 en un grupo de
+            referencia, y para comparar calibraciones distintas hay que equipararlas.
+          </p>
+          <p class="source-note">
+            Abad et al., capítulos 4, 11 y 12. El 4PL amplía los modelos introductorios del capítulo 4; su
+            implementación se contrasta con mirt.
+          </p>
+        </article>
+      </section>
+      <section class="card quiz-card">
+        <span class="eyebrow">COMPRUEBA TU INTERPRETACIÓN</span>
+        <h2>Lee las curvas con criterio</h2>
+        <div id="tri-quiz" data-quiz="tri" data-module="tri"></div>
+      </section>
+      <section class="card dx-closing" id="cierre-modulo" aria-labelledby="cierre-titulo">
+        <span class="eyebrow">CIERRE DEL MÓDULO</span>
+        <h2 id="cierre-titulo">Antes de terminar</h2>
+        <div class="dx-closing-grid">
+          <div>
+            <h3>¿Han cambiado tus ideas?</h3>
+            <div data-predcheck="tri"></div>
+          </div>
+          <div data-autoexp>
+            <h3>Explícalo con tus palabras</h3>
+            <label for="autoexp-tri"
+              >¿Por qué un test puede ser muy preciso para unas personas y poco para otras?</label
+            >
+            <textarea id="autoexp-tri" rows="4"></textarea>
+            <button type="button" class="ghost">Comparar con una respuesta modelo</button>
+            <p class="dx-model" hidden>
+              Porque cada ítem informa sobre todo cerca de su localización b. Si los ítems se concentran en una zona de
+              θ, la información total es alta allí y baja lejos de ella; como EE(θ) ≈ 1/√I(θ), el error es pequeño en
+              esa zona y grande en las demás.
+            </p>
+          </div>
+        </div>
+        <h3>Ideas clave</h3>
+        <ol>
+          <li>En TRI la precisión cambia con θ: la información del test es la suma de la de sus ítems.</li>
+          <li>b localiza el ítem y a lo hace más o menos discriminante; c y d acotan las probabilidades.</li>
+          <li>En el 2PL el ítem informa más en θ = b; con c &gt; 0 el máximo se desplaza por encima de b.</li>
+          <li>En el modelo graduado, b_k localiza P(X ≥ k) = 0,5, no P(X = k).</li>
+          <li>La invarianza de parámetros solo se cumple si el modelo ajusta; la escala de θ se fija por convenio.</li>
+        </ol>
+        <p class="explanation">
+          <strong>Después:</strong> vuelve dentro de una semana al <a href="repaso.html#tri">repaso espaciado</a>;
+          empezará por las preguntas que fallaste.
+        </p>
+        <details class="dx-teacher">
+          <summary>Guía para el docente</summary>
+          <h4>Uso sugerido</h4>
+          <p>
+            45 min. Dicotómicos (20 min): un estudiante fija parámetros y el otro predice la curva antes de verla.
+            Graduados (10 min). Interpretación y cuestionario (15 min).
+          </p>
+          <h4>Preguntas para el debate</h4>
+          <ul>
+            <li>¿Qué banco de ítems construiríais para un test de cribado con punto de corte alto?</li>
+            <li>¿Por qué en el 3PL b no es el punto en que P = 0,5?</li>
+            <li>¿Qué significa que la escala de θ esté indeterminada?</li>
+          </ul>
+          <h4>Errores frecuentes que conviene buscar</h4>
+          <ul>
+            <li>Creer que b es siempre el punto con P = 0,5.</li>
+            <li>Pensar que la TRI no depende del ajuste del modelo.</li>
+            <li>Confundir la información del test con su fiabilidad global.</li>
+            <li>Leer b_k como la probabilidad de una categoría aislada.</li>
+          </ul>
+          <h4>Qué mirar</h4>
+          <p>
+            La predicción de dónde informa más el ítem (antes del resultado) y la pregunta de transferencia sobre el
+            punto de corte.
+          </p>
+          <p>
+            La herramienta no envía datos a ningún servidor: solo el navegador de cada estudiante recuerda las
+            predicciones y qué preguntas falló, para el repaso. Si queréis recoger resultados, cada estudiante puede
+            descargar sus resultados en CSV (con un código, sin su nombre) y entregarlos en el aula virtual.
+          </p>
+        </details>
+      </section>
+      <details class="sources">
+        <summary>Referencias, alcance y verificación</summary>
+        <p>
+          Abad, Olea, Ponsoda y García (2011), <em>Medición en ciencias sociales y de la salud</em>: capítulo 4, pp.
+          128–134 y 148–153; capítulo 12, pp. 420–424 y 436–438.
+        </p>
+        <p>
+          <a href="https://philchalmers.github.io/mirt/reference/mirt.html" target="_blank" rel="noopener"
+            >mirt: modelos y parametrización</a
+          >
+          ·
+          <a href="https://philchalmers.github.io/mirt/reference/iteminfo.html" target="_blank" rel="noopener"
+            >Información del ítem</a
+          >
+          ·
+          <a href="https://philchalmers.github.io/mirt/reference/testinfo.html" target="_blank" rel="noopener"
+            >Información del test</a
+          >.
+        </p>
+        <p>
+          <a href="https://doi.org/10.1177/0146621606291569" target="_blank" rel="noopener"
+            >Raju et al. (2007): fiabilidad condicional</a
+          >. La extensión condicional se distingue de la relación grupal atribuida a Lord.
+        </p>
+        <p>
+          <a href="https://www.jstatsoft.org/article/view/v020i11" target="_blank" rel="noopener"
+            >Mokken: TRI no paramétrica</a
+          >.
+        </p>
+        <p>
+          Gráficos calculados directamente a partir de las ecuaciones, sin simulación de calibraciones. Ver
+          docs/VERIFICACION.md para la verificación reproducible. Diseño, contenidos y dirección: Eduar Ramírez.
+        </p>
+      </details>
+      <div class="module-footer"><a href="afe.html">Continuar con el Módulo 5 · AFE →</a></div>
+    </main>
+  </body>
+</html>
